@@ -9,12 +9,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -23,16 +19,27 @@ import javafx.stage.Stage;
  */
 public class LabyrinthBoardGame extends Application {
     
-    private int currentPlayer = 1;
-    private final int PLAYERS = 2;
-    
-    
-    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+        Parent root = loader.load();
+        GameBoardController controller = loader.getController();
         
         Scene scene = new Scene(root);
+        
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.R) 
+            {
+                if (key.isShiftDown())
+                {
+                    controller.rotateTileCounterClockwise();
+                }
+                else
+                {
+                    controller.rotateTileClockwise();
+                }
+            }
+        });
         
         stage.setScene(scene);
         stage.setTitle("Labyrinth Board Game");
