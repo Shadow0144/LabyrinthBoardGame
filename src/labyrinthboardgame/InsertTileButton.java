@@ -17,6 +17,8 @@ import static javafx.scene.layout.StackPane.setAlignment;
  */
 public class InsertTileButton extends StackPane
 {
+    LabyrinthGameBoard board;
+    
     public enum Arrow
     {
         TopLeft, TopCenter, TopRight,
@@ -28,8 +30,14 @@ public class InsertTileButton extends StackPane
     
     private final int ARROW_SIZE = 20;
     
-    public InsertTileButton(int rotation, Arrow arrow)
+    private final double PREVIEW_OPACITY = 0.5;
+    
+    private Tile previewTile;
+    
+    public InsertTileButton(LabyrinthGameBoard gameBoard, int rotation, Arrow arrow)
     {
+        board = gameBoard;
+        
         ImageView arrowImageView = new ImageView();
         String arrowImageString = getClass().getResource("assets/arrow.png").toString();
         Image arrowImage = new Image(arrowImageString, ARROW_SIZE, ARROW_SIZE, false, true);
@@ -38,16 +46,56 @@ public class InsertTileButton extends StackPane
         getChildren().add(arrowImageView);
         setAlignment(arrowImageView, Pos.CENTER);
         this.arrow = arrow;
+        
+        this.setOnMouseEntered(event -> {
+            setPreviewTile(gameBoard.getNextTile());
+        });
+        this.setOnMouseExited(event -> {
+            removePreviewTile();
+        });
+        this.setOnMouseClicked(event -> {
+            insertTile();
+        });
     }
     
     public void setPreviewTile(Tile previewTile)
     {
+        this.previewTile = previewTile;
+        previewTile.setOpacity(PREVIEW_OPACITY);
         getChildren().add(previewTile);
         setAlignment(previewTile, Pos.CENTER);
     }
     
-    public void removePreviewTile(Tile previewTile)
+    public void removePreviewTile()
     {
         getChildren().remove(previewTile);
+        previewTile = null;
+    }
+    
+    public void rotatePreviewClockwise()
+    {
+        if (previewTile != null)
+        {
+            previewTile.rotateClockwise();
+        }
+    }
+    
+    public void rotatePreviewCounterClockwise()
+    {
+        if (previewTile != null)
+        {
+            previewTile.rotateCounterClockwise();
+        }
+    }
+    
+    private void insertTile()
+    {
+        board.insertTile(arrow);
+        if (previewTile != null)
+        {
+            removePreviewTile();
+            setPreviewTile(board.getNextTile());
+        }
+        else {}
     }
 }

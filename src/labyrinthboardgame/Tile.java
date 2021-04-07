@@ -26,6 +26,7 @@ public class Tile extends StackPane
     private Shape tileShape;
     
     private Treasure tileTreasure;
+    private int player;
     
     private boolean[] availableNeighbors;
     private boolean[] connectedNeighbors;
@@ -40,18 +41,66 @@ public class Tile extends StackPane
     private final int TILE_SIZE = 70;
     private final int PLAYER_START_RADIUS = 15;
     
+    public Tile(Tile tile)
+    {
+        super();
+        if (tile.getTreasure() != null)
+        {
+            setupTile(tile.getTileShape(), tile.getRotation());
+            player = -1;
+            tileTreasure = tile.getTreasure();
+            if (tileTreasure != null)
+            {
+                treasureImageView = new ImageView();
+                treasureImageView.setImage(tileTreasure.getTileTreasureImage());
+                getChildren().add(treasureImageView);
+                setAlignment(treasureImageView, Pos.CENTER);
+            }
+            else {}
+        }
+        else if (tile.getPlayer() != -1)
+        {
+            setupTile(tile.getTileShape(), tile.getRotation());
+            tileTreasure = null;
+            player = tile.getPlayer();
+            switch (player)
+            {
+                case 1:
+                    addPlayerStart(Color.YELLOW);
+                    break;
+                case 2:
+                    addPlayerStart(Color.BLUE);
+                    break;
+                case 3:
+                    addPlayerStart(Color.GREEN);
+                    break;
+                case 4:
+                    addPlayerStart(Color.RED);
+                    break;
+            }
+        }
+        else
+        {
+            setupTile(tile.getTileShape(), tile.getRotation());
+        }
+    }
+    
     public Tile(Shape shape, int rotation)
     {
         super();
         setupTile(shape, rotation);
+        tileTreasure = null;
+        player = -1;
     }
     
-    public Tile(Shape shape, int rotation, int playerStart)
+    public Tile(Shape shape, int rotation, int player)
     {
         super();
         setupTile(shape, rotation);
         
-        switch (playerStart)
+        tileTreasure = null;
+        this.player = player;
+        switch (player)
         {
             case 1:
                 addPlayerStart(Color.YELLOW);
@@ -73,6 +122,8 @@ public class Tile extends StackPane
         super();
         setupTile(shape, rotation);
         
+        player = -1;
+        tileTreasure = treasure;
         if (treasure != null)
         {
             treasureImageView = new ImageView();
@@ -120,6 +171,21 @@ public class Tile extends StackPane
     public int getRotation()
     {
         return currentRotation;
+    }
+    
+    public Shape getTileShape()
+    {
+        return tileShape;
+    }
+    
+    public int getPlayer()
+    {
+        return player;
+    }
+    
+    public Treasure getTreasure()
+    {
+        return tileTreasure;
     }
     
     public void rotateClockwise()
