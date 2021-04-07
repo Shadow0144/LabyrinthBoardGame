@@ -19,11 +19,17 @@ import javafx.stage.Stage;
  */
 public class LabyrinthBoardGame extends Application {
     
+    Player[] players;
+    TileSet tileSet;
+    TreasureSet treasureSet;
+    
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
         GameBoardController controller = loader.getController();
+        tileSet = new TileSet();
+        controller.setupBoard(tileSet);
         
         Scene scene = new Scene(root);
         

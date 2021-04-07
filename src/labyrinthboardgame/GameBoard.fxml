@@ -33,148 +33,78 @@
 -->
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+<?import labyrinthboardgame.*?>
 
-<VBox prefHeight="765.2" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.GameBoardController">
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.GameBoardController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-            <VBox prefHeight="221.0" prefWidth="306.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="gamePane">
+         <children>
+            <Button fx:id="menuButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" text="Menu" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="7.0" />
+            <Text fx:id="titleText" layoutX="304.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The AMAZEing Labyrinth" textAlignment="CENTER" AnchorPane.bottomAnchor="13.600000000000001" AnchorPane.leftAnchor="304.0" AnchorPane.rightAnchor="304.796875" AnchorPane.topAnchor="11.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="boardPane">
+         <children>
+            <LabyrinthGameBoard fx:id="gameBoard" alignment="CENTER" gridLinesVisible="true" prefHeight="630.0" prefWidth="630.0" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <GridPane fx:id="gameGridPane" gridLinesVisible="true" prefHeight="640.0" prefWidth="640.0" style="-fx-background-color: #777777;">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <ImageView fx:id="imageView00" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="imageView01" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                        <ImageView fx:id="imageView02" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-                        <ImageView fx:id="imageView03" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-                        <ImageView fx:id="imageView04" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-                        <ImageView fx:id="imageView05" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
-                        <ImageView fx:id="imageView06" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
-                        <ImageView fx:id="imageView10" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                        <ImageView fx:id="imageView11" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ImageView fx:id="imageView12" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <ImageView fx:id="imageView13" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <ImageView fx:id="imageView14" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <ImageView fx:id="imageView15" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                        <ImageView fx:id="imageView16" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                        <ImageView fx:id="imageView20" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-                        <ImageView fx:id="imageView21" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ImageView fx:id="imageView22" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <ImageView fx:id="imageView23" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <ImageView fx:id="imageView24" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <ImageView fx:id="imageView25" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                        <ImageView fx:id="imageView26" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                        <ImageView fx:id="imageView30" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
-                        <ImageView fx:id="imageView31" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ImageView fx:id="imageView32" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <ImageView fx:id="imageView33" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <ImageView fx:id="imageView34" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <ImageView fx:id="imageView35" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                        <ImageView fx:id="imageView36" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                        <ImageView fx:id="imageView40" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
-                        <ImageView fx:id="imageView41" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <ImageView fx:id="imageView42" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <ImageView fx:id="imageView43" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                        <ImageView fx:id="imageView44" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                        <ImageView fx:id="imageView45" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                        <ImageView fx:id="imageView46" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                        <ImageView fx:id="imageView50" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" />
-                        <ImageView fx:id="imageView51" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <ImageView fx:id="imageView52" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <ImageView fx:id="imageView53" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                        <ImageView fx:id="imageView54" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                        <ImageView fx:id="imageView55" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                        <ImageView fx:id="imageView56" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                        <ImageView fx:id="imageView60" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6" />
-                        <ImageView fx:id="imageView61" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <ImageView fx:id="imageView62" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                        <ImageView fx:id="imageView63" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <ImageView fx:id="imageView64" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                        <ImageView fx:id="imageView65" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-                        <ImageView fx:id="imageView66" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#addTile" onMouseEntered="#addHighlight" onMouseExited="#removeHighlight" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                     </children>
-                  </GridPane>
-                  <HBox fx:id="playerHBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                     <children>
-                        <Circle fx:id="player1Icon" fill="#ff1f1f" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="player2Icon" fill="#2130ff" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
-                        <ImageView fx:id="currentTileImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </HBox>
                </children>
-            </VBox>
-      </children>
-    </AnchorPane>
+            </LabyrinthGameBoard>
+         </children>
+      </AnchorPane>
+      <VBox>
+         <children>
+            <HBox fx:id="playerHBox" alignment="CENTER" spacing="10.0">
+               <children>
+                  <Pane fx:id="player1Pane" prefHeight="100.0" prefWidth="100.0">
+                  </Pane>
+                  <Pane fx:id="player2Pane" prefHeight="100.0" prefWidth="100.0">
+                  </Pane>
+                  <Pane fx:id="nextTilePane">
+                  </Pane>
+                  <Pane fx:id="player3Pane" prefHeight="100.0" prefWidth="100.0">
+                  </Pane>
+                  <Pane fx:id="player4Pane" prefHeight="100.0" prefWidth="100.0">
+                  </Pane>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
   </children>
 </VBox>
