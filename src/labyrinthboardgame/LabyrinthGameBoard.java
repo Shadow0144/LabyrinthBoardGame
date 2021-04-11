@@ -5,7 +5,11 @@
  */
 package labyrinthboardgame;
 
+import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 
 /**
  *
@@ -77,6 +81,7 @@ public class LabyrinthGameBoard extends GridPane
                 placeTileHorizontal(5, false);
                 break;
         }
+        updateTileNeighbors();
     }
     
     public void placeTileVertical(int column, boolean fromAbove)
@@ -123,141 +128,6 @@ public class LabyrinthGameBoard extends GridPane
         gbController.updateNextTile();
     }
     
-    public void placeTileLeftTop()
-    {
-        /*Tile temp = tiles[1][6];
-        tiles[1][6] = tiles[1][5];
-        tiles[1][5] = tiles[1][4];
-        tiles[1][4] = tiles[1][3];
-        tiles[1][3] = tiles[1][2];
-        tiles[1][2] = tiles[1][1];
-        tiles[1][1] = tiles[1][0];
-        tiles[1][0] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
-    public void placeTileLeftCenter()
-    {
-        /*Tile temp = tiles[3][6];
-        tiles[3][6] = tiles[3][5];
-        tiles[3][5] = tiles[3][4];
-        tiles[3][4] = tiles[3][3];
-        tiles[3][3] = tiles[3][2];
-        tiles[3][2] = tiles[3][1];
-        tiles[3][1] = tiles[3][0];
-        tiles[3][0] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
-    public void placeTileLeftBottom()
-    {
-        /*Tile temp = tiles[5][6];
-        tiles[5][6] = tiles[5][5];
-        tiles[5][5] = tiles[5][4];
-        tiles[5][4] = tiles[5][3];
-        tiles[5][3] = tiles[5][2];
-        tiles[5][2] = tiles[5][1];
-        tiles[5][1] = tiles[5][0];
-        tiles[5][0] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
-    public void placeTileBottomLeft()
-    {
-        /*Tile temp = tiles[0][1];
-        tiles[0][1] = tiles[1][1];
-        tiles[1][1] = tiles[2][1];
-        tiles[2][1] = tiles[3][1];
-        tiles[3][1] = tiles[4][1];
-        tiles[4][1] = tiles[5][1];
-        tiles[5][1] = tiles[6][1];
-        tiles[6][1] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
-    public void placeTileBottomCenter()
-    {
-        /*Tile temp = tiles[0][3];
-        tiles[0][3] = tiles[1][3];
-        tiles[1][3] = tiles[2][3];
-        tiles[2][3] = tiles[3][3];
-        tiles[3][3] = tiles[4][3];
-        tiles[4][3] = tiles[5][3];
-        tiles[5][3] = tiles[6][3];
-        tiles[6][3] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
-    public void placeTileBottomRight()
-    {
-        /*Tile temp = tiles[0][5];
-        tiles[0][5] = tiles[1][5];
-        tiles[1][5] = tiles[2][5];
-        tiles[2][5] = tiles[3][5];
-        tiles[3][5] = tiles[4][5];
-        tiles[4][5] = tiles[5][5];
-        tiles[5][5] = tiles[6][5];
-        tiles[6][5] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
-    public void placeTileRightTop()
-    {
-        /*Tile temp = tiles[1][0];
-        tiles[1][0] = tiles[1][1];
-        tiles[1][1] = tiles[1][2];
-        tiles[1][2] = tiles[1][3];
-        tiles[1][3] = tiles[1][4];
-        tiles[1][4] = tiles[1][5];
-        tiles[1][5] = tiles[1][6];
-        tiles[1][6] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
-    public void placeTileRightCenter()
-    {
-        /*Tile temp = tiles[3][0];
-        tiles[3][0] = tiles[3][1];
-        tiles[3][1] = tiles[3][2];
-        tiles[3][2] = tiles[3][3];
-        tiles[3][3] = tiles[3][4];
-        tiles[3][4] = tiles[3][5];
-        tiles[3][5] = tiles[3][6];
-        tiles[3][6] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
-    public void placeTileRightBottom()
-    {
-        /*Tile temp = tiles[5][0];
-        tiles[5][0] = tiles[5][1];
-        tiles[5][1] = tiles[5][2];
-        tiles[5][2] = tiles[5][3];
-        tiles[5][3] = tiles[5][4];
-        tiles[5][4] = tiles[5][5];
-        tiles[5][5] = tiles[5][6];
-        tiles[5][6] = tileSet.getNextTile();
-        tileSet.setNextTile(temp);
-        
-        gbController.setTiles(tiles, tileSet.getNextTile());*/
-    }
-    
     public Tile getNextTile()
     {
         return new Tile(nextTile);
@@ -283,6 +153,8 @@ public class LabyrinthGameBoard extends GridPane
     
     public void setupTiles(TileSet tileSet)
     {
+        addEmptyTiles();
+                
         tiles = new Tile[7][7];
         //tileSet = new TileSet();
         this.tileSet = tileSet;
@@ -352,6 +224,22 @@ public class LabyrinthGameBoard extends GridPane
         }
         
         nextTile = tileSet.getNextTile();
+        updateTileNeighbors();
+    }
+    
+    private void updateTileNeighbors()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                Tile top = (i > 0) ? tiles[i-1][j] : null;
+                Tile right = (j < 6) ? tiles[i][j+1] : null;
+                Tile bottom = (i < 6) ? tiles[i+1][j] : null;
+                Tile left = (j > 0) ? tiles[i][j-1] : null;
+                tiles[i][j].updateConnectedNeighbors(top, right, bottom, left);
+            }
+        }
     }
     
     private void createArrows()
@@ -386,5 +274,43 @@ public class LabyrinthGameBoard extends GridPane
         this.add(arrows[10], 8, 4);
         arrows[11] = new InsertTileButton(this, 90, InsertTileButton.Arrow.RightBottom);
         this.add(arrows[11], 8, 6);
+    }
+    
+    private void addEmptyTiles()
+    {
+        addEmptyTile(0, 0);
+        addEmptyTile(0, 1);
+        addEmptyTile(0, 3);
+        addEmptyTile(0, 5);
+        addEmptyTile(0, 7);
+        addEmptyTile(0, 8);
+        
+        addEmptyTile(1, 0);
+        addEmptyTile(3, 0);
+        addEmptyTile(5, 0);
+        addEmptyTile(7, 0);
+        addEmptyTile(8, 0);
+        
+        addEmptyTile(8, 1);
+        addEmptyTile(8, 3);
+        addEmptyTile(8, 5);
+        addEmptyTile(8, 7);
+        addEmptyTile(8, 8);
+        
+        addEmptyTile(1, 8);
+        addEmptyTile(3, 8);
+        addEmptyTile(5, 8);
+        addEmptyTile(7, 8);
+    }
+    
+    private void addEmptyTile(int i, int j)
+    {
+        String emptyTileImageString = getClass().getResource("assets/O.png").toString();
+        Image emptyTileImage = new Image(emptyTileImageString, Tile.TILE_SIZE, Tile.TILE_SIZE, false, true);
+        StackPane emptyTilePane = new StackPane();
+        ImageView emptyTileImageView = new ImageView(emptyTileImage);
+        emptyTilePane.getChildren().add(emptyTileImageView);
+        emptyTilePane.setAlignment(emptyTileImageView, Pos.CENTER);
+        this.add(emptyTilePane, i, j);
     }
 }
