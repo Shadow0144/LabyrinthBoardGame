@@ -565,4 +565,12 @@ public class Tile extends StackPane
             }
         }
     }
+    
+    public void movePlayers(Tile newTile)
+    {
+        while (playerCharacters[0] != null)
+        {
+            playerCharacters[0].getPlayer().moveCharacter(newTile);
+        }
+    }
 }

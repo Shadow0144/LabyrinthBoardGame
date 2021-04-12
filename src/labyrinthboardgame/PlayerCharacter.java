@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
  */
 public class PlayerCharacter extends ImageView {
     
-    private int playerNumber;
+    private Player player;
     private Image playerImage;
     
     private int currentRow;
@@ -23,11 +23,11 @@ public class PlayerCharacter extends ImageView {
     private final int WIDTH = 15;
     private final int HEIGHT = 42;
     
-    public PlayerCharacter(int playerNumber)
+    public PlayerCharacter(Player player)
     {
-        this.playerNumber = playerNumber;
+        this.player = player;
         String playerImageString = "";
-        switch (playerNumber)
+        switch (player.getPlayerNumber())
         {
             case 1:
                 playerImageString = getClass().getResource("assets/p1.png").toString();
@@ -44,5 +44,10 @@ public class PlayerCharacter extends ImageView {
         }
         playerImage = new Image(playerImageString, WIDTH, HEIGHT, false, true);
         this.setImage(playerImage);
+    }
+    
+    public Player getPlayer()
+    {
+        return player;
     }
 }

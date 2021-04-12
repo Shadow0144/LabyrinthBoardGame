@@ -53,7 +53,7 @@ public class Player extends StackPane {
     {
         number = playerNumber;
         currentPhase = Phase.placingTile;
-        character = new PlayerCharacter(playerNumber);
+        character = new PlayerCharacter(this);
         currentTile = null;
         
         setupIcon();

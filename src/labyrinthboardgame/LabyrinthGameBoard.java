@@ -109,7 +109,7 @@ public class LabyrinthGameBoard extends GridPane
         int i = (fromAbove) ? 6 : 0;
         int j = column;
         int next = (fromAbove) ? -1 : +1;
-        Tile temp = tiles[i][j];
+        Tile temp = tiles[i][j]; // The tile to remove
         this.getChildren().remove(temp);
         for (int count = 0; count < 6; count++)
         {
@@ -118,10 +118,12 @@ public class LabyrinthGameBoard extends GridPane
             this.add(tiles[i][j], j+1, i+1);
             i += next;
         }
-        tiles[i][j] = tileSet.getNextTile();
+        Tile newTile = tileSet.getNextTile();
+        temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
+        tiles[i][j] = newTile;
         this.add(tiles[i][j], j+1, i+1);
-        nextTile = temp;
-        tileSet.setNextTile(nextTile);
+        tileSet.setNextTile(temp); // The new next tile
+        nextTile = temp; // Update the local reference
         
         gbController.updateNextTile();
     }
@@ -131,7 +133,7 @@ public class LabyrinthGameBoard extends GridPane
         int i = row;
         int j = (fromLeft) ? 6 : 0;
         int next = (fromLeft) ? -1 : +1;
-        Tile temp = tiles[i][j];
+        Tile temp = tiles[i][j]; // The tile to remove
         this.getChildren().remove(temp);
         for (int count = 0; count < 6; count++)
         {
@@ -140,10 +142,12 @@ public class LabyrinthGameBoard extends GridPane
             this.add(tiles[i][j], j+1, i+1);
             j += next;
         }
-        tiles[i][j] = tileSet.getNextTile();
+        Tile newTile = tileSet.getNextTile();
+        temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
+        tiles[i][j] = newTile;
         this.add(tiles[i][j], j+1, i+1);
-        nextTile = temp;
-        tileSet.setNextTile(nextTile);
+        tileSet.setNextTile(temp); // The new next tile
+        nextTile = temp; // Update the local reference
         
         gbController.updateNextTile();
     }
