@@ -5,10 +5,17 @@
  */
 package labyrinthboardgame;
 
+import java.util.LinkedList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
+import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -21,7 +28,8 @@ import javafx.scene.text.TextAlignment;
 public class Player extends StackPane {
     Circle playerIcon;
     ImageView playerTreasure;
-    Text playerTreasuresLeft;
+    Text playerTreasuresRemainingText;
+    int playerTreasuresRemaining;
     
     int player;
     
@@ -29,9 +37,20 @@ public class Player extends StackPane {
     final int UNSELECTED_STROKE = 1;
     final int SELECTED_STROKE = 3;
     
+    public enum Phase
+    {
+        placingTile,
+        moving
+    };
+    private Phase currentPhase;
+    
+    private LinkedList<Treasure> treasures;
+    private Treasure currentTreasure;
+    
     public Player(int playerNumber)
     {
         player = playerNumber;
+        currentPhase = Phase.placingTile;
         
         setupIcon();
     }
@@ -60,6 +79,8 @@ public class Player extends StackPane {
         }
         getChildren().add(playerIcon);
         
+        AnchorPane treasuresRemainingPane = new AnchorPane();
+        
         Circle textBackground = new Circle();
         textBackground.setFill(Color.WHITE);
         textBackground.setLayoutX(75);
@@ -67,14 +88,41 @@ public class Player extends StackPane {
         textBackground.setRadius(10);
         textBackground.setStroke(Color.BLACK);
         textBackground.setStrokeWidth(1);
-        getChildren().add(textBackground);
+        treasuresRemainingPane.getChildren().add(textBackground);
         
-        playerTreasuresLeft = new Text();
-        playerTreasuresLeft.setLayoutX(71);
-        playerTreasuresLeft.setLayoutY(30);
-        playerTreasuresLeft.setText("0");
-        playerTreasuresLeft.setTextAlignment(TextAlignment.CENTER);
-        playerTreasuresLeft.setTextOrigin(VPos.CENTER);
-        getChildren().add(playerTreasuresLeft);
+        playerTreasuresRemaining = 0;
+        playerTreasuresRemainingText = new Text();
+        playerTreasuresRemainingText.setLayoutX(71);
+        playerTreasuresRemainingText.setLayoutY(30);
+        playerTreasuresRemainingText.setText("" + playerTreasuresRemaining);
+        playerTreasuresRemainingText.setTextAlignment(TextAlignment.CENTER);
+        playerTreasuresRemainingText.setTextOrigin(VPos.CENTER);
+        treasuresRemainingPane.getChildren().add(playerTreasuresRemainingText);
+        
+        getChildren().add(treasuresRemainingPane);
+        setAlignment(treasuresRemainingPane, Pos.TOP_RIGHT);
+        
+        treasures = new LinkedList<Treasure>();
+        playerTreasure = new ImageView();
+        getChildren().add(playerTreasure);
+    }
+    
+    public void assignTreasure(Treasure treasure)
+    {
+        treasures.add(treasure);
+        playerTreasuresRemainingText.setText("" + ++playerTreasuresRemaining);
+    }
+    
+    public void showNextTreasure()
+    {
+        currentTreasure = treasures.poll();
+        if (currentTreasure != null)
+        {
+            playerTreasure.setImage(currentTreasure.getPlayerTreasureImage());
+        }
+        else 
+        {
+            playerTreasure.setImage(null);
+        }
     }
 }

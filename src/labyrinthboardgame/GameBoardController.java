@@ -58,18 +58,36 @@ public class GameBoardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        player1Pane.getChildren().add(new Player(1));
-        player2Pane.getChildren().add(new Player(2));
-        
         currentPlayer = -1;
         switchPlayers();
     }
     
-    public void setupBoard(TileSet tileSet)
+    public void setupBoard(TileSet tileSet, int players)
     {
         gameBoard.setGameBoardController(this);
         gameBoard.setupTiles(tileSet);
         updateNextTile();
+        gameBoard.setPlayers(players);
+    }
+    
+    public void addPlayer(int playerNumber, Player player)
+    {
+        switch (playerNumber)
+        {
+            case 1:
+                player1Pane.getChildren().add(player);
+                break;
+            case 2:
+                player2Pane.getChildren().add(player);
+                break;
+            case 3:
+                player3Pane.getChildren().add(player);
+                break;
+            case 4:
+                player4Pane.getChildren().add(player);
+                break;
+        }
+        
     }
     
     private void switchPlayers()

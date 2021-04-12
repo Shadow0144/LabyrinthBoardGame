@@ -82,6 +82,7 @@ public class LabyrinthGameBoard extends GridPane
                 break;
         }
         updateTileNeighbors();
+        tiles[0][6].showPaths(1); // Temp
     }
     
     public void placeTileVertical(int column, boolean fromAbove)
@@ -239,6 +240,22 @@ public class LabyrinthGameBoard extends GridPane
                 Tile left = (j > 0) ? tiles[i][j-1] : null;
                 tiles[i][j].updateConnectedNeighbors(top, right, bottom, left);
             }
+        }
+    }
+    
+    public void setPlayers(int playerCount)
+    {
+        switch (playerCount) // Uses falling through
+        {
+            case 4:
+                tiles[0][0].addPlayerCharacter(new PlayerCharacter(4));
+            case 3:
+                tiles[6][0].addPlayerCharacter(new PlayerCharacter(3));
+            case 2:
+                tiles[6][6].addPlayerCharacter(new PlayerCharacter(2));
+            case 1:
+                tiles[0][6].addPlayerCharacter(new PlayerCharacter(1));
+                break;
         }
     }
     

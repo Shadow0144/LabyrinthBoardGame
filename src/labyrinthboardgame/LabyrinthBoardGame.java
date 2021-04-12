@@ -28,8 +28,20 @@ public class LabyrinthBoardGame extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
         GameBoardController controller = loader.getController();
+        
         tileSet = new TileSet();
-        controller.setupBoard(tileSet);
+        int playerCount = 2;
+        controller.setupBoard(tileSet, playerCount);
+        
+        treasureSet = new TreasureSet();
+        players = new Player[playerCount];
+        for (int i = 0; i < playerCount; i++)
+        {
+            players[i] = new Player(i+1);
+            treasureSet.assignTreasuresToPlayer(players[i], 24 / playerCount);
+            players[i].showNextTreasure();
+            controller.addPlayer(i+1, players[i]);
+        }
         
         Scene scene = new Scene(root);
         

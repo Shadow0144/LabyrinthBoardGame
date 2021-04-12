@@ -5,20 +5,35 @@
  */
 package labyrinthboardgame;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import javafx.event.EventType;
+
 /**
  *
  * @author Corbi
  */
 public class TreasureSet {
-    public Treasure[] treasures;
+    private ArrayList<Treasure> treasures;
+    
+    private int index;
     
     public TreasureSet()
     {
-        treasures = new Treasure[24];
+        treasures = new ArrayList<Treasure>();
+        for (int i = 0; i < 24; i++)
+        {
+            treasures.add(new Treasure(Treasure.TreasureType.values()[i]));
+        }
+        Collections.shuffle(treasures);
+        index = 0;
     }
     
     public void assignTreasuresToPlayer(Player player, int treasureCount)
     {
-        
+        for (int i = 0; i < treasureCount; i++)
+        {
+            player.assignTreasure(treasures.get(index++));
+        }
     }
 }

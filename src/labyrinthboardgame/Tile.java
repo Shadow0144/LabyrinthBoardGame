@@ -8,10 +8,10 @@ package labyrinthboardgame;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -42,6 +42,9 @@ public class Tile extends StackPane
     private ImageView treasureImageView;
     private Circle playerStart;
     
+    private GridPane playerGridPane;
+    private PlayerCharacter[] playerCharacters;
+    
     private Image tileImage;
     public static final int TILE_SIZE = 70;
     private final int PLAYER_START_RADIUS = 15;
@@ -50,6 +53,8 @@ public class Tile extends StackPane
     private final int PATH_WIDTH = 10;
     private final int PATH_LENGTH = 40;
     private final double PATH_OPACITY = 0.75;
+    
+    private boolean buildingPath;
     
     public Tile(Tile tile)
     {
@@ -93,7 +98,7 @@ public class Tile extends StackPane
             // Nothing to add
         }
         
-        setupPaths();
+        setupOverlays();
     }
     
     public Tile(Shape shape, int rotation)
@@ -102,7 +107,7 @@ public class Tile extends StackPane
         setupTile(shape, rotation);
         tileTreasure = null;
         player = -1;
-        setupPaths();
+        setupOverlays();
     }
     
     public Tile(Shape shape, int rotation, int player)
@@ -128,7 +133,7 @@ public class Tile extends StackPane
                 break;
         }
         
-        setupPaths();
+        setupOverlays();
     }
     
     public Tile(Shape shape, int rotation, Treasure treasure)
@@ -147,7 +152,7 @@ public class Tile extends StackPane
         }
         else {}
         
-        setupPaths();
+        setupOverlays();
     }
     
     private void setupTile(Shape shape, int rotation)
@@ -177,8 +182,20 @@ public class Tile extends StackPane
         tileImageView.setRotate(currentRotation);
     }
     
-    private void setupPaths()
+    private void setupOverlays()
     {
+        playerGridPane = new GridPane();
+        playerGridPane.setAlignment(Pos.CENTER);
+        getChildren().add(playerGridPane);
+        setAlignment(playerGridPane, Pos.CENTER);
+        playerCharacters = new PlayerCharacter[4];
+        for (int i = 0; i < 4; i++)
+        {
+            playerCharacters[i] = null;
+        }
+        
+        buildingPath = false;
+        
         connectedNeighbors = new Tile[4];
         
         paths = new Rectangle[4];
@@ -221,8 +238,6 @@ public class Tile extends StackPane
         
         possibleNeighbors = new boolean[4];
         refreshPossibleNeighbors();
-        
-        showPaths(1);
     }
     
     public void setRotation(int rotation)
@@ -285,6 +300,7 @@ public class Tile extends StackPane
     
     public void updateConnectedNeighbors(Tile top, Tile right, Tile bottom, Tile left)
     {
+        hidePaths();
         if (top != null && (top.possibleNeighbors[2] && possibleNeighbors[0]))
         {
             connectedNeighbors[0] = top;
@@ -317,40 +333,45 @@ public class Tile extends StackPane
         {
             connectedNeighbors[3] = null;
         }
-        showPaths(1); // TEMP
     }
     
     public void showPaths(int player)
     {
-        Color playerColor = Color.WHITE;
-        switch (player)
+        if (!buildingPath) // Prevent infinite looping
         {
-            case 1:
-                playerColor = Color.YELLOW;
-                break;
-            case 2:
-                playerColor = Color.BLUE;
-                break;
-            case 3:
-                playerColor = Color.GREEN;
-                break;
-            case 4:
-                playerColor = Color.RED;
-                break;
-        }
-        pathIntersection.setOpacity(PATH_OPACITY);
-        pathIntersection.setFill(playerColor);
-        for (int i = 0; i < 4; i++)
-        {
-            if (connectedNeighbors[i] != null)
+            buildingPath = true;
+            Color playerColor = Color.WHITE;
+            switch (player)
             {
-                paths[i].setOpacity(PATH_OPACITY);
-                paths[i].setFill(playerColor);
+                case 1:
+                    playerColor = Color.YELLOW;
+                    break;
+                case 2:
+                    playerColor = Color.BLUE;
+                    break;
+                case 3:
+                    playerColor = Color.GREEN;
+                    break;
+                case 4:
+                    playerColor = Color.RED;
+                    break;
             }
-            else 
+            pathIntersection.setOpacity(PATH_OPACITY);
+            pathIntersection.setFill(playerColor);
+            for (int i = 0; i < 4; i++)
             {
-                paths[i].setOpacity(0);
+                if (connectedNeighbors[i] != null)
+                {
+                    paths[i].setOpacity(PATH_OPACITY);
+                    paths[i].setFill(playerColor);
+                    connectedNeighbors[i].showPaths(player);
+                }
+                else 
+                {
+                    paths[i].setOpacity(0);
+                }
             }
+            buildingPath = false;
         }
     }
     
@@ -458,5 +479,53 @@ public class Tile extends StackPane
         playerStart.setStrokeWidth(1);
         getChildren().add(playerStart);
         setAlignment(playerStart, Pos.CENTER);
+    }
+    
+    public void addPlayerCharacter(PlayerCharacter player)
+    {
+        playerGridPane.getChildren().clear();
+        for (int i = 0; i < 4; i++)
+        {
+            if (playerCharacters[i] == null)
+            {
+                playerCharacters[i] = player;
+                playerGridPane.add(playerCharacters[i], i % 2, (i < 2) ? 0 : 1);
+                break;
+            }
+            else
+            {
+                playerGridPane.add(playerCharacters[i], i % 2, (i < 2) ? 0 : 1);
+            }
+        }
+    }
+    
+    public void removePlayerCharacter(PlayerCharacter player)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (playerCharacters[i] == player)
+            {
+                for (; i < 3; i++) // Shift everything left (which removes the current item)
+                {
+                    playerCharacters[i] = playerCharacters[i+1];
+                }
+                playerCharacters[3] = null; // Set the final item to null
+                break;
+            }
+            else {}
+        }
+        // Remove and readd everything to the correct spots
+        playerGridPane.getChildren().clear();
+        for (int i = 0; i < 4; i++)
+        {
+            if (playerCharacters[i] == null)
+            {
+                break;
+            }
+            else
+            {
+                playerGridPane.add(playerCharacters[i], i % 2, (i < 2) ? 0 : 1);
+            }
+        }
     }
 }

@@ -18,21 +18,29 @@ public class Treasure {
         s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24,
         p1, p2, p3, p4
     };
-    private TreasureType type;
+    private final TreasureType type;
     
-    private Image tileTreasureImage;
-    private final int TREASURE_SIZE = 50;
+    private final Image tileTreasureImage;
+    private final int TILE_TREASURE_SIZE = 50;
+    private final Image playerTreasureImage;
+    private final int PLAYER_TREASURE_SIZE = 50;
     
     public Treasure(TreasureType treasureType)
     {
         type = treasureType;
         
         String treasureImageString = getClass().getResource("assets/" + type.toString() + ".png").toString();
-        tileTreasureImage = new Image(treasureImageString, TREASURE_SIZE, TREASURE_SIZE, false, true);
+        tileTreasureImage = new Image(treasureImageString, TILE_TREASURE_SIZE, TILE_TREASURE_SIZE, false, true);
+        playerTreasureImage = new Image(treasureImageString, PLAYER_TREASURE_SIZE, PLAYER_TREASURE_SIZE, false, true);
     }
     
     public Image getTileTreasureImage()
     {
         return tileTreasureImage;
+    }
+    
+    public Image getPlayerTreasureImage()
+    {
+        return playerTreasureImage;
     }
 }
