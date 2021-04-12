@@ -26,16 +26,18 @@ import javafx.scene.text.TextAlignment;
  * @author Corbi
  */
 public class Player extends StackPane {
-    Circle playerIcon;
-    ImageView playerTreasure;
-    Text playerTreasuresRemainingText;
-    int playerTreasuresRemaining;
+    private Circle playerIcon;
+    private ImageView playerTreasure;
+    private Text playerTreasuresRemainingText;
+    private int playerTreasuresRemaining;
     
-    int player;
+    private int number;
+    private PlayerCharacter character;
+    private Tile currentTile;
     
-    final int PLAYER_ICON_RADIUS = 30;
-    final int UNSELECTED_STROKE = 1;
-    final int SELECTED_STROKE = 3;
+    private final int PLAYER_ICON_RADIUS = 30;
+    private final int UNSELECTED_STROKE = 1;
+    private final int SELECTED_STROKE = 3;
     
     public enum Phase
     {
@@ -49,8 +51,10 @@ public class Player extends StackPane {
     
     public Player(int playerNumber)
     {
-        player = playerNumber;
+        number = playerNumber;
         currentPhase = Phase.placingTile;
+        character = new PlayerCharacter(playerNumber);
+        currentTile = null;
         
         setupIcon();
     }
@@ -61,7 +65,7 @@ public class Player extends StackPane {
         playerIcon.setRadius(PLAYER_ICON_RADIUS);
         playerIcon.setStroke(Color.BLACK);
         playerIcon.setStrokeWidth(UNSELECTED_STROKE);
-        switch (player)
+        switch (number)
         {
             case 1:
                 playerIcon.setFill(Color.YELLOW);
@@ -107,6 +111,11 @@ public class Player extends StackPane {
         getChildren().add(playerTreasure);
     }
     
+    public int getPlayerNumber()
+    {
+        return number;
+    }
+    
     public void assignTreasure(Treasure treasure)
     {
         treasures.add(treasure);
@@ -124,5 +133,45 @@ public class Player extends StackPane {
         {
             playerTreasure.setImage(null);
         }
+    }
+    
+    public void showPaths()
+    {
+        if (currentTile != null)
+        {
+            currentTile.showPaths(number);
+        }
+        else {}
+    }
+    
+    private void hidePaths()
+    {
+        if (currentTile != null)
+        {
+            currentTile.hidePaths();
+        }
+        else {}
+    }
+    
+    public void moveCharacter(Tile tile)
+    {
+        hidePaths();
+        if (currentTile != null)
+        {
+            currentTile.removePlayerCharacter(character);
+        }
+        else {}
+        currentTile = tile;
+        currentTile.addPlayerCharacter(character);
+    }
+    
+    public void setActive()
+    {
+        playerIcon.setStrokeWidth(SELECTED_STROKE);
+    }
+    
+    public void setInactive()
+    {
+        playerIcon.setStrokeWidth(UNSELECTED_STROKE);
     }
 }

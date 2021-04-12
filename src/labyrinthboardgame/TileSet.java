@@ -8,6 +8,7 @@ package labyrinthboardgame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import javafx.scene.input.MouseEvent;
 
 /**
  *

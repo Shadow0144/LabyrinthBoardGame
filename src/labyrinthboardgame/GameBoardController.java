@@ -6,6 +6,7 @@
 package labyrinthboardgame;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -52,14 +53,14 @@ public class GameBoardController implements Initializable {
     
     private Tile nextTile;
     
+    private ArrayList<Player> players;
     private int currentPlayer;
-    private final int PLAYERS = 2;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        currentPlayer = -1;
-        switchPlayers();
+        currentPlayer = 0;
+        players = new ArrayList<Player>();
     }
     
     public void setupBoard(TileSet tileSet, int players)
@@ -67,7 +68,6 @@ public class GameBoardController implements Initializable {
         gameBoard.setGameBoardController(this);
         gameBoard.setupTiles(tileSet);
         updateNextTile();
-        gameBoard.setPlayers(players);
     }
     
     public void addPlayer(int playerNumber, Player player)
@@ -87,23 +87,16 @@ public class GameBoardController implements Initializable {
                 player4Pane.getChildren().add(player);
                 break;
         }
-        
+        gameBoard.addPlayerCharacterToBoard(player);
+        players.add(player);
+        players.get(currentPlayer).setActive();
     }
     
     private void switchPlayers()
     {
-        currentPlayer = (currentPlayer + 1) % PLAYERS;
-        /*switch (currentPlayer)
-        {
-            case 0:
-                player1Icon.setStrokeWidth(3);
-                player2Icon.setStrokeWidth(1);
-                break;
-            case 1:
-                player1Icon.setStrokeWidth(1);
-                player2Icon.setStrokeWidth(3);
-                break;
-        }*/
+        players.get(currentPlayer).setInactive();
+        currentPlayer = (currentPlayer + 1) % players.size();
+        players.get(currentPlayer).setActive();
     }
     
     public void rotateTileClockwise()
@@ -123,5 +116,20 @@ public class GameBoardController implements Initializable {
         nextTile = gameBoard.getNextTile();
         nextTilePane.getChildren().clear();
         nextTilePane.getChildren().add(nextTile);
+    }
+    
+    public void showPaths()
+    {
+        players.get(currentPlayer).showPaths();
+    }
+    
+    public void movedPlayer()
+    {
+        switchPlayers();
+    }
+    
+    public Player getCurrentPlayer()
+    {
+        return players.get(currentPlayer);
     }
 }

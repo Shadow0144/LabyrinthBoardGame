@@ -23,6 +23,7 @@ public class LabyrinthGameBoard extends GridPane
     private TileSet tileSet;
     
     private InsertTileButton[] arrows;
+    private InsertTileButton disabledArrow;
     
     public LabyrinthGameBoard()
     {
@@ -43,46 +44,64 @@ public class LabyrinthGameBoard extends GridPane
             // Top
             case TopLeft:
                 placeTileVertical(1, true);
+                disabledArrow = arrows[6];
                 break;
             case TopCenter:
                 placeTileVertical(3, true);
+                disabledArrow = arrows[7];
                 break;
             case TopRight:
                 placeTileVertical(5, true);
+                disabledArrow = arrows[8];
                 break;
             // Left
             case LeftTop:
                 placeTileHorizontal(1, true);
+                disabledArrow = arrows[9];
                 break;
             case LeftCenter:
                 placeTileHorizontal(3, true);
+                disabledArrow = arrows[10];
                 break;
             case LeftBottom:
                 placeTileHorizontal(5, true);
+                disabledArrow = arrows[11];
                 break;
             // Bottom
             case BottomLeft:
                 placeTileVertical(1, false);
+                disabledArrow = arrows[0];
                 break;
             case BottomCenter:
                 placeTileVertical(3, false);
+                disabledArrow = arrows[1];
                 break;
             case BottomRight:
                 placeTileVertical(5, false);
+                disabledArrow = arrows[2];
                 break;
             // Right
             case RightTop:
                 placeTileHorizontal(1, false);
+                disabledArrow = arrows[3];
                 break;
             case RightCenter:
                 placeTileHorizontal(3, false);
+                disabledArrow = arrows[4];
                 break;
             case RightBottom:
                 placeTileHorizontal(5, false);
+                disabledArrow = arrows[5];
                 break;
         }
         updateTileNeighbors();
-        tiles[0][6].showPaths(1); // Temp
+        
+        for (int i = 0; i < 12; i++)
+        {
+            arrows[i].disable();
+        }
+        
+        gbController.showPaths();
     }
     
     public void placeTileVertical(int column, boolean fromAbove)
@@ -221,10 +240,12 @@ public class LabyrinthGameBoard extends GridPane
             for (int j = 0; j < 7; j++)
             {
                 this.add(tiles[i][j], j+1, i+1);
+                tiles[i][j].setBoard(this);
             }
         }
         
         nextTile = tileSet.getNextTile();
+        nextTile.setBoard(this);
         updateTileNeighbors();
     }
     
@@ -243,19 +264,42 @@ public class LabyrinthGameBoard extends GridPane
         }
     }
     
-    public void setPlayers(int playerCount)
+    public void addPlayerCharacterToBoard(Player player)
     {
-        switch (playerCount) // Uses falling through
+        switch (player.getPlayerNumber())
         {
-            case 4:
-                tiles[0][0].addPlayerCharacter(new PlayerCharacter(4));
-            case 3:
-                tiles[6][0].addPlayerCharacter(new PlayerCharacter(3));
-            case 2:
-                tiles[6][6].addPlayerCharacter(new PlayerCharacter(2));
             case 1:
-                tiles[0][6].addPlayerCharacter(new PlayerCharacter(1));
+                player.moveCharacter(tiles[0][6]);
                 break;
+            case 2:
+                player.moveCharacter(tiles[6][6]);
+                break;
+            case 3:
+                player.moveCharacter(tiles[6][0]);
+                break;
+            case 4:
+                player.moveCharacter(tiles[0][0]);
+                break;
+        }
+    }
+    
+    public Player getCurrentPlayer()
+    {
+        return gbController.getCurrentPlayer();
+    }
+    
+    public void movePlayerToTile(Tile tile)
+    {
+        getCurrentPlayer().moveCharacter(tile);
+        gbController.movedPlayer();
+        
+        for (int i = 0; i < 12; i++)
+        {
+            if (arrows[i] != disabledArrow)
+            {
+                arrows[i].enable();
+            }
+            else {}
         }
     }
     
@@ -291,6 +335,8 @@ public class LabyrinthGameBoard extends GridPane
         this.add(arrows[10], 8, 4);
         arrows[11] = new InsertTileButton(this, 90, InsertTileButton.Arrow.RightBottom);
         this.add(arrows[11], 8, 6);
+        
+        disabledArrow = null;
     }
     
     private void addEmptyTiles()

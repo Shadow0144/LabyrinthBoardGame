@@ -34,6 +34,9 @@ public class InsertTileButton extends StackPane
     
     private Tile previewTile;
     
+    private boolean enabled;
+    private final double DISABLED = 0.25;
+    
     public InsertTileButton(LabyrinthGameBoard gameBoard, int rotation, Arrow arrow)
     {
         board = gameBoard;
@@ -56,25 +59,34 @@ public class InsertTileButton extends StackPane
         this.setOnMouseClicked(event -> {
             insertTile();
         });
+        
+        enabled = true;
     }
     
     public void setPreviewTile(Tile previewTile)
     {
-        this.previewTile = previewTile;
-        previewTile.setOpacity(PREVIEW_OPACITY);
-        getChildren().add(previewTile);
-        setAlignment(previewTile, Pos.CENTER);
+        if (enabled)
+        {
+            this.previewTile = previewTile;
+            previewTile.setOpacity(PREVIEW_OPACITY);
+            getChildren().add(previewTile);
+            setAlignment(previewTile, Pos.CENTER);
+        }
+        else {}
     }
     
     public void removePreviewTile()
     {
-        getChildren().remove(previewTile);
-        previewTile = null;
+        if (previewTile != null)
+        {
+            getChildren().remove(previewTile);
+            previewTile = null;
+        }
     }
     
     public void rotatePreviewClockwise()
     {
-        if (previewTile != null)
+        if (enabled && previewTile != null)
         {
             previewTile.rotateClockwise();
         }
@@ -82,7 +94,7 @@ public class InsertTileButton extends StackPane
     
     public void rotatePreviewCounterClockwise()
     {
-        if (previewTile != null)
+        if (enabled && previewTile != null)
         {
             previewTile.rotateCounterClockwise();
         }
@@ -90,12 +102,26 @@ public class InsertTileButton extends StackPane
     
     private void insertTile()
     {
-        board.insertTile(arrow);
-        if (previewTile != null)
+        if (enabled)
         {
-            removePreviewTile();
-            setPreviewTile(board.getNextTile());
+            board.insertTile(arrow);
+            if (previewTile != null)
+            {
+                removePreviewTile();
+            }
+            else {}
         }
-        else {}
+    }
+    
+    public void enable()
+    {
+        enabled = true;
+        setOpacity(1);
+    }
+    
+    public void disable()
+    {
+        enabled = false;
+        setOpacity(DISABLED);
     }
 }

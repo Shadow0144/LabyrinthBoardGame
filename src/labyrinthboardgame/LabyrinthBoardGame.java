@@ -30,7 +30,7 @@ public class LabyrinthBoardGame extends Application {
         GameBoardController controller = loader.getController();
         
         tileSet = new TileSet();
-        int playerCount = 2;
+        int playerCount = 4;
         controller.setupBoard(tileSet, playerCount);
         
         treasureSet = new TreasureSet();

@@ -8,6 +8,7 @@ package labyrinthboardgame;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -47,14 +48,17 @@ public class Tile extends StackPane
     
     private Image tileImage;
     public static final int TILE_SIZE = 70;
-    private final int PLAYER_START_RADIUS = 15;
+    private final int PLAYER_START_RADIUS = 12;
     
     private final int INTERSECTION_RADIUS = 10;
     private final int PATH_WIDTH = 10;
     private final int PATH_LENGTH = 40;
     private final double PATH_OPACITY = 0.75;
     
+    private boolean accessible;
     private boolean buildingPath;
+    
+    private LabyrinthGameBoard board;
     
     public Tile(Tile tile)
     {
@@ -180,6 +184,17 @@ public class Tile extends StackPane
         currentRotation = rotation;
         tileImageView.setImage(tileImage);
         tileImageView.setRotate(currentRotation);
+        accessible = false;
+        
+        board = null;
+        addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
+            { 
+                if (board != null && accessible)
+                {
+                    board.movePlayerToTile(this); 
+                }
+                else {}
+            });
     }
     
     private void setupOverlays()
@@ -238,6 +253,11 @@ public class Tile extends StackPane
         
         possibleNeighbors = new boolean[4];
         refreshPossibleNeighbors();
+    }
+    
+    public void setBoard(LabyrinthGameBoard gameBoard)
+    {
+        board = gameBoard;
     }
     
     public void setRotation(int rotation)
@@ -340,6 +360,7 @@ public class Tile extends StackPane
         if (!buildingPath) // Prevent infinite looping
         {
             buildingPath = true;
+            accessible = true;
             Color playerColor = Color.WHITE;
             switch (player)
             {
@@ -377,11 +398,27 @@ public class Tile extends StackPane
     
     public void hidePaths()
     {
-        pathIntersection.setOpacity(0);
-        for (int i = 0; i < 4; i++)
+        if (!buildingPath) // Prevent infinite looping
         {
-            paths[i].setOpacity(0);
+            buildingPath = true;
+            accessible = false;
+            pathIntersection.setOpacity(0);
+            for (int i = 0; i < 4; i++)
+            {
+                if (connectedNeighbors[i] != null)
+                {
+                    connectedNeighbors[i].hidePaths();
+                }
+                else {}
+                paths[i].setOpacity(0);
+            }
+            buildingPath = false;
         }
+    }
+    
+    public boolean getAccessible()
+    {
+        return accessible;
     }
     
     private void refreshPossibleNeighbors()
