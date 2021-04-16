@@ -3,24 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package labyrinthboardgame;
+package labyrinthboardgame.gui;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import labyrinthboardgame.logic.Player;
+import labyrinthboardgame.logic.TileSet;
 
 /**
  *
@@ -55,6 +53,10 @@ public class GameBoardController implements Initializable {
     
     private ArrayList<Player> players;
     private int currentPlayer;
+    @FXML
+    private ImageView playerWonImageView;
+    @FXML
+    private Label playerWonText;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -94,9 +96,32 @@ public class GameBoardController implements Initializable {
     
     private void switchPlayers()
     {
-        players.get(currentPlayer).setInactive();
-        currentPlayer = (currentPlayer + 1) % players.size();
-        players.get(currentPlayer).setActive();
+        if (!players.get(currentPlayer).getHasWon())
+        {
+            players.get(currentPlayer).setInactive();
+            currentPlayer = (currentPlayer + 1) % players.size();
+            players.get(currentPlayer).setActive();
+        }
+        else 
+        {
+            playerWonImageView.setVisible(true);
+            playerWonText.setVisible(true);
+            switch (currentPlayer)
+            {
+                case 1:
+                    playerWonText.setText("Yellow Player Wins!");
+                    break;
+                case 2:
+                    playerWonText.setText("Blue Player Wins!");
+                    break;
+                case 3:
+                    playerWonText.setText("Green Player Wins!");
+                    break;
+                case 4:
+                    playerWonText.setText("Red Player Wins!");
+                    break;
+            }
+        }
     }
     
     public void rotateTileClockwise()

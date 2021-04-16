@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package labyrinthboardgame;
+package labyrinthboardgame.logic;
 
+import labyrinthboardgame.logic.Player;
+import labyrinthboardgame.gui.Treasure;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.event.EventType;
@@ -31,7 +33,7 @@ public class TreasureSet {
     
     public void assignTreasuresToPlayer(Player player, int treasureCount)
     {
-        for (int i = 0; i < treasureCount; i++)
+        for (int i = 0; i < 1; i++)
         {
             player.assignTreasure(treasures.get(index++));
         }

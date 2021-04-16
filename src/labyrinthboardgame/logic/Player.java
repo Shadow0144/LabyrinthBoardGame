@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package labyrinthboardgame;
+package labyrinthboardgame.logic;
 
+import labyrinthboardgame.gui.Treasure;
+import labyrinthboardgame.gui.Tile;
+import labyrinthboardgame.gui.PlayerCharacter;
 import java.util.LinkedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,6 +41,7 @@ public class Player extends StackPane {
     private final int PLAYER_ICON_RADIUS = 30;
     private final int UNSELECTED_STROKE = 1;
     private final int SELECTED_STROKE = 3;
+    private final int VICTORY_STROKE = 5;
     
     public enum Phase
     {
@@ -45,6 +49,8 @@ public class Player extends StackPane {
         moving
     };
     private Phase currentPhase;
+    
+    private boolean hasWon;
     
     private LinkedList<Treasure> treasures;
     private Treasure currentTreasure;
@@ -55,6 +61,7 @@ public class Player extends StackPane {
         currentPhase = Phase.placingTile;
         character = new PlayerCharacter(this);
         currentTile = null;
+        hasWon = false;
         
         setupIcon();
     }
@@ -94,7 +101,7 @@ public class Player extends StackPane {
         textBackground.setStrokeWidth(1);
         treasuresRemainingPane.getChildren().add(textBackground);
         
-        playerTreasuresRemaining = 0;
+        playerTreasuresRemaining = 1; // Count the card that is showing as well
         playerTreasuresRemainingText = new Text();
         playerTreasuresRemainingText.setLayoutX(71);
         playerTreasuresRemainingText.setLayoutY(30);
@@ -133,6 +140,7 @@ public class Player extends StackPane {
         {
             playerTreasure.setImage(null);
         }
+        playerTreasuresRemainingText.setText("" + --playerTreasuresRemaining);
     }
     
     public void showPaths()
@@ -163,6 +171,28 @@ public class Player extends StackPane {
         else {}
         currentTile = tile;
         currentTile.addPlayerCharacter(character);
+        
+        Treasure treasure = tile.getTreasure();
+        if (treasure != null && currentTreasure != null &&
+            treasure.getTreasureType() == currentTreasure.getTreasureType())
+        {
+            showNextTreasure();
+        }
+        else {}
+        
+        if (playerTreasuresRemaining == 0
+                && tile.getPlayer() == number)
+        {
+            hasWon = true;
+            playerIcon.setStroke(Color.GOLD);
+            playerIcon.setStrokeWidth(VICTORY_STROKE);
+        }
+        else {}
+    }
+    
+    public boolean getHasWon()
+    {
+        return hasWon;
     }
     
     public void setActive()

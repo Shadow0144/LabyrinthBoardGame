@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package labyrinthboardgame;
+package labyrinthboardgame.gui;
 
+import labyrinthboardgame.gui.GameBoardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import labyrinthboardgame.logic.Player;
+import labyrinthboardgame.logic.TileSet;
+import labyrinthboardgame.logic.TreasureSet;
 
 /**
  *

@@ -3,13 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package labyrinthboardgame;
+package labyrinthboardgame.gui;
 
+import labyrinthboardgame.gui.InsertTileButton;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import labyrinthboardgame.logic.Player;
+import labyrinthboardgame.logic.Player;
+import labyrinthboardgame.logic.TileSet;
+import labyrinthboardgame.logic.TileSet;
 
 /**
  *
@@ -297,13 +302,16 @@ public class LabyrinthGameBoard extends GridPane
         getCurrentPlayer().moveCharacter(tile);
         gbController.movedPlayer();
         
-        for (int i = 0; i < 12; i++)
+        if (!getCurrentPlayer().getHasWon())
         {
-            if (arrows[i] != disabledArrow)
+            for (int i = 0; i < 12; i++)
             {
-                arrows[i].enable();
+                if (arrows[i] != disabledArrow)
+                {
+                    arrows[i].enable();
+                }
+                else {}
             }
-            else {}
         }
     }
     

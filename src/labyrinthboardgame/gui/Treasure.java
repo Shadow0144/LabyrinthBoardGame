@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package labyrinthboardgame;
+package labyrinthboardgame.gui;
 
 import javafx.scene.image.Image;
 
@@ -42,5 +42,10 @@ public class Treasure {
     public Image getPlayerTreasureImage()
     {
         return playerTreasureImage;
+    }
+    
+    public TreasureType getTreasureType()
+    {
+        return type;
     }
 }

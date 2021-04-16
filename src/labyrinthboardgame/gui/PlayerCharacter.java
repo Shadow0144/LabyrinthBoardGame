@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package labyrinthboardgame;
+package labyrinthboardgame.gui;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import labyrinthboardgame.logic.Player;
 
 /**
  *

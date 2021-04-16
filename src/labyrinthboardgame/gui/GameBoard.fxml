@@ -34,20 +34,19 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Text?>
-<?import labyrinthboardgame.*?>
+<?import labyrinthboardgame.gui.LabyrinthGameBoard?>
 
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.GameBoardController">
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
   <children>
       <AnchorPane fx:id="gamePane">
          <children>
@@ -83,6 +82,12 @@
                <children>
                </children>
             </LabyrinthGameBoard>
+            <ImageView fx:id="playerWonImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="270.0">
+               <image>
+                  <Image url="@assets/playerWon.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="playerWonText" alignment="CENTER" textAlignment="CENTER" visible="false" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="270.0" />
          </children>
       </AnchorPane>
       <VBox>
