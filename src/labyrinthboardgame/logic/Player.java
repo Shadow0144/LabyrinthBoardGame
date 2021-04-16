@@ -6,49 +6,23 @@
 package labyrinthboardgame.logic;
 
 import labyrinthboardgame.gui.Treasure;
-import labyrinthboardgame.gui.Tile;
 import labyrinthboardgame.gui.PlayerCharacter;
 import java.util.LinkedList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.StackPane;
-import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import labyrinthboardgame.gui.PlayerDisplay;
 
 /**
  *
  * @author Corbi
  */
-public class Player extends StackPane {
-    private Circle playerIcon;
-    private ImageView playerTreasure;
-    private Text playerTreasuresRemainingText;
-    private int playerTreasuresRemaining;
-    
-    private int number;
-    private PlayerCharacter character;
+public class Player {
+
+    private final int number;
+    private final PlayerDisplay display;
+    private final PlayerCharacter character;
     private Tile currentTile;
     
-    private final int PLAYER_ICON_RADIUS = 30;
-    private final int UNSELECTED_STROKE = 1;
-    private final int SELECTED_STROKE = 3;
-    private final int VICTORY_STROKE = 5;
-    
-    public enum Phase
-    {
-        placingTile,
-        moving
-    };
-    private Phase currentPhase;
+    private int playerTreasuresRemaining;
     
     private boolean hasWon;
     
@@ -58,64 +32,40 @@ public class Player extends StackPane {
     public Player(int playerNumber)
     {
         number = playerNumber;
-        currentPhase = Phase.placingTile;
-        character = new PlayerCharacter(this);
         currentTile = null;
         hasWon = false;
         
-        setupIcon();
-    }
-    
-    private void setupIcon()
-    {
-        playerIcon = new Circle();
-        playerIcon.setRadius(PLAYER_ICON_RADIUS);
-        playerIcon.setStroke(Color.BLACK);
-        playerIcon.setStrokeWidth(UNSELECTED_STROKE);
+        character = new PlayerCharacter(this);
+        
+        treasures = new LinkedList<Treasure>();
+        playerTreasuresRemaining = 1; // Prevent off-by-one error
+        Color color = Color.WHITE;
         switch (number)
         {
             case 1:
-                playerIcon.setFill(Color.YELLOW);
+                color = Color.YELLOW;
                 break;
             case 2:
-                playerIcon.setFill(Color.BLUE);
+                color = Color.BLUE;
                 break;
             case 3:
-                playerIcon.setFill(Color.GREEN);
+                color = Color.GREEN;
                 break;
             case 4:
-                playerIcon.setFill(Color.RED);
+                color = Color.RED;
                 break;
-            
         }
-        getChildren().add(playerIcon);
-        
-        AnchorPane treasuresRemainingPane = new AnchorPane();
-        
-        Circle textBackground = new Circle();
-        textBackground.setFill(Color.WHITE);
-        textBackground.setLayoutX(75);
-        textBackground.setLayoutY(30);
-        textBackground.setRadius(10);
-        textBackground.setStroke(Color.BLACK);
-        textBackground.setStrokeWidth(1);
-        treasuresRemainingPane.getChildren().add(textBackground);
-        
-        playerTreasuresRemaining = 1; // Count the card that is showing as well
-        playerTreasuresRemainingText = new Text();
-        playerTreasuresRemainingText.setLayoutX(71);
-        playerTreasuresRemainingText.setLayoutY(30);
-        playerTreasuresRemainingText.setText("" + playerTreasuresRemaining);
-        playerTreasuresRemainingText.setTextAlignment(TextAlignment.CENTER);
-        playerTreasuresRemainingText.setTextOrigin(VPos.CENTER);
-        treasuresRemainingPane.getChildren().add(playerTreasuresRemainingText);
-        
-        getChildren().add(treasuresRemainingPane);
-        setAlignment(treasuresRemainingPane, Pos.TOP_RIGHT);
-        
-        treasures = new LinkedList<Treasure>();
-        playerTreasure = new ImageView();
-        getChildren().add(playerTreasure);
+        display = new PlayerDisplay(color);
+    }
+    
+    public PlayerDisplay getDisplay()
+    {
+        return display;
+    }
+    
+    public PlayerCharacter getCharacter()
+    {
+        return character;
     }
     
     public int getPlayerNumber()
@@ -126,7 +76,7 @@ public class Player extends StackPane {
     public void assignTreasure(Treasure treasure)
     {
         treasures.add(treasure);
-        playerTreasuresRemainingText.setText("" + ++playerTreasuresRemaining);
+        display.updateTreasuresRemaining(++playerTreasuresRemaining);
     }
     
     public void showNextTreasure()
@@ -134,13 +84,13 @@ public class Player extends StackPane {
         currentTreasure = treasures.poll();
         if (currentTreasure != null)
         {
-            playerTreasure.setImage(currentTreasure.getPlayerTreasureImage());
+            display.updateTreasureImage(currentTreasure.getPlayerTreasureImage());
         }
         else 
         {
-            playerTreasure.setImage(null);
+            display.updateTreasureImage(null);
         }
-        playerTreasuresRemainingText.setText("" + --playerTreasuresRemaining);
+        display.updateTreasuresRemaining(--playerTreasuresRemaining);
     }
     
     public void showPaths()
@@ -184,8 +134,7 @@ public class Player extends StackPane {
                 && tile.getPlayer() == number)
         {
             hasWon = true;
-            playerIcon.setStroke(Color.GOLD);
-            playerIcon.setStrokeWidth(VICTORY_STROKE);
+            display.setHasWon();
         }
         else {}
     }
@@ -197,11 +146,11 @@ public class Player extends StackPane {
     
     public void setActive()
     {
-        playerIcon.setStrokeWidth(SELECTED_STROKE);
+        display.setActive();
     }
     
     public void setInactive()
     {
-        playerIcon.setStrokeWidth(UNSELECTED_STROKE);
+        display.setInactive();
     }
 }

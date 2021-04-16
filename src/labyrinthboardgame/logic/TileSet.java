@@ -6,7 +6,6 @@
 package labyrinthboardgame.logic;
 
 import labyrinthboardgame.gui.Treasure;
-import labyrinthboardgame.gui.Tile;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;

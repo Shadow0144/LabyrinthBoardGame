@@ -5,18 +5,15 @@
  */
 package labyrinthboardgame.gui;
 
+import labyrinthboardgame.logic.Tile;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.TileSet;
 
@@ -26,16 +23,6 @@ import labyrinthboardgame.logic.TileSet;
  */
 public class GameBoardController implements Initializable {
     
-    @FXML
-    private AnchorPane gamePane;
-    @FXML
-    private Button menuButton;
-    @FXML
-    private Text titleText;
-    @FXML
-    private AnchorPane boardPane;
-    @FXML
-    private HBox playerHBox;
     @FXML
     private Pane player1Pane;
     @FXML
@@ -77,16 +64,16 @@ public class GameBoardController implements Initializable {
         switch (playerNumber)
         {
             case 1:
-                player1Pane.getChildren().add(player);
+                player1Pane.getChildren().add(player.getDisplay());
                 break;
             case 2:
-                player2Pane.getChildren().add(player);
+                player2Pane.getChildren().add(player.getDisplay());
                 break;
             case 3:
-                player3Pane.getChildren().add(player);
+                player3Pane.getChildren().add(player.getDisplay());
                 break;
             case 4:
-                player4Pane.getChildren().add(player);
+                player4Pane.getChildren().add(player.getDisplay());
                 break;
         }
         gameBoard.addPlayerCharacterToBoard(player);
@@ -140,7 +127,7 @@ public class GameBoardController implements Initializable {
     {
         nextTile = gameBoard.getNextTile();
         nextTilePane.getChildren().clear();
-        nextTilePane.getChildren().add(nextTile);
+        nextTilePane.getChildren().add(nextTile.getTileView());
     }
     
     public void showPaths()

@@ -5,6 +5,7 @@
  */
 package labyrinthboardgame.gui;
 
+import labyrinthboardgame.logic.Tile;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -68,9 +69,9 @@ public class InsertTileButton extends StackPane
         if (enabled)
         {
             this.previewTile = previewTile;
-            previewTile.setOpacity(PREVIEW_OPACITY);
-            getChildren().add(previewTile);
-            setAlignment(previewTile, Pos.CENTER);
+            previewTile.getTileView().setOpacity(PREVIEW_OPACITY);
+            getChildren().add(previewTile.getTileView());
+            setAlignment(previewTile.getTileView(), Pos.CENTER);
         }
         else {}
     }
@@ -79,7 +80,7 @@ public class InsertTileButton extends StackPane
     {
         if (previewTile != null)
         {
-            getChildren().remove(previewTile);
+            getChildren().remove(previewTile.getTileView());
             previewTile = null;
         }
     }

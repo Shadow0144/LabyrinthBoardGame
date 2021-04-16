@@ -15,11 +15,8 @@ import labyrinthboardgame.logic.Player;
  */
 public class PlayerCharacter extends ImageView {
     
-    private Player player;
-    private Image playerImage;
-    
-    private int currentRow;
-    private int currentColumn;
+    private final Player player;
+    private final Image playerImage;
     
     private final int WIDTH = 15;
     private final int HEIGHT = 42;

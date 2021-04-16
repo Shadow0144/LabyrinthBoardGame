@@ -5,15 +5,13 @@
  */
 package labyrinthboardgame.gui;
 
-import labyrinthboardgame.gui.InsertTileButton;
+import labyrinthboardgame.logic.Tile;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import labyrinthboardgame.logic.Player;
-import labyrinthboardgame.logic.Player;
-import labyrinthboardgame.logic.TileSet;
 import labyrinthboardgame.logic.TileSet;
 
 /**
@@ -115,18 +113,18 @@ public class LabyrinthGameBoard extends GridPane
         int j = column;
         int next = (fromAbove) ? -1 : +1;
         Tile temp = tiles[i][j]; // The tile to remove
-        this.getChildren().remove(temp);
+        this.getChildren().remove(temp.getTileView());
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i+next][j];
-            this.getChildren().remove(tiles[i][j]);
-            this.add(tiles[i][j], j+1, i+1);
+            this.getChildren().remove(tiles[i][j].getTileView());
+            this.add(tiles[i][j].getTileView(), j+1, i+1);
             i += next;
         }
         Tile newTile = tileSet.getNextTile();
         temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
-        this.add(tiles[i][j], j+1, i+1);
+        this.add(tiles[i][j].getTileView(), j+1, i+1);
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
         
@@ -139,18 +137,18 @@ public class LabyrinthGameBoard extends GridPane
         int j = (fromLeft) ? 6 : 0;
         int next = (fromLeft) ? -1 : +1;
         Tile temp = tiles[i][j]; // The tile to remove
-        this.getChildren().remove(temp);
+        this.getChildren().remove(temp.getTileView());
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i][j+next];
-            this.getChildren().remove(tiles[i][j]);
-            this.add(tiles[i][j], j+1, i+1);
+            this.getChildren().remove(tiles[i][j].getTileView());
+            this.add(tiles[i][j].getTileView(), j+1, i+1);
             j += next;
         }
         Tile newTile = tileSet.getNextTile();
         temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
-        this.add(tiles[i][j], j+1, i+1);
+        this.add(tiles[i][j].getTileView(), j+1, i+1);
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
         
@@ -248,13 +246,13 @@ public class LabyrinthGameBoard extends GridPane
         {
             for (int j = 0; j < 7; j++)
             {
-                this.add(tiles[i][j], j+1, i+1);
-                tiles[i][j].setBoard(this);
+                this.add(tiles[i][j].getTileView(), j+1, i+1);
+                tiles[i][j].setListener(this);
             }
         }
         
         nextTile = tileSet.getNextTile();
-        nextTile.setBoard(this);
+        nextTile.setListener(this);
         updateTileNeighbors();
     }
     
@@ -381,11 +379,11 @@ public class LabyrinthGameBoard extends GridPane
     private void addEmptyTile(int i, int j)
     {
         String emptyTileImageString = getClass().getResource("assets/O.png").toString();
-        Image emptyTileImage = new Image(emptyTileImageString, Tile.TILE_SIZE, Tile.TILE_SIZE, false, true);
+        Image emptyTileImage = new Image(emptyTileImageString, TileView.TILE_SIZE, TileView.TILE_SIZE, false, true);
         StackPane emptyTilePane = new StackPane();
         ImageView emptyTileImageView = new ImageView(emptyTileImage);
         emptyTilePane.getChildren().add(emptyTileImageView);
-        emptyTilePane.setAlignment(emptyTileImageView, Pos.CENTER);
+        StackPane.setAlignment(emptyTileImageView, Pos.CENTER);
         this.add(emptyTilePane, i, j);
     }
 }
