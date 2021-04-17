@@ -34,16 +34,16 @@ public class GameBoardController implements Initializable {
     @FXML
     private Pane nextTilePane;
     @FXML
-    private LabyrinthGameBoard gameBoard;
-    
     private Tile nextTile;
-    
-    private ArrayList<Player> players;
-    private int currentPlayer;
     @FXML
     private ImageView playerWonImageView;
     @FXML
     private Label playerWonText;
+    @FXML
+    private LabyrinthGameBoard gameBoard;
+    
+    private ArrayList<Player> players;
+    private int currentPlayer;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 

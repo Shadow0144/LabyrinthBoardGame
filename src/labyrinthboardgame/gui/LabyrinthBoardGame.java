@@ -5,7 +5,6 @@
  */
 package labyrinthboardgame.gui;
 
-import labyrinthboardgame.gui.GameBoardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,14 +22,51 @@ import labyrinthboardgame.logic.TreasureSet;
  */
 public class LabyrinthBoardGame extends Application {
     
-    Player[] players;
-    TileSet tileSet;
-    TreasureSet treasureSet;
+    private Player[] players;
+    private TileSet tileSet;
+    private TreasureSet treasureSet;
+    
+    private static LabyrinthBoardGame instance;
+    public static LabyrinthBoardGame getInstance()
+    {
+        return instance;
+    }
+    
+    private Stage currentStage;
     
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception
+    {
+        instance = this;
+        
+        currentStage = stage;
+        moveToMainMenuScene();
+        
+        currentStage.setTitle("Labyrinth Board Game");
+        currentStage.show();
+    }
+    
+    public void moveToMainMenuScene() throws Exception
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        currentStage.setScene(scene);
+    }
+    
+    public void moveToPlayerSelectScene() throws Exception
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerSelect.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        currentStage.setScene(scene);
+    }
+    
+    public void moveToGameScene() throws Exception
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
+        Scene scene = new Scene(root);
         GameBoardController controller = loader.getController();
         
         tileSet = new TileSet();
@@ -47,8 +83,6 @@ public class LabyrinthBoardGame extends Application {
             controller.addPlayer(i+1, players[i]);
         }
         
-        Scene scene = new Scene(root);
-        
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if(key.getCode()== KeyCode.R) 
             {
@@ -63,9 +97,7 @@ public class LabyrinthBoardGame extends Application {
             }
         });
         
-        stage.setScene(scene);
-        stage.setTitle("Labyrinth Board Game");
-        stage.show();
+        currentStage.setScene(scene);
     }
 
     /**

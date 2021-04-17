@@ -27,7 +27,7 @@ public class InsertTileButton extends StackPane
         BottomLeft, BottomCenter, BottomRight,
         RightTop, RightCenter, RightBottom,
     };
-    private Arrow arrow;
+    private final Arrow arrow;
     
     private final int ARROW_SIZE = 20;
     
