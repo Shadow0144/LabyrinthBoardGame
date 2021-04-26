@@ -13,14 +13,18 @@ import labyrinthboardgame.logic.Player;
  *
  * @author Corbi
  */
-public class PlayerCharacter extends ImageView {
-    
+public class PlayerCharacter extends ImageView
+{
     private final Player player;
     private final Image playerImage;
     
     private final int WIDTH = 15;
     private final int HEIGHT = 42;
     
+    /**
+     * Creates a player character for moving around on the board
+     * @param player The player controlling the character
+     */
     public PlayerCharacter(Player player)
     {
         this.player = player;
@@ -44,6 +48,10 @@ public class PlayerCharacter extends ImageView {
         this.setImage(playerImage);
     }
     
+    /**
+     * Returns a reference to the controlling player
+     * @return The controlling player
+     */
     public Player getPlayer()
     {
         return player;

@@ -22,6 +22,9 @@ public class PlayerIconTray extends HBox
     private final PlayerIcon icon3;
     private final PlayerIcon icon4;
         
+    /**
+     * Builds a tray to hold the player icons and the next tile to be inserted
+     */
     public PlayerIconTray()
     {
         icon1 = new PlayerIcon(Color.YELLOW);
@@ -37,6 +40,11 @@ public class PlayerIconTray extends HBox
         getChildren().add(icon4);
     }
     
+    /**
+     * Returns a reference to a player icon
+     * @param player The player number
+     * @return A reference to a player icon
+     */
     public PlayerIcon getIcon(int player)
     {
         PlayerIcon rIcon = null;
@@ -58,6 +66,10 @@ public class PlayerIconTray extends HBox
         return rIcon;
     }
     
+    /**
+     * Updates the preview of the next tile to be inserted
+     * @param nextTile The next tile
+     */
     public void updateNextTile(Tile nextTile)
     {
         nextTilePane.getChildren().clear();

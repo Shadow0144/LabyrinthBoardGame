@@ -16,8 +16,8 @@ import javafx.fxml.Initializable;
  *
  * @author Corbi
  */
-public class PlayerSelectController implements Initializable {
-
+public class PlayerSelectController implements Initializable
+{
     @FXML
     private PlayerSelector player1Selector;
     @FXML
@@ -35,6 +35,10 @@ public class PlayerSelectController implements Initializable {
         // TODO
     }   
     
+    /**
+     * Moves to the Game Scene
+     * @param e Unused
+     */
     public void moveToGameScene(ActionEvent e)
     {
         try

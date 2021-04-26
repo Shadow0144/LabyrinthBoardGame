@@ -9,7 +9,6 @@ import labyrinthboardgame.gui.Treasure;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -28,6 +27,10 @@ public class TileSet
     
     Random random;
     
+    /**
+     * Creates a set of tiles that can be moved around the game board
+     * Note: this does not include the fixed in place tiles attached to the board
+     */
     public TileSet()
     {
         tileIndex = 0;
@@ -102,26 +105,46 @@ public class TileSet
         nextTile = tiles.get(33); // 34 tiles
     }
     
+    /**
+     * Returns the next tile to add to the board
+     * @return The next tile to add to the board
+     */
     public Tile getNextInitialTile()
     {
         return tiles.get(tileIndex++);
     }
     
+    /**
+     * Sets a reference to the next tile
+     * @param next The next tile to be inserted into the board during play
+     */
     public void setNextTile(Tile next)
     {
         nextTile = next;
     }
     
+    /**
+     * Returns the next tile to be inserted during play
+     * @return The next tile to be inserted during play
+     */
     public Tile getNextTile()
     {
         return nextTile;
     }
     
+    /**
+     * Returns a random rotation between the values of 0, 90, 180, and 270
+     * @return A random 90-degree rotation
+     */
     public int getRandomRotation()
     {
         return (random.nextInt(3) * 90);
     }
     
+    /**
+     * Sets the rotation of the next tile
+     * @param rotation The new rotation of the next tile
+     */
     public void setNextTileRotation(int rotation)
     {
         nextTile.setRotation(rotation);

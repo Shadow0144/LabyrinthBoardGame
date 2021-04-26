@@ -22,11 +22,10 @@ import labyrinthboardgame.logic.Tile;
  */
 public class TileView extends StackPane 
 {
-    
     private Rectangle[] paths;
     private Circle pathIntersection;
     
-    private ImageView tileImageView;
+    private final ImageView tileImageView;
     private ImageView treasureImageView;
     private Circle playerStart;
     
@@ -43,6 +42,12 @@ public class TileView extends StackPane
     
     private PlayerCharacter[] playerCharacters;
     
+    /**
+     * A graphical representation for a tile, containing images for treasures,
+     * starting locations, paths, and players
+     * @param shape The shape of the tile (i.e. I, L, or T)
+     * @param rotation The rotation of the tile
+     */
     public TileView(Tile.Shape shape, int rotation)
     {
         String tileImageString;
@@ -69,6 +74,10 @@ public class TileView extends StackPane
         setupOverlays();
     }
     
+    /**
+     * Adds a treasure to be displayed on the tile
+     * @param treasureImage The image of the treasure
+     */
     public void addTreasure(Image treasureImage)
     {
         treasureImageView = new ImageView();
@@ -77,6 +86,10 @@ public class TileView extends StackPane
         setAlignment(treasureImageView, Pos.CENTER);
     }
     
+    /**
+     * Adds a player starting location images to the tile
+     * @param color The color of the starting location
+     */
     public void addPlayerStart(Color color)
     {
         playerStart = new Circle();
@@ -88,6 +101,9 @@ public class TileView extends StackPane
         setAlignment(playerStart, Pos.CENTER);
     }
     
+    /**
+     * Sets up the graphics for drawing paths between tiles
+     */
     public void setupOverlays()
     {
         paths = new Rectangle[4];
@@ -128,6 +144,9 @@ public class TileView extends StackPane
         setAlignment(paths[3], Pos.CENTER_LEFT);
     }
     
+    /**
+     * Set up the grid to hold any player characters that arrive on this tile
+     */
     public void setupPlayers()
     {
         playerGridPane = new GridPane();
@@ -141,33 +160,57 @@ public class TileView extends StackPane
         }
     }
     
+    /**
+     * Updates the graphics to match the rotation
+     * @param rotation The rotation of the tile
+     */
     public void setRotation(int rotation)
     {
         tileImageView.setRotate(rotation);
     }
     
+    /**
+     * Returns the image of the tile used by this tile
+     * @return The image of the tile
+     */
     public Image getTileImage()
     {
         return tileImage;
     }
     
+    /**
+     * Displays a circle indicating this tile is part of a viable path
+     * @param playerColor The color the circle should be
+     */
     public void showIntersection(Color playerColor)
     {
         pathIntersection.setOpacity(PATH_OPACITY);
         pathIntersection.setFill(playerColor);
     }
     
+    /**
+     * Displays a path indicating a neighboring tile is part of a viable path
+     * @param path The direction of the connecting tile
+     * @param playerColor The color the circle should be
+     */
     public void showPath(int path, Color playerColor)
     {
         paths[path].setOpacity(PATH_OPACITY);
         paths[path].setFill(playerColor);
     }
     
+    /**
+     * Stops displaying a path
+     * @param path The path to stop displaying
+     */
     public void hidePath(int path)
     {
         paths[path].setOpacity(0);
     }
     
+    /**
+     * Stops displaying all paths and the intersection point
+     */
     public void hideAllPaths()
     {
         pathIntersection.setOpacity(0);
@@ -177,8 +220,14 @@ public class TileView extends StackPane
         }
     }
     
+    /**
+     * Adds a player character to be displayed on this tile, moving other 
+     * characters as appropriate
+     * @param player The player character to add to this tile
+     */
     public void addPlayerCharacter(PlayerCharacter player)
     {
+         // First clear all the displayed characters and readd them all and the new character
         playerGridPane.getChildren().clear();
         for (int i = 0; i < 4; i++)
         {
@@ -195,6 +244,11 @@ public class TileView extends StackPane
         }
     }
     
+    /**
+     * Removes a player character from this tile, readjusting the remaining
+     * characters as appropriate
+     * @param player The player character to remove from this tile
+     */
     public void removePlayerCharacter(PlayerCharacter player)
     {
         for (int i = 0; i < 4; i++)
@@ -225,6 +279,11 @@ public class TileView extends StackPane
         }
     }
     
+    /**
+     * When this tile is pushed off the board, all characters are moved to the
+     * new tile on the opposite side of the board
+     * @param newTile The tile the players are moved to
+     */
     public void moveCharacters(Tile newTile)
     {
         while (playerCharacters[0] != null)

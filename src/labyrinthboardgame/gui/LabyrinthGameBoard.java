@@ -7,9 +7,6 @@ package labyrinthboardgame.gui;
 
 import javafx.geometry.Insets;
 import labyrinthboardgame.logic.Tile;
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -33,6 +30,9 @@ public class LabyrinthGameBoard extends GridPane
     private InsertTileButton[] arrows;
     private InsertTileButton disabledArrow;
     
+    /**
+     * The main game board, which holds all the tiles and treasures and players
+     */
     public LabyrinthGameBoard()
     {
         super();
@@ -41,14 +41,22 @@ public class LabyrinthGameBoard extends GridPane
         addEmptyTiles();
     }
     
+    /**
+     * Get a reference to the controller
+     * @param controller The controller for handling input and events
+     */
     public void setGameBoardController(GameBoardController controller)
     {
         gbController = controller;
     }
     
-    public void insertTile(InsertTileButton.Arrow arrow)
+    /**
+     * Inserts the next tile into the game board, moving all tiles in that line, and updating the new next tile
+     * @param position Where and which direction to insert the next tile
+     */
+    public void insertTile(InsertTileButton.ArrowPosition position)
     {
-        switch (arrow)
+        switch (position)
         {
             // Top
             case TopLeft:
@@ -103,16 +111,23 @@ public class LabyrinthGameBoard extends GridPane
                 disabledArrow = arrows[5];
                 break;
         }
-        updateTileNeighbors();
+        updateTileNeighbors(); // Refresh the paths between tiles
         
+        // Disable all the arrows and move into the player move phase
         for (int i = 0; i < 12; i++)
         {
             arrows[i].disable();
         }
         
+        // Display the paths the player can take
         gbController.showPaths();
     }
     
+    /**
+     * Places the next tile along a column, moving all the other tiles up or down
+     * @param column The column to insert the new tile into
+     * @param fromAbove If true, the tiles all move down; else, up
+     */
     public void placeTileVertical(int column, boolean fromAbove)
     {
         int i = (fromAbove) ? 6 : 0;
@@ -137,6 +152,11 @@ public class LabyrinthGameBoard extends GridPane
         gbController.updateNextTile();
     }
     
+    /**
+     * Places the next tile along a row, moving all the other tiles left or right
+     * @param row The row to insert the new tile into
+     * @param fromLeft If true, the tiles all move right; else, left
+     */
     public void placeTileHorizontal(int row, boolean fromLeft)
     {
         int i = row;
@@ -161,11 +181,18 @@ public class LabyrinthGameBoard extends GridPane
         gbController.updateNextTile();
     }
     
+    /**
+     * Return a copy of the next tile for displaying a preview
+     * @return A copy of the next tile to insert
+     */
     public Tile getNextTile()
     {
         return new Tile(nextTile);
     }
     
+    /**
+     * Update the next tile image and all previews when rotated
+     */
     public void rotatePreviewClockwise()
     {
         nextTile.rotateClockwise();
@@ -175,6 +202,9 @@ public class LabyrinthGameBoard extends GridPane
         }
     }
     
+    /**
+     * Update the next tile image and all previews when rotated
+     */
     public void rotatePreviewCounterClockwise()
     {
         nextTile.rotateCounterClockwise();
@@ -184,6 +214,10 @@ public class LabyrinthGameBoard extends GridPane
         }
     }
     
+    /**
+     * Fill the board with tiles
+     * @param tileSet The set of free-moving tiles to insert into the board
+     */
     public void setupTiles(TileSet tileSet)
     {                
         tiles = new Tile[7][7];
@@ -246,6 +280,7 @@ public class LabyrinthGameBoard extends GridPane
         tiles[6][5] = tileSet.getNextInitialTile(); // Random
         tiles[6][6] = new Tile(Tile.Shape.L, 270, 2); // Blue
         
+        // Add listeners for moving the players
         for (int i = 0; i < 7; i++)
         {
             for (int j = 0; j < 7; j++)
@@ -256,10 +291,13 @@ public class LabyrinthGameBoard extends GridPane
         }
         
         nextTile = tileSet.getNextTile();
-        nextTile.setListener(this);
-        updateTileNeighbors();
+        nextTile.setListener(this); // Add a listener to the last remaining tile as well
+        updateTileNeighbors(); // Update the paths between tiles
     }
     
+    /**
+     * Updates the paths between tiles
+     */
     private void updateTileNeighbors()
     {
         for (int i = 0; i < 7; i++)
@@ -275,6 +313,10 @@ public class LabyrinthGameBoard extends GridPane
         }
     }
     
+    /**
+     * Adds the player characters to their starting locations on the board
+     * @param player The player to be added to the board
+     */
     public void addPlayerCharacterToBoard(Player player)
     {
         switch (player.getPlayerNumber())
@@ -294,16 +336,25 @@ public class LabyrinthGameBoard extends GridPane
         }
     }
     
+    /**
+     * Returns the current player
+     * @return The current player
+     */
     public Player getCurrentPlayer()
     {
         return gbController.getCurrentPlayer();
     }
     
+    /**
+     * Moves a player's character to a new tile and switches to the next player
+     * @param tile The tile the player's character moves to
+     */
     public void movePlayerToTile(Tile tile)
     {
         getCurrentPlayer().moveCharacter(tile);
-        gbController.movedPlayer();
+        gbController.switchPlayers(); // After moving, switch players
         
+        // Disable the tile insert arrows if the game is over
         if (!getCurrentPlayer().getHasWon())
         {
             for (int i = 0; i < 12; i++)
@@ -317,42 +368,48 @@ public class LabyrinthGameBoard extends GridPane
         }
     }
     
+    /**
+     * Creates and adds the insert tile buttons around the border
+     */
     private void createArrows()
     {
         arrows = new InsertTileButton[12];
         
         // Top
-        arrows[0] = new InsertTileButton(this, 0, InsertTileButton.Arrow.TopLeft);
+        arrows[0] = new InsertTileButton(this, InsertTileButton.ArrowPosition.TopLeft);
         this.add(arrows[0], 2, 0);
-        arrows[1] = new InsertTileButton(this, 0, InsertTileButton.Arrow.TopCenter);
+        arrows[1] = new InsertTileButton(this, InsertTileButton.ArrowPosition.TopCenter);
         this.add(arrows[1], 4, 0);
-        arrows[2] = new InsertTileButton(this, 0, InsertTileButton.Arrow.TopRight);
+        arrows[2] = new InsertTileButton(this, InsertTileButton.ArrowPosition.TopRight);
         this.add(arrows[2], 6, 0);
         // Left
-        arrows[3] = new InsertTileButton(this, 270, InsertTileButton.Arrow.LeftTop);
+        arrows[3] = new InsertTileButton(this, InsertTileButton.ArrowPosition.LeftTop);
         this.add(arrows[3], 0, 2);
-        arrows[4] = new InsertTileButton(this, 270, InsertTileButton.Arrow.LeftCenter);
+        arrows[4] = new InsertTileButton(this, InsertTileButton.ArrowPosition.LeftCenter);
         this.add(arrows[4], 0, 4);
-        arrows[5] = new InsertTileButton(this, 270, InsertTileButton.Arrow.LeftBottom);
+        arrows[5] = new InsertTileButton(this, InsertTileButton.ArrowPosition.LeftBottom);
         this.add(arrows[5], 0, 6);
         // Bottom
-        arrows[6] = new InsertTileButton(this, 180, InsertTileButton.Arrow.BottomLeft);
+        arrows[6] = new InsertTileButton(this, InsertTileButton.ArrowPosition.BottomLeft);
         this.add(arrows[6], 2, 8);
-        arrows[7] = new InsertTileButton(this, 180, InsertTileButton.Arrow.BottomCenter);
+        arrows[7] = new InsertTileButton(this, InsertTileButton.ArrowPosition.BottomCenter);
         this.add(arrows[7], 4, 8);
-        arrows[8] = new InsertTileButton(this, 180, InsertTileButton.Arrow.BottomRight);
+        arrows[8] = new InsertTileButton(this, InsertTileButton.ArrowPosition.BottomRight);
         this.add(arrows[8], 6, 8);
         // Right
-        arrows[9] = new InsertTileButton(this, 90, InsertTileButton.Arrow.RightTop);
+        arrows[9] = new InsertTileButton(this, InsertTileButton.ArrowPosition.RightTop);
         this.add(arrows[9], 8, 2);
-        arrows[10] = new InsertTileButton(this, 90, InsertTileButton.Arrow.RightCenter);
+        arrows[10] = new InsertTileButton(this, InsertTileButton.ArrowPosition.RightCenter);
         this.add(arrows[10], 8, 4);
-        arrows[11] = new InsertTileButton(this, 90, InsertTileButton.Arrow.RightBottom);
+        arrows[11] = new InsertTileButton(this, InsertTileButton.ArrowPosition.RightBottom);
         this.add(arrows[11], 8, 6);
         
         disabledArrow = null;
     }
     
+    /**
+     * Fills in the empty space around the board that goes unused
+     */
     private void addEmptyTiles()
     {
         addEmptyTile(0, 0);
@@ -380,6 +437,11 @@ public class LabyrinthGameBoard extends GridPane
         addEmptyTile(7, 8);
     }
     
+    /**
+     * Adds decoration around the border of the board at i, j
+     * @param i The row to add the empty tile
+     * @param j The column to add the empty tile
+     */
     private void addEmptyTile(int i, int j)
     {
         StackPane emptyTilePane = new StackPane();

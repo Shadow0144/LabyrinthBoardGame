@@ -17,11 +17,11 @@ import labyrinthboardgame.logic.TileSet;
 import labyrinthboardgame.logic.TreasureSet;
 
 /**
- *
+ * 
  * @author Corbi
  */
-public class LabyrinthBoardGame extends Application {
-    
+public class LabyrinthBoardGame extends Application
+{
     private Player[] players;
     private TileSet tileSet;
     private TreasureSet treasureSet;
@@ -46,6 +46,10 @@ public class LabyrinthBoardGame extends Application {
         currentStage.show();
     }
     
+    /**
+     * Changes the current scene to be the main menu scene
+     * @throws Exception 
+     */
     public void moveToMainMenuScene() throws Exception
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
@@ -54,6 +58,10 @@ public class LabyrinthBoardGame extends Application {
         currentStage.setScene(scene);
     }
     
+    /**
+     * Changes the current scene to be the player select scene
+     * @throws Exception 
+     */
     public void moveToPlayerSelectScene() throws Exception
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerSelect.fxml"));
@@ -62,6 +70,11 @@ public class LabyrinthBoardGame extends Application {
         currentStage.setScene(scene);
     }
     
+    /**
+     * Changes the current scene to be the game scene
+     * Sets up the board, treasures, and players
+     * @throws Exception 
+     */
     public void moveToGameScene() throws Exception
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
@@ -69,20 +82,23 @@ public class LabyrinthBoardGame extends Application {
         Scene scene = new Scene(root);
         GameBoardController controller = loader.getController();
         
+        // Create a new set of tiles and fill the board with them
         tileSet = new TileSet();
         controller.setupBoard(tileSet);
         
+        // Set up the players and treasures
         int playerCount = 4;
         treasureSet = new TreasureSet();
         players = new Player[playerCount];
         for (int i = 0; i < playerCount; i++)
         {
             players[i] = new Player(i+1);
-            controller.addPlayer(i+1, players[i]);
+            controller.addPlayer(players[i]);
             treasureSet.assignTreasuresToPlayer(players[i], 24 / playerCount);
             players[i].showNextTreasure();
         }
         
+        // Create a listener for handling rotating tiles with the keyboard
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if(key.getCode()== KeyCode.R) 
             {

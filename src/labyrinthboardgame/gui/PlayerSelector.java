@@ -13,7 +13,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -22,8 +21,8 @@ import javafx.scene.text.Text;
  *
  * @author Corbi
  */
-public class PlayerSelector extends VBox {
-    
+public class PlayerSelector extends VBox
+{
     private Text nameText;
     private Label playerTypeLabel;
     
@@ -34,6 +33,9 @@ public class PlayerSelector extends VBox {
     };
     private PlayerType playerType;
     
+    /**
+     * Allows selecting the player type (e.g. human or ai) for each player
+     */
     public PlayerSelector()
     {
         super();
@@ -58,6 +60,10 @@ public class PlayerSelector extends VBox {
         getChildren().add(selectionBox);
     }
     
+    /**
+     * Sets the color for the selector
+     * @param playerColor The color for the selector
+     */
     public void setColor(Color playerColor)
     {
         this.setBackground(new Background(new BackgroundFill(playerColor, CornerRadii.EMPTY, Insets.EMPTY)));

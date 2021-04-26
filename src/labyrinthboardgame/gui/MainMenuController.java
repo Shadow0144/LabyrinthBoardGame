@@ -15,8 +15,8 @@ import javafx.fxml.Initializable;
  *
  * @author Corbi
  */
-public class MainMenuController implements Initializable {
-
+public class MainMenuController implements Initializable
+{
     /**
      * Initializes the controller class.
      */
@@ -25,6 +25,10 @@ public class MainMenuController implements Initializable {
         // Do nothing
     }    
     
+    /**
+     * Moves to the Player Select Scene
+     * @param e Unused
+     */
     public void moveToPlayerSelectScene(ActionEvent e)
     {
         try

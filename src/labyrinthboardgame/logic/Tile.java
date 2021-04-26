@@ -37,6 +37,10 @@ public class Tile
     
     private TileView tileView;
     
+    /**
+     * Copy constructor, used for creating a copy to display such as in previews
+     * @param tile The tile to copy
+     */
     public Tile(Tile tile)
     {
         super();
@@ -82,6 +86,12 @@ public class Tile
         setupOverlays();
     }
     
+    /**
+     * Creates a tile of a particular shape and rotation, but no treasure
+     * or starting area
+     * @param shape The shape of the tile (i.e. I, L, or T)
+     * @param rotation The rotation of the tile
+     */
     public Tile(Shape shape, int rotation)
     {
         super();
@@ -94,6 +104,13 @@ public class Tile
         setupOverlays();
     }
     
+    /**
+     * Creates a tile of a particular shape and rotation with a player's
+     * starting location
+     * @param shape The shape of the tile (i.e. I, L, or T)
+     * @param rotation The rotation of the tile
+     * @param player The number of the player which starts here
+     */
     public Tile(Shape shape, int rotation, int player)
     {
         super();
@@ -123,6 +140,12 @@ public class Tile
         setupOverlays();
     }
     
+    /**
+     * Creates a tile of a particular shape and rotation with a treasure
+     * @param shape The shape of the tile (i.e. I, L, or T)
+     * @param rotation The rotation of the tile
+     * @param treasure The treasure on this tile
+     */
     public Tile(Shape shape, int rotation, Treasure treasure)
     {
         super();
@@ -142,12 +165,18 @@ public class Tile
         setupOverlays();
     }
     
+    /**
+     * Sets up the graphics for this tile
+     */
     private void setupTile()
     {
         accessible = false;
         tileView = new TileView(tileShape, currentRotation);
     }
     
+    /**
+     * Sets up the logic for displaying paths
+     */
     private void setupOverlays()
     {
         buildingPath = false;
@@ -161,11 +190,19 @@ public class Tile
         refreshPossibleNeighbors();
     }
     
+    /**
+     * Returns a reference to the graphical representation of the tile
+     * @return The tile view
+     */
     public TileView getTileView()
     {
         return tileView;
     }
     
+    /**
+     * Adds a listener to move player characters
+     * @param gameBoard A reference to the parent game board
+     */
     public void setListener(LabyrinthGameBoard gameBoard)
     {
         tileView.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
@@ -178,6 +215,10 @@ public class Tile
             });
     }
     
+    /**
+     * Sets the tile's rotation, updating the graphics and neighbors
+     * @param rotation The tile's new rotation
+     */
     public void setRotation(int rotation)
     {
         currentRotation = rotation;
@@ -185,26 +226,45 @@ public class Tile
         refreshPossibleNeighbors();
     }
     
+    /**
+     * Returns the tile's current rotation
+     * @return The tile's current rotation
+     */
     public int getRotation()
     {
         return currentRotation;
     }
     
+    /**
+     * Returns the tile's shape
+     * @return The tile's shape
+     */
     public Shape getTileShape()
     {
         return tileShape;
     }
     
+    /**
+     * Returns the player's number if this tile has a starting location
+     * @return The starting player's number
+     */
     public int getPlayer()
     {
         return playerStartNumber;
     }
     
+    /**
+     * Returns the treasure on this tile if there is any
+     * @return The treasure on this tile
+     */
     public Treasure getTreasure()
     {
         return tileTreasure;
     }
     
+    /**
+     * Rotates the tile and updates the graphics and possible neighbors
+     */
     public void rotateClockwise()
     {
         currentRotation += 90;
@@ -212,6 +272,9 @@ public class Tile
         refreshPossibleNeighbors();
     }
     
+    /**
+     * Rotates the tile and updates the graphics and possible neighbors
+     */
     public void rotateCounterClockwise()
     {
         currentRotation -= 90;
@@ -219,11 +282,20 @@ public class Tile
         refreshPossibleNeighbors();
     }
     
+    /**
+     * Gets a reference to the image used to display the tile
+     * @return The tile image
+     */
     public Image getTileImage()
     {
         return tileView.getTileImage();
     }
     
+    /**
+     * Gets a reference to the image used to display the treasure on the tile
+     * if there is any
+     * @return The tile's treasure image
+     */
     public Image getTreasureImage()
     {
         if (tileTreasure != null)
@@ -236,6 +308,13 @@ public class Tile
         }
     }
     
+    /**
+     * Links neighboring tiles with a viable path
+     * @param top The tile above this one
+     * @param right The tile to the right of this one
+     * @param bottom The tile below this one
+     * @param left  The tile to the left of this one
+     */
     public void updateConnectedNeighbors(Tile top, Tile right, Tile bottom, Tile left)
     {
         hidePaths();
@@ -273,6 +352,10 @@ public class Tile
         }
     }
     
+    /**
+     * Displays viable paths which begin at this tile
+     * @param player The player (and therefore color) of the path
+     */
     public void showPaths(int player)
     {
         if (!buildingPath) // Prevent infinite looping
@@ -312,6 +395,9 @@ public class Tile
         }
     }
     
+    /**
+     * Disables drawing paths from this tile
+     */
     public void hidePaths()
     {
         if (!buildingPath) // Prevent infinite looping
@@ -332,11 +418,18 @@ public class Tile
         }
     }
     
+    /**
+     * Returns if a tile is reachable after building paths
+     * @return If the tile is accessible to the current player
+     */
     public boolean getAccessible()
     {
         return accessible;
     }
     
+    /**
+     * Updates possible paths from this tile based on its shape and rotation
+     */
     private void refreshPossibleNeighbors()
     {
         // Clockwise from Top
@@ -423,16 +516,29 @@ public class Tile
         }
     }
     
+    /**
+     * Adds a player's character to this tile to be displayed
+     * @param player The character to add to this tile
+     */
     public void addPlayerCharacter(PlayerCharacter player)
     {
         tileView.addPlayerCharacter(player);
     }
     
+    /**
+     * Removes a player's character from being displayed on this tile
+     * @param player The character to remove from this tile
+     */
     public void removePlayerCharacter(PlayerCharacter player)
     {
         tileView.removePlayerCharacter(player);
     }
     
+    /**
+     * Moves all player characters on this tile when the tile is pushed off
+     * the board
+     * @param newTile The tile to move all the characters to
+     */
     public void movePlayers(Tile newTile)
     {
         tileView.moveCharacters(newTile);

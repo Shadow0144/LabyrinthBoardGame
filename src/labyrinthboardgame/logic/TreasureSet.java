@@ -5,21 +5,22 @@
  */
 package labyrinthboardgame.logic;
 
-import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.gui.Treasure;
 import java.util.ArrayList;
 import java.util.Collections;
-import javafx.event.EventType;
 
 /**
  *
  * @author Corbi
  */
-public class TreasureSet {
-    private ArrayList<Treasure> treasures;
-    
+public class TreasureSet 
+{
+    private final ArrayList<Treasure> treasures;
     private int index;
     
+    /**
+     * Creates a set of treasures to randomly assign to players
+     */
     public TreasureSet()
     {
         treasures = new ArrayList<Treasure>();
@@ -31,6 +32,11 @@ public class TreasureSet {
         index = 0;
     }
     
+    /**
+     * Assigns a set of treasures to a player
+     * @param player The player to assign to
+     * @param treasureCount The amount of treasures to assign to the player
+     */
     public void assignTreasuresToPlayer(Player player, int treasureCount)
     {
         for (int i = 0; i < 1; i++)

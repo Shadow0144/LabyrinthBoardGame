@@ -20,14 +20,15 @@ public class InsertTileButton extends StackPane
 {
     LabyrinthGameBoard board;
     
-    public enum Arrow
+    // Position of the arrow
+    public enum ArrowPosition
     {
         TopLeft, TopCenter, TopRight,
         LeftTop, LeftCenter, LeftBottom,
         BottomLeft, BottomCenter, BottomRight,
         RightTop, RightCenter, RightBottom,
     };
-    private final Arrow arrow;
+    private final ArrowPosition arrow;
     
     private final int ARROW_SIZE = 20;
     
@@ -38,39 +39,48 @@ public class InsertTileButton extends StackPane
     private boolean enabled;
     private final double DISABLED = 0.25;
     
-    private ImageView arrowImageView;
-    private double rotation;
-    public double getRotation() { return rotation; }
-    public void setRotation(double rot) 
-    { 
-        rotation = rot;
-        arrowImageView.setRotate(rotation);
-    }
-    
-    public InsertTileButton()
-    {
-        arrowImageView = new ImageView();
-        String arrowImageString = getClass().getResource("assets/arrow.png").toString();
-        Image arrowImage = new Image(arrowImageString, ARROW_SIZE, ARROW_SIZE, false, true);
-        arrowImageView.setImage(arrowImage);
-        arrowImageView.setRotate(rotation);
-        getChildren().add(arrowImageView);
-        setAlignment(arrowImageView, Pos.CENTER);
-        this.arrow = Arrow.TopLeft;
-    }
-    
-    public InsertTileButton(LabyrinthGameBoard gameBoard, int rotation, Arrow arrow)
+    /**
+     * A button for inserting tiles into the board
+     * @param gameBoard A reference to the game board the arrow belongs to
+     * @param position The position the tiles are inserted from
+     */
+    public InsertTileButton(LabyrinthGameBoard gameBoard, ArrowPosition position)
     {
         board = gameBoard;
         
-        arrowImageView = new ImageView();
+        ImageView arrowImageView = new ImageView();
         String arrowImageString = getClass().getResource("assets/arrow.png").toString();
         Image arrowImage = new Image(arrowImageString, ARROW_SIZE, ARROW_SIZE, false, true);
         arrowImageView.setImage(arrowImage);
-        arrowImageView.setRotate(rotation);
         getChildren().add(arrowImageView);
         setAlignment(arrowImageView, Pos.CENTER);
-        this.arrow = arrow;
+        
+        arrow = position;
+        int rotation = 0;
+        switch (arrow)
+        {
+            case TopLeft:
+            case TopCenter:
+            case TopRight:
+                rotation = 0;
+                break;
+            case LeftTop:
+            case LeftCenter:
+            case LeftBottom:
+                rotation = 270;
+                break;
+            case BottomLeft:
+            case BottomCenter:
+            case BottomRight:
+                rotation = 180;
+                break;
+            case RightTop:
+            case RightCenter:
+            case RightBottom:
+                rotation = 90;
+                break;
+        }
+        arrowImageView.setRotate(rotation);
         
         this.setOnMouseEntered(event -> {
             setPreviewTile(gameBoard.getNextTile());
@@ -85,6 +95,10 @@ public class InsertTileButton extends StackPane
         enabled = true;
     }
     
+    /**
+     * Shows a preview of the tile to be inserted
+     * @param previewTile The tile to be inserted
+     */
     public void setPreviewTile(Tile previewTile)
     {
         if (enabled)
@@ -97,6 +111,9 @@ public class InsertTileButton extends StackPane
         else {}
     }
     
+    /**
+     * Hides the preview of the next tile such as when the mouse leaves
+     */
     public void removePreviewTile()
     {
         if (previewTile != null)
@@ -106,6 +123,9 @@ public class InsertTileButton extends StackPane
         }
     }
     
+    /**
+     * Rotates the preview of the next tile when it is displayed
+     */
     public void rotatePreviewClockwise()
     {
         if (enabled && previewTile != null)
@@ -114,6 +134,9 @@ public class InsertTileButton extends StackPane
         }
     }
     
+    /**
+     * Rotates the preview of the next tile when it is displayed
+     */
     public void rotatePreviewCounterClockwise()
     {
         if (enabled && previewTile != null)
@@ -122,6 +145,9 @@ public class InsertTileButton extends StackPane
         }
     }
     
+    /**
+     * Inserts the next tile into the board
+     */
     private void insertTile()
     {
         if (enabled)
@@ -135,12 +161,18 @@ public class InsertTileButton extends StackPane
         }
     }
     
+    /**
+     * Enables the button
+     */
     public void enable()
     {
         enabled = true;
         setOpacity(1);
     }
     
+    /** 
+     * Disables the button
+     */
     public void disable()
     {
         enabled = false;

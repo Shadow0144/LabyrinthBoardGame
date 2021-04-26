@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.TileSet;
 
@@ -21,8 +20,8 @@ import labyrinthboardgame.logic.TileSet;
  *
  * @author Corbi
  */
-public class GameBoardController implements Initializable {
-    
+public class GameBoardController implements Initializable
+{ 
     @FXML
     private PlayerIconTray playerIconTray;
     @FXML
@@ -55,16 +54,25 @@ public class GameBoardController implements Initializable {
         updateNextTile();
     }
     
-    public void addPlayer(int playerNumber, Player player)
+    /**
+     * Stores a reference to a player,
+     * links the player to its icon and adds the player's character to the game board,
+     * and sets the current player (i.e. player 1) as active
+     * @param player - the player to store and update
+     */
+    public void addPlayer(Player player)
     {
-
-        player.setIcon(playerIconTray.getIcon(playerNumber));
+        player.setIcon(playerIconTray.getIcon(player.getPlayerNumber()));
         gameBoard.addPlayerCharacterToBoard(player);
         players.add(player);
         players.get(currentPlayer).setActive();
     }
     
-    private void switchPlayers()
+    /**
+     * Checks if any players have won and displays a message if they have
+     * Otherwise switches the next player to active
+     */
+    public void switchPlayers()
     {
         if (!players.get(currentPlayer).getHasWon())
         {
@@ -94,32 +102,39 @@ public class GameBoardController implements Initializable {
         }
     }
     
+    /**
+     * Updates the next tile previews when rotated
+     */
     public void rotateTileClockwise()
     {
         nextTile.rotateClockwise();
         gameBoard.rotatePreviewClockwise();
     }
     
+    /**
+     * Updates the next tile previews when rotated
+     */
     public void rotateTileCounterClockwise()
     {
         nextTile.rotateCounterClockwise();
         gameBoard.rotatePreviewCounterClockwise();
     }
     
+    /**
+     * Updates the player icon tray to display the next tile
+     */
     public void updateNextTile()
     {
         nextTile = gameBoard.getNextTile();
         playerIconTray.updateNextTile(nextTile);
     }
     
+    /**
+     * Enables drawing paths available to the current player
+     */
     public void showPaths()
     {
         players.get(currentPlayer).showPaths();
-    }
-    
-    public void movedPlayer()
-    {
-        switchPlayers();
     }
     
     public Player getCurrentPlayer()
