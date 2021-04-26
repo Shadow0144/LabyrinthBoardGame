@@ -5,12 +5,17 @@
  */
 package labyrinthboardgame.gui;
 
+import javafx.geometry.Insets;
 import labyrinthboardgame.logic.Tile;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.TileSet;
 
@@ -33,6 +38,7 @@ public class LabyrinthGameBoard extends GridPane
         super();
         
         createArrows();
+        addEmptyTiles();
     }
     
     public void setGameBoardController(GameBoardController controller)
@@ -179,9 +185,7 @@ public class LabyrinthGameBoard extends GridPane
     }
     
     public void setupTiles(TileSet tileSet)
-    {
-        addEmptyTiles();
-                
+    {                
         tiles = new Tile[7][7];
         //tileSet = new TileSet();
         this.tileSet = tileSet;
@@ -378,12 +382,9 @@ public class LabyrinthGameBoard extends GridPane
     
     private void addEmptyTile(int i, int j)
     {
-        String emptyTileImageString = getClass().getResource("assets/O.png").toString();
-        Image emptyTileImage = new Image(emptyTileImageString, TileView.TILE_SIZE, TileView.TILE_SIZE, false, true);
         StackPane emptyTilePane = new StackPane();
-        ImageView emptyTileImageView = new ImageView(emptyTileImage);
-        emptyTilePane.getChildren().add(emptyTileImageView);
-        StackPane.setAlignment(emptyTileImageView, Pos.CENTER);
+        emptyTilePane.setBackground(new Background(new BackgroundFill(Color.rgb(119, 98, 82), 
+                CornerRadii.EMPTY, Insets.EMPTY)));
         this.add(emptyTilePane, i, j);
     }
 }

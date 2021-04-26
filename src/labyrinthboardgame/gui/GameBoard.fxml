@@ -32,84 +32,62 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import labyrinthboardgame.gui.LabyrinthGameBoard?>
+<?import labyrinthboardgame.gui.PlayerIconTray?>
 
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
+<VBox fx:id="gameWindow" prefHeight="800.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
   <children>
-      <AnchorPane fx:id="gamePane">
+      <AnchorPane fx:id="titlePane">
          <children>
             <Button fx:id="menuButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" text="Menu" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="7.0" />
             <Text fx:id="titleText" layoutX="304.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The AMAZEing Labyrinth" textAlignment="CENTER" AnchorPane.bottomAnchor="13.600000000000001" AnchorPane.leftAnchor="304.0" AnchorPane.rightAnchor="304.796875" AnchorPane.topAnchor="11.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="boardPane">
-         <children>
-            <LabyrinthGameBoard fx:id="gameBoard" alignment="CENTER" gridLinesVisible="true" prefHeight="630.0" prefWidth="630.0" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-               </children>
-            </LabyrinthGameBoard>
-            <ImageView fx:id="playerWonImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="270.0">
-               <image>
-                  <Image url="@assets/playerWon.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="playerWonText" alignment="CENTER" textAlignment="CENTER" visible="false" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="270.0" />
-         </children>
-      </AnchorPane>
-      <VBox>
-         <children>
-            <HBox fx:id="playerHBox" alignment="CENTER" spacing="10.0">
-               <children>
-                  <Pane fx:id="player1Pane" prefHeight="100.0" prefWidth="100.0">
-                  </Pane>
-                  <Pane fx:id="player2Pane" prefHeight="100.0" prefWidth="100.0">
-                  </Pane>
-                  <Pane fx:id="nextTilePane">
-                  </Pane>
-                  <Pane fx:id="player3Pane" prefHeight="100.0" prefWidth="100.0">
-                  </Pane>
-                  <Pane fx:id="player4Pane" prefHeight="100.0" prefWidth="100.0">
-                  </Pane>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </HBox>
-         </children>
-      </VBox>
+    <AnchorPane fx:id="boardPane">
+        <children>
+           <LabyrinthGameBoard fx:id="gameBoard" alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+             <columnConstraints>
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+             </columnConstraints>
+             <rowConstraints>
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+             </rowConstraints>
+              <children>
+              </children>
+           </LabyrinthGameBoard>
+           <ImageView fx:id="playerWonImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="270.0">
+              <image>
+                 <Image url="@assets/playerWon.png" />
+              </image>
+           </ImageView>
+           <Label fx:id="playerWonText" alignment="CENTER" textAlignment="CENTER" visible="false" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="270.0" />
+        </children>
+     </AnchorPane>
+    <PlayerIconTray fx:id="playerIconTray" alignment="CENTER" />
   </children>
 </VBox>

@@ -43,7 +43,7 @@ public class PlayerSelectController implements Initializable {
         }
         catch (Exception ex)
         {
-            System.out.println("Error!");
+            System.out.println("Error! Failed to move to Game Scene.");
         }
     }
 }

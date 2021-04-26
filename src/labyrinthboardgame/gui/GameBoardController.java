@@ -24,15 +24,7 @@ import labyrinthboardgame.logic.TileSet;
 public class GameBoardController implements Initializable {
     
     @FXML
-    private Pane player1Pane;
-    @FXML
-    private Pane player2Pane;
-    @FXML
-    private Pane player3Pane;
-    @FXML
-    private Pane player4Pane;
-    @FXML
-    private Pane nextTilePane;
+    private PlayerIconTray playerIconTray;
     @FXML
     private Tile nextTile;
     @FXML
@@ -52,7 +44,11 @@ public class GameBoardController implements Initializable {
         players = new ArrayList<Player>();
     }
     
-    public void setupBoard(TileSet tileSet, int players)
+    /**
+     * Sets up the game board, filling in the tiles
+     * @param tileSet The set of tiles to fill the game board with
+     */
+    public void setupBoard(TileSet tileSet)
     {
         gameBoard.setGameBoardController(this);
         gameBoard.setupTiles(tileSet);
@@ -61,21 +57,8 @@ public class GameBoardController implements Initializable {
     
     public void addPlayer(int playerNumber, Player player)
     {
-        switch (playerNumber)
-        {
-            case 1:
-                player1Pane.getChildren().add(player.getDisplay());
-                break;
-            case 2:
-                player2Pane.getChildren().add(player.getDisplay());
-                break;
-            case 3:
-                player3Pane.getChildren().add(player.getDisplay());
-                break;
-            case 4:
-                player4Pane.getChildren().add(player.getDisplay());
-                break;
-        }
+
+        player.setIcon(playerIconTray.getIcon(playerNumber));
         gameBoard.addPlayerCharacterToBoard(player);
         players.add(player);
         players.get(currentPlayer).setActive();
@@ -126,8 +109,7 @@ public class GameBoardController implements Initializable {
     public void updateNextTile()
     {
         nextTile = gameBoard.getNextTile();
-        nextTilePane.getChildren().clear();
-        nextTilePane.getChildren().add(nextTile.getTileView());
+        playerIconTray.updateNextTile(nextTile);
     }
     
     public void showPaths()

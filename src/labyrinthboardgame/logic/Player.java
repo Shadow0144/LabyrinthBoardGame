@@ -9,7 +9,7 @@ import labyrinthboardgame.gui.Treasure;
 import labyrinthboardgame.gui.PlayerCharacter;
 import java.util.LinkedList;
 import javafx.scene.paint.Color;
-import labyrinthboardgame.gui.PlayerDisplay;
+import labyrinthboardgame.gui.PlayerIcon;
 
 /**
  *
@@ -18,8 +18,8 @@ import labyrinthboardgame.gui.PlayerDisplay;
 public class Player {
 
     private final int number;
-    private final PlayerDisplay display;
-    private final PlayerCharacter character;
+    private PlayerIcon display;
+    private PlayerCharacter character;
     private Tile currentTile;
     
     private int playerTreasuresRemaining;
@@ -39,26 +39,14 @@ public class Player {
         
         treasures = new LinkedList<Treasure>();
         playerTreasuresRemaining = 1; // Prevent off-by-one error
-        Color color = Color.WHITE;
-        switch (number)
-        {
-            case 1:
-                color = Color.YELLOW;
-                break;
-            case 2:
-                color = Color.BLUE;
-                break;
-            case 3:
-                color = Color.GREEN;
-                break;
-            case 4:
-                color = Color.RED;
-                break;
-        }
-        display = new PlayerDisplay(color);
     }
     
-    public PlayerDisplay getDisplay()
+    public void setIcon(PlayerIcon icon)
+    {
+        display = icon;
+    }
+    
+    public PlayerIcon getIcon()
     {
         return display;
     }

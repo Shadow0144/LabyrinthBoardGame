@@ -70,17 +70,17 @@ public class LabyrinthBoardGame extends Application {
         GameBoardController controller = loader.getController();
         
         tileSet = new TileSet();
-        int playerCount = 4;
-        controller.setupBoard(tileSet, playerCount);
+        controller.setupBoard(tileSet);
         
+        int playerCount = 4;
         treasureSet = new TreasureSet();
         players = new Player[playerCount];
         for (int i = 0; i < playerCount; i++)
         {
             players[i] = new Player(i+1);
+            controller.addPlayer(i+1, players[i]);
             treasureSet.assignTreasuresToPlayer(players[i], 24 / playerCount);
             players[i].showNextTreasure();
-            controller.addPlayer(i+1, players[i]);
         }
         
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {

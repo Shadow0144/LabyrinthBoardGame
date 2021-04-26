@@ -38,11 +38,32 @@ public class InsertTileButton extends StackPane
     private boolean enabled;
     private final double DISABLED = 0.25;
     
+    private ImageView arrowImageView;
+    private double rotation;
+    public double getRotation() { return rotation; }
+    public void setRotation(double rot) 
+    { 
+        rotation = rot;
+        arrowImageView.setRotate(rotation);
+    }
+    
+    public InsertTileButton()
+    {
+        arrowImageView = new ImageView();
+        String arrowImageString = getClass().getResource("assets/arrow.png").toString();
+        Image arrowImage = new Image(arrowImageString, ARROW_SIZE, ARROW_SIZE, false, true);
+        arrowImageView.setImage(arrowImage);
+        arrowImageView.setRotate(rotation);
+        getChildren().add(arrowImageView);
+        setAlignment(arrowImageView, Pos.CENTER);
+        this.arrow = Arrow.TopLeft;
+    }
+    
     public InsertTileButton(LabyrinthGameBoard gameBoard, int rotation, Arrow arrow)
     {
         board = gameBoard;
         
-        ImageView arrowImageView = new ImageView();
+        arrowImageView = new ImageView();
         String arrowImageString = getClass().getResource("assets/arrow.png").toString();
         Image arrowImage = new Image(arrowImageString, ARROW_SIZE, ARROW_SIZE, false, true);
         arrowImageView.setImage(arrowImage);

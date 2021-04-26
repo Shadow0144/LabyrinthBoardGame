@@ -5,7 +5,6 @@
  */
 package labyrinthboardgame.gui;
 
-import java.util.LinkedList;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
@@ -22,7 +21,7 @@ import javafx.scene.text.TextAlignment;
  *
  * @author Corbi
  */
-public class PlayerDisplay extends StackPane
+public class PlayerIcon extends StackPane
 {
     private Circle playerIcon;
     private ImageView playerTreasure;
@@ -33,7 +32,50 @@ public class PlayerDisplay extends StackPane
     private final int SELECTED_STROKE = 3;
     private final int VICTORY_STROKE = 5;
     
-    public PlayerDisplay(Color color)
+    private Color color;
+    public Color getColor() { return color; }
+    public void setColor(Color col)
+    {
+        color = col;
+        playerIcon.setFill(color);
+    }
+    
+    public PlayerIcon()
+    {
+        playerIcon = new Circle();
+        playerIcon.setRadius(PLAYER_ICON_RADIUS);
+        playerIcon.setStroke(Color.BLACK);
+        playerIcon.setStrokeWidth(UNSELECTED_STROKE);
+        
+        getChildren().add(playerIcon);
+        
+        AnchorPane treasuresRemainingPane = new AnchorPane();
+        
+        Circle textBackground = new Circle();
+        textBackground.setFill(Color.WHITE);
+        textBackground.setLayoutX(75);
+        textBackground.setLayoutY(30);
+        textBackground.setRadius(10);
+        textBackground.setStroke(Color.BLACK);
+        textBackground.setStrokeWidth(1);
+        treasuresRemainingPane.getChildren().add(textBackground);
+        
+        playerTreasuresRemainingText = new Text();
+        playerTreasuresRemainingText.setLayoutX(71);
+        playerTreasuresRemainingText.setLayoutY(30);
+        playerTreasuresRemainingText.setText("" + 0);
+        playerTreasuresRemainingText.setTextAlignment(TextAlignment.CENTER);
+        playerTreasuresRemainingText.setTextOrigin(VPos.CENTER);
+        treasuresRemainingPane.getChildren().add(playerTreasuresRemainingText);
+        
+        getChildren().add(treasuresRemainingPane);
+        setAlignment(treasuresRemainingPane, Pos.TOP_RIGHT);
+        
+        playerTreasure = new ImageView();
+        getChildren().add(playerTreasure);
+    }
+    
+    public PlayerIcon(Color color)
     {
         playerIcon = new Circle();
         playerIcon.setRadius(PLAYER_ICON_RADIUS);

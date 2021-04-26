@@ -33,7 +33,7 @@ public class MainMenuController implements Initializable {
         }
         catch (Exception ex)
         {
-            System.out.println("Error!");
+            System.out.println("Error! Failed to move to Player Select Screen.");
         }
     }
 }
