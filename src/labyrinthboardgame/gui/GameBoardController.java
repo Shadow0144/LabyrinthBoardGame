@@ -13,7 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.TileSet;
@@ -28,6 +28,8 @@ public class GameBoardController implements Initializable
     private PlayerIconTray playerIconTray;
     @FXML
     private Tile nextTile;
+    @FXML
+    private Pane menuPane;
     @FXML
     private VBox playerWonDisplay;
     @FXML
@@ -157,5 +159,41 @@ public class GameBoardController implements Initializable
         {
             System.out.println("Error! Failed to move to Main Menu Screen.");
         }
+    }
+    
+    /**
+     * Displays the menu
+     * @param e Unused
+     */
+    public void showMenu(ActionEvent e)
+    {
+        menuPane.setVisible(true);
+    }
+    
+    /**
+     * Opens the dialog to save the game
+     * @param e Unused
+     */
+    public void save(ActionEvent e)
+    {
+        
+    }
+    
+    /**
+     * Opens the dialog to load a game
+     * @param e Unused
+     */
+    public void load(ActionEvent e)
+    {
+        
+    }
+    
+    /**
+     * Closes the menu
+     * @param e Unused
+     */
+    public void closeMenu(ActionEvent e)
+    {
+        menuPane.setVisible(false);
     }
 }
