@@ -39,7 +39,7 @@ public class TreasureSet
      */
     public void assignTreasuresToPlayer(Player player, int treasureCount)
     {
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < treasureCount; i++)
         {
             player.assignTreasure(treasures.get(index++));
         }

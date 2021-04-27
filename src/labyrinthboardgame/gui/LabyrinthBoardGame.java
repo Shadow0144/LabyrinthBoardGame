@@ -94,7 +94,7 @@ public class LabyrinthBoardGame extends Application
         {
             players[i] = new Player(i+1);
             controller.addPlayer(players[i]);
-            treasureSet.assignTreasuresToPlayer(players[i], 24 / playerCount);
+            treasureSet.assignTreasuresToPlayer(players[i], 0 / playerCount);
             players[i].showNextTreasure();
         }
         

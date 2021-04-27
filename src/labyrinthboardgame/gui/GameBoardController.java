@@ -9,10 +9,12 @@ import labyrinthboardgame.logic.Tile;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.TileSet;
 
@@ -27,7 +29,7 @@ public class GameBoardController implements Initializable
     @FXML
     private Tile nextTile;
     @FXML
-    private ImageView playerWonImageView;
+    private VBox playerWonDisplay;
     @FXML
     private Label playerWonText;
     @FXML
@@ -82,20 +84,19 @@ public class GameBoardController implements Initializable
         }
         else 
         {
-            playerWonImageView.setVisible(true);
-            playerWonText.setVisible(true);
-            switch (currentPlayer)
+            playerWonDisplay.setVisible(true);
+            switch (currentPlayer) // Current player (as opposed to player number) starts at 0
             {
-                case 1:
+                case 0:
                     playerWonText.setText("Yellow Player Wins!");
                     break;
-                case 2:
+                case 1:
                     playerWonText.setText("Blue Player Wins!");
                     break;
-                case 3:
+                case 2:
                     playerWonText.setText("Green Player Wins!");
                     break;
-                case 4:
+                case 3:
                     playerWonText.setText("Red Player Wins!");
                     break;
             }
@@ -140,5 +141,21 @@ public class GameBoardController implements Initializable
     public Player getCurrentPlayer()
     {
         return players.get(currentPlayer);
+    }
+    
+    /**
+     * Moves to the Main Menu Scene
+     * @param e Unused
+     */
+    public void moveToMainMenuScene(ActionEvent e)
+    {
+        try
+        {
+            LabyrinthBoardGame.getInstance().moveToMainMenuScene();
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Error! Failed to move to Main Menu Screen.");
+        }
     }
 }
