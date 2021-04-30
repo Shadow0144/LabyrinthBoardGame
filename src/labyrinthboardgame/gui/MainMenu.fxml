@@ -32,20 +32,42 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.MainMenuController">
+<VBox fx:id="mainMenuBox" alignment="TOP_CENTER" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.MainMenuController">
    <children>
-      <Label alignment="CENTER" text="The AMAZEing Labyrinth" textAlignment="CENTER" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+      <VBox fx:id="titleBox" alignment="CENTER" prefWidth="100.0" style="-fx-background-color: #604E43;">
+         <children>
+            <Label fx:id="titleLabel" alignment="CENTER" text="The AMAZEing Labyrinth" textAlignment="CENTER" underline="true">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <ImageView fx:id="splashImage" fitHeight="659.0" fitWidth="619.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/amazingSplash.jpg" />
          </image>
+         <VBox.margin>
+            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+         </VBox.margin>
       </ImageView>
-      <Button mnemonicParsing="false" onAction="#moveToPlayerSelectScene" text="Start" />
+      <Button fx:id="startButton" mnemonicParsing="false" onAction="#moveToPlayerSelectScene" text="Start" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="12.0" left="12.0" right="12.0" />
+         </VBox.margin></Button>
    </children>
 </VBox>

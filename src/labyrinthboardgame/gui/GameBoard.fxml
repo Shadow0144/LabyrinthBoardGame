@@ -45,7 +45,7 @@
 <?import labyrinthboardgame.gui.LabyrinthGameBoard?>
 <?import labyrinthboardgame.gui.PlayerIconTray?>
 
-<VBox fx:id="gameWindow" prefHeight="800.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
+<VBox fx:id="gameWindow" prefHeight="800.0" prefWidth="400.0" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
   <children>
       <AnchorPane fx:id="titlePane" style="-fx-background-color: #604E43;">
          <children>
@@ -58,7 +58,7 @@
       </AnchorPane>
     <AnchorPane fx:id="boardPane">
         <children>
-           <LabyrinthGameBoard fx:id="gameBoard" alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+           <LabyrinthGameBoard fx:id="gameBoard" alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
              <columnConstraints>
                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -142,7 +142,13 @@
                </children>
             </Pane>
         </children>
+         <VBox.margin>
+            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+         </VBox.margin>
      </AnchorPane>
-    <PlayerIconTray fx:id="playerIconTray" alignment="CENTER" />
+    <PlayerIconTray fx:id="playerIconTray" alignment="CENTER">
+         <VBox.margin>
+            <Insets bottom="12.0" left="12.0" right="12.0" />
+         </VBox.margin></PlayerIconTray>
   </children>
 </VBox>
