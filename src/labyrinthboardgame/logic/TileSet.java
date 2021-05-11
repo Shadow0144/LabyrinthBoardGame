@@ -5,7 +5,6 @@
  */
 package labyrinthboardgame.logic;
 
-import labyrinthboardgame.gui.Treasure;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -14,7 +13,7 @@ import java.util.Random;
  *
  * @author Corbi
  */
-public class TileSet
+public final class TileSet
 {    
     int tileIndex;
     ArrayList<Tile> tiles;

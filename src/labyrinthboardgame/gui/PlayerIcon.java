@@ -21,7 +21,7 @@ import javafx.scene.text.TextAlignment;
  *
  * @author Corbi
  */
-public class PlayerIcon extends StackPane
+public final class PlayerIcon extends StackPane
 {
     private final Circle playerIcon;
     private final ImageView playerTreasure;
@@ -31,6 +31,8 @@ public class PlayerIcon extends StackPane
     private final int UNSELECTED_STROKE = 1;
     private final int SELECTED_STROKE = 3;
     private final int VICTORY_STROKE = 5;
+    
+    private final int PLAYER_TREASURE_SIZE = 50;
     
     /**
      * Creates an icon for displaying details about a player, such as their current
@@ -76,11 +78,17 @@ public class PlayerIcon extends StackPane
     
     /**
      * Updates the player's current treasure goal image
-     * @param treasureImage The image to use
+     * @param treasureType The name of the image of the treasure (if not null)
      */
-    public void updateTreasureImage(Image treasureImage)
+    public void updateTreasureImage(String treasureType)
     {
-        playerTreasure.setImage(treasureImage);
+        if (treasureType != null)
+        {
+            String treasureImageString = getClass().getResource("assets/" + treasureType + ".png").toString();
+            Image treasureImage = new Image(treasureImageString, PLAYER_TREASURE_SIZE, PLAYER_TREASURE_SIZE, false, true);
+            playerTreasure.setImage(treasureImage);
+        }
+        else {}
     }
     
     /**

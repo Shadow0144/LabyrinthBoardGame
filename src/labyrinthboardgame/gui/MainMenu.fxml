@@ -41,7 +41,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainMenuBox" alignment="TOP_CENTER" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.MainMenuController">
+<VBox fx:id="mainMenuBox" alignment="TOP_CENTER" style="-fx-background-color: #A58772;" 
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="labyrinthboardgame.gui.MainMenuController">
    <children>
       <VBox fx:id="titleBox" alignment="CENTER" prefWidth="100.0" style="-fx-background-color: #604E43;">
          <children>

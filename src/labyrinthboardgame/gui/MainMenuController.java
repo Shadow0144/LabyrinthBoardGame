@@ -10,8 +10,6 @@ import javafx.fxml.FXML;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -19,10 +17,7 @@ import javafx.stage.Stage;
  * @author Corbi
  */
 public class MainMenuController implements Initializable
-{
-    @FXML
-    Button exitGameButton;
-    
+{    
     /**
      * Initializes the controller class.
      */
@@ -62,7 +57,6 @@ public class MainMenuController implements Initializable
      */
     public void exit(ActionEvent e)
     {
-        Stage stage = ((Stage)(exitGameButton.getScene().getWindow()));
-        stage.close();
+        System.exit(0);
     }
 }

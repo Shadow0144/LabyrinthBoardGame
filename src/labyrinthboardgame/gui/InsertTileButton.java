@@ -16,9 +16,9 @@ import static javafx.scene.layout.StackPane.setAlignment;
  *
  * @author Corbi
  */
-public class InsertTileButton extends StackPane
+public final class InsertTileButton extends StackPane
 {
-    LabyrinthGameBoard board;
+    BoardView board;
     
     // Position of the arrow
     public enum ArrowPosition
@@ -44,7 +44,7 @@ public class InsertTileButton extends StackPane
      * @param gameBoard A reference to the game board the arrow belongs to
      * @param position The position the tiles are inserted from
      */
-    public InsertTileButton(LabyrinthGameBoard gameBoard, ArrowPosition position)
+    public InsertTileButton(BoardView gameBoard, ArrowPosition position)
     {
         board = gameBoard;
         

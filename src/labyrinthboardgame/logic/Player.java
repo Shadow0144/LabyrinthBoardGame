@@ -5,7 +5,6 @@
  */
 package labyrinthboardgame.logic;
 
-import labyrinthboardgame.gui.Treasure;
 import labyrinthboardgame.gui.PlayerCharacter;
 import java.util.LinkedList;
 import labyrinthboardgame.gui.PlayerIcon;
@@ -101,7 +100,7 @@ public class Player
         currentTreasure = treasures.poll();
         if (currentTreasure != null)
         {
-            display.updateTreasureImage(currentTreasure.getPlayerTreasureImage());
+            display.updateTreasureImage(currentTreasure.getTreasureImageName());
         }
         else 
         {

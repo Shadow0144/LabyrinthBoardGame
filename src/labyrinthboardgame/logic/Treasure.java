@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package labyrinthboardgame.gui;
-
-import javafx.scene.image.Image;
+package labyrinthboardgame.logic;
 
 /**
  *
@@ -20,11 +18,6 @@ public class Treasure
     };
     private final TreasureType type;
     
-    private final Image tileTreasureImage;
-    private final int TILE_TREASURE_SIZE = 50;
-    private final Image playerTreasureImage;
-    private final int PLAYER_TREASURE_SIZE = 50;
-    
     /**
      * Creates a treasure which holds images for displaying on a tile and in a
      * player's icons
@@ -34,28 +27,15 @@ public class Treasure
     public Treasure(TreasureType treasureType)
     {
         type = treasureType;
-        
-        String treasureImageString = getClass().getResource("assets/" + type.toString() + ".png").toString();
-        tileTreasureImage = new Image(treasureImageString, TILE_TREASURE_SIZE, TILE_TREASURE_SIZE, false, true);
-        playerTreasureImage = new Image(treasureImageString, PLAYER_TREASURE_SIZE, PLAYER_TREASURE_SIZE, false, true);
     }
     
     /**
-     * Returns an image for use on tiles
+     * Returns the name of the treasure image
      * @return The treasure image for a tile
      */
-    public Image getTileTreasureImage()
+    public String getTreasureImageName()
     {
-        return tileTreasureImage;
-    }
-    
-    /**
-     * Returns an image for use in a player's icon
-     * @return The treasure image for an icon
-     */
-    public Image getPlayerTreasureImage()
-    {
-        return playerTreasureImage;
+        return type.toString();
     }
     
     /**

@@ -8,10 +8,9 @@ package labyrinthboardgame.logic;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import labyrinthboardgame.gui.LabyrinthGameBoard;
+import labyrinthboardgame.gui.BoardView;
 import labyrinthboardgame.gui.PlayerCharacter;
 import labyrinthboardgame.gui.TileView;
-import labyrinthboardgame.gui.Treasure;
 
 /**
  *
@@ -53,7 +52,7 @@ public class Tile
             tileTreasure = tile.getTreasure();
             if (tileTreasure != null)
             {
-                tileView.addTreasure(tileTreasure.getTileTreasureImage());
+                tileView.addTreasure(tileTreasure.getTreasureImageName());
             }
             else {}
         }
@@ -157,7 +156,7 @@ public class Tile
         tileTreasure = treasure;
         if (treasure != null)
         {
-            tileView.addTreasure(tileTreasure.getTileTreasureImage());
+            tileView.addTreasure(tileTreasure.getTreasureImageName());
         }
         else {}
         tileView.setupPlayers();
@@ -203,7 +202,7 @@ public class Tile
      * Adds a listener to move player characters
      * @param gameBoard A reference to the parent game board
      */
-    public void setListener(LabyrinthGameBoard gameBoard)
+    public void setListener(BoardView gameBoard)
     {
         tileView.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
             { 
@@ -289,23 +288,6 @@ public class Tile
     public Image getTileImage()
     {
         return tileView.getTileImage();
-    }
-    
-    /**
-     * Gets a reference to the image used to display the treasure on the tile
-     * if there is any
-     * @return The tile's treasure image
-     */
-    public Image getTreasureImage()
-    {
-        if (tileTreasure != null)
-        {
-            return tileTreasure.getTileTreasureImage();
-        }
-        else
-        {
-            return null;
-        }
     }
     
     /**

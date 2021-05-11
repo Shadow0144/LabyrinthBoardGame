@@ -5,6 +5,7 @@
  */
 package labyrinthboardgame.gui;
 
+import labyrinthboardgame.logic.Treasure;
 import javafx.geometry.Insets;
 import labyrinthboardgame.logic.Tile;
 import javafx.scene.layout.Background;
@@ -20,7 +21,7 @@ import labyrinthboardgame.logic.TileSet;
  *
  * @author Corbi
  */
-public class LabyrinthGameBoard extends GridPane
+public class BoardView extends GridPane
 {
     private GameBoardController gbController;
     private Tile[][] tiles;
@@ -33,7 +34,7 @@ public class LabyrinthGameBoard extends GridPane
     /**
      * The main game board, which holds all the tiles and treasures and players
      */
-    public LabyrinthGameBoard()
+    public BoardView()
     {
         super();
         

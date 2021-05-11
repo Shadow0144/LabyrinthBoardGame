@@ -11,7 +11,8 @@
 <?import javafx.scene.text.Font?>
 <?import labyrinthboardgame.gui.PlayerSelectorBox?>
 
-<VBox fx:id="playerSelectBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="820.0" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.PlayerSelectController">
+<VBox fx:id="playerSelectBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="820.0" style="-fx-background-color: #A58772;" 
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="labyrinthboardgame.gui.PlayerSelectController">
    <children>
       <VBox fx:id="titleBox" alignment="CENTER" prefWidth="100.0" style="-fx-background-color: #604E43;">
          <children>

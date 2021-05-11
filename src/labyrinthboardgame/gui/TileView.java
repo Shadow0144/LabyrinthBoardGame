@@ -20,7 +20,7 @@ import labyrinthboardgame.logic.Tile;
  *
  * @author Corbi
  */
-public class TileView extends StackPane 
+public final class TileView extends StackPane 
 {
     private Rectangle[] paths;
     private Circle pathIntersection;
@@ -34,6 +34,8 @@ public class TileView extends StackPane
     private Image tileImage;
     public static final int TILE_SIZE = 70;
     private final int PLAYER_START_RADIUS = 12;
+    
+    private final int TILE_TREASURE_SIZE = 50;
     
     private final int INTERSECTION_RADIUS = 10;
     private final int PATH_WIDTH = 10;
@@ -76,10 +78,12 @@ public class TileView extends StackPane
     
     /**
      * Adds a treasure to be displayed on the tile
-     * @param treasureImage The image of the treasure
+     * @param treasureType The name of the image of the treasure
      */
-    public void addTreasure(Image treasureImage)
+    public void addTreasure(String treasureType)
     {
+        String treasureImageString = getClass().getResource("assets/" + treasureType + ".png").toString();
+        Image treasureImage = new Image(treasureImageString, TILE_TREASURE_SIZE, TILE_TREASURE_SIZE, false, true);
         treasureImageView = new ImageView();
         treasureImageView.setImage(treasureImage);
         getChildren().add(treasureImageView);
