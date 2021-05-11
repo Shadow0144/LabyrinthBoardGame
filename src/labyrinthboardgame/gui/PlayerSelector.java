@@ -32,9 +32,10 @@ public class PlayerSelector extends VBox
     
     private enum PlayerType
     {
-      human,
-      ai,
-      advanced_ai
+        none,
+        human,
+        ai,
+        advanced_ai
     };
     private PlayerType playerType;
     
@@ -104,6 +105,9 @@ public class PlayerSelector extends VBox
     {
         switch (playerType)
         {
+            case none:
+                playerTypeLabel.setText("None");
+                break;
             case human:
                 playerTypeLabel.setText("Human");
                 break;
@@ -123,8 +127,10 @@ public class PlayerSelector extends VBox
     {
         switch (playerType)
         {
-            case human:
+            case none:
                 playerType = PlayerType.advanced_ai;
+            case human:
+                playerType = PlayerType.none;
                 break;
             case ai:
                 playerType = PlayerType.human;
@@ -143,6 +149,9 @@ public class PlayerSelector extends VBox
     {
         switch (playerType)
         {
+            case none:
+                playerType = PlayerType.human;
+                break;
             case human:
                 playerType = PlayerType.ai;
                 break;
@@ -150,7 +159,7 @@ public class PlayerSelector extends VBox
                 playerType = PlayerType.advanced_ai;
                 break;
             case advanced_ai:
-                playerType = PlayerType.human;
+                playerType = PlayerType.none;
                 break;
         }
         updatePlayerTypeText();

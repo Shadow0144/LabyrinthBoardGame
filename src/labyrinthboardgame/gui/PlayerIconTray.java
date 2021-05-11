@@ -5,7 +5,7 @@
  */
 package labyrinthboardgame.gui;
 
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import labyrinthboardgame.logic.Tile;
@@ -14,7 +14,7 @@ import labyrinthboardgame.logic.Tile;
  *
  * @author Corbi
  */
-public class PlayerIconTray extends HBox 
+public class PlayerIconTray extends VBox 
 {
     private final PlayerIcon icon1;
     private final PlayerIcon icon2;

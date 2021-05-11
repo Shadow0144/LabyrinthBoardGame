@@ -37,6 +37,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -62,12 +63,33 @@
             <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
          </VBox.margin>
       </ImageView>
-      <Button fx:id="startButton" mnemonicParsing="false" onAction="#moveToPlayerSelectScene" text="Start" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="12.0" left="12.0" right="12.0" />
-         </VBox.margin></Button>
+      <HBox fx:id="buttonBox" alignment="CENTER" prefHeight="33.0" prefWidth="643.0">
+         <children>
+            <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#moveToPlayerSelectScene" text="New Game" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="12.0" left="12.0" right="12.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="loadGameButton" mnemonicParsing="false" onAction="#loadGame" text="Load" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="12.0" left="12.0" right="12.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="exitGameButton" mnemonicParsing="false" onAction="#exit" text="Exit" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="12.0" left="12.0" right="12.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </VBox>

@@ -6,9 +6,12 @@
 package labyrinthboardgame.gui;
 
 import java.net.URL;
+import javafx.fxml.FXML;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -17,6 +20,9 @@ import javafx.fxml.Initializable;
  */
 public class MainMenuController implements Initializable
 {
+    @FXML
+    Button exitGameButton;
+    
     /**
      * Initializes the controller class.
      */
@@ -39,5 +45,24 @@ public class MainMenuController implements Initializable
         {
             System.out.println("Error! Failed to move to Player Select Screen.");
         }
+    }
+    
+    /**
+     * Opens the dialog to load a game
+     * @param e Unused
+     */
+    public void loadGame(ActionEvent e)
+    {
+        // TODO
+    }
+    
+    /**
+     * Quits the program
+     * @param e Unused
+     */
+    public void exit(ActionEvent e)
+    {
+        Stage stage = ((Stage)(exitGameButton.getScene().getWindow()));
+        stage.close();
     }
 }

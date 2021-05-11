@@ -35,120 +35,132 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 <?import labyrinthboardgame.gui.LabyrinthGameBoard?>
 <?import labyrinthboardgame.gui.PlayerIconTray?>
 
-<VBox fx:id="gameWindow" prefHeight="800.0" prefWidth="400.0" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
+<VBox fx:id="gameWindow" prefHeight="738.0" prefWidth="823.0" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
   <children>
-      <AnchorPane fx:id="titlePane" style="-fx-background-color: #604E43;">
+      <MenuBar fx:id="menuBar">
+        <menus>
+          <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save..." />
+                  <MenuItem fx:id="loadMenuItem" mnemonicParsing="false" text="Load..." />
+              <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
+            <items>
+                  <MenuItem fx:id="controlsMenuItem" mnemonicParsing="false" text="Controls" />
+              <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox prefHeight="713.0" prefWidth="724.0">
          <children>
-            <Button fx:id="menuButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#showMenu" text="Menu" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="7.0" />
-            <Text fx:id="titleText" layoutX="304.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The AMAZEing Labyrinth" textAlignment="CENTER" underline="true" AnchorPane.bottomAnchor="13.600000000000001" AnchorPane.leftAnchor="304.0" AnchorPane.rightAnchor="304.796875" AnchorPane.topAnchor="11.0">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Text>
-         </children>
-      </AnchorPane>
-    <AnchorPane fx:id="boardPane">
-        <children>
-           <LabyrinthGameBoard fx:id="gameBoard" alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-             <columnConstraints>
-                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-             </columnConstraints>
-             <rowConstraints>
-                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-             </rowConstraints>
-           </LabyrinthGameBoard>
-            <VBox fx:id="playerWonDisplay" alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #776252; -fx-border-color: #000000;" visible="false" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="300.0">
-               <children>
-                 <Label fx:id="playerWonText" alignment="CENTER" text="Player Wins!" textAlignment="CENTER">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="returnToMenuButton" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Return to Menu" textAlignment="CENTER">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-            </VBox>
-            <Pane fx:id="menuPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #55555555;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <VBox fx:id="menuBox" alignment="CENTER" layoutX="332.0" layoutY="263.0" style="-fx-background-color: #776252; -fx-border-color: #000000;">
+          <AnchorPane fx:id="boardPane">
+              <children>
+                 <LabyrinthGameBoard fx:id="gameBoard" alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                   <columnConstraints>
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   </columnConstraints>
+                   <rowConstraints>
+                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   </rowConstraints>
+                 </LabyrinthGameBoard>
+                  <VBox fx:id="playerWonDisplay" alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #776252; -fx-border-color: #000000;" visible="false" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="300.0">
                      <children>
-                        <Label fx:id="menuLabel" alignment="CENTER" text="Menu" textAlignment="CENTER">
+                       <Label fx:id="playerWonText" alignment="CENTER" text="Player Wins!" textAlignment="CENTER">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="24.0" />
                            </font>
-                           <VBox.margin>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                           </VBox.margin>
                         </Label>
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Save...">
+                        <Button fx:id="returnToMenuButton" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Return to Menu" textAlignment="CENTER">
                            <VBox.margin>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button fx:id="loadButton" mnemonicParsing="false" onAction="#load" text="Load...">
-                           <VBox.margin>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button fx:id="closeMenuButton" mnemonicParsing="false" onAction="#closeMenu" text="Close Menu">
-                           <VBox.margin>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button fx:id="returnToMainMenuButton" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Return to Main Menu">
-                           <VBox.margin>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
                      </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                      <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                   </VBox>
-               </children>
-            </Pane>
-        </children>
-         <VBox.margin>
-            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-         </VBox.margin>
-     </AnchorPane>
-    <PlayerIconTray fx:id="playerIconTray" alignment="CENTER">
-         <VBox.margin>
-            <Insets bottom="12.0" left="12.0" right="12.0" />
-         </VBox.margin></PlayerIconTray>
+                  <Pane fx:id="menuPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #55555555;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox fx:id="menuBox" alignment="CENTER" layoutX="332.0" layoutY="263.0" style="-fx-background-color: #776252; -fx-border-color: #000000;">
+                           <children>
+                              <Label fx:id="menuLabel" alignment="CENTER" text="Menu" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Save...">
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="loadButton" mnemonicParsing="false" onAction="#load" text="Load...">
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="closeMenuButton" mnemonicParsing="false" onAction="#closeMenu" text="Close Menu">
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="returnToMainMenuButton" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Return to Main Menu">
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </Pane>
+              </children>
+           </AnchorPane>
+          <PlayerIconTray fx:id="playerIconTray" alignment="CENTER" prefWidth="52.0">
+               <HBox.margin>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </HBox.margin></PlayerIconTray>
+         </children>
+      </HBox>
   </children>
 </VBox>
