@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
  *
  * @author Corbi
  */
-public class PlayerSelectorBox extends VBox 
+public final class PlayerSelectorBox extends VBox 
 {
     private final PlayerSelector[] selectors;
     

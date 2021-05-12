@@ -12,7 +12,7 @@ import java.util.Collections;
  *
  * @author Corbi
  */
-public class TreasureSet 
+public final class TreasureSet 
 {
     private final ArrayList<Treasure> treasures;
     private int index;

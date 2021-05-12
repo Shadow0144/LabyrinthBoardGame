@@ -13,7 +13,7 @@ import labyrinthboardgame.logic.Player;
  *
  * @author Corbi
  */
-public class PlayerCharacter extends ImageView
+public final class PlayerCharacter extends ImageView
 {
     private final Player player;
     private final Image playerImage;

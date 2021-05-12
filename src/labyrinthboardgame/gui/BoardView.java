@@ -21,7 +21,7 @@ import labyrinthboardgame.logic.TileSet;
  *
  * @author Corbi
  */
-public class BoardView extends GridPane
+public final class BoardView extends GridPane
 {
     private GameBoardController gbController;
     private Tile[][] tiles;

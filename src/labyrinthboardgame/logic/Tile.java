@@ -16,7 +16,7 @@ import labyrinthboardgame.gui.TileView;
  *
  * @author Corbi
  */
-public class Tile
+public final class Tile
 {
     public enum Shape {
         I,

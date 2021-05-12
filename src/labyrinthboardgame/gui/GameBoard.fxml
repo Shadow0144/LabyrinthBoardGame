@@ -118,41 +118,6 @@
                   </VBox>
                   <Pane fx:id="menuPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #55555555;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox fx:id="menuBox" alignment="CENTER" layoutX="332.0" layoutY="263.0" style="-fx-background-color: #776252; -fx-border-color: #000000;">
-                           <children>
-                              <Label fx:id="menuLabel" alignment="CENTER" text="Menu" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Save...">
-                                 <VBox.margin>
-                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="loadButton" mnemonicParsing="false" onAction="#load" text="Load...">
-                                 <VBox.margin>
-                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="closeMenuButton" mnemonicParsing="false" onAction="#closeMenu" text="Close Menu">
-                                 <VBox.margin>
-                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="returnToMainMenuButton" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Return to Main Menu">
-                                 <VBox.margin>
-                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                           <padding>
-                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                           </padding>
-                        </VBox>
                      </children>
                   </Pane>
               </children>

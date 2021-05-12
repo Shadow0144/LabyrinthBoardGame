@@ -24,7 +24,7 @@ import javafx.scene.text.Font;
  *
  * @author Corbi
  */
-public class PlayerSelector extends VBox
+public final class PlayerSelector extends VBox
 {
     private final TextField nameText;
     private final Label playerTypeLabel;

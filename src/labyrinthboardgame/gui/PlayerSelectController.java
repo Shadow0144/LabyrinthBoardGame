@@ -16,7 +16,7 @@ import javafx.fxml.Initializable;
  *
  * @author Corbi
  */
-public class PlayerSelectController implements Initializable
+public final class PlayerSelectController implements Initializable
 {
     @FXML
     private PlayerSelector player1Selector;
@@ -26,6 +26,8 @@ public class PlayerSelectController implements Initializable
     private PlayerSelector player3Selector;
     @FXML
     private PlayerSelector player4Selector;
+    
+    private SceneController sceneController;
 
     /**
      * Initializes the controller class.
@@ -35,6 +37,11 @@ public class PlayerSelectController implements Initializable
         // TODO
     }   
     
+    public void setSceneController(SceneController sc)
+    {
+        sceneController = sc;
+    }
+    
     /**
      * Moves to the Game Scene
      * @param e Unused
@@ -43,7 +50,7 @@ public class PlayerSelectController implements Initializable
     {
         try
         {
-            LabyrinthBoardGame.getInstance().moveToGameScene();
+            sceneController.moveToGameScene();
         }
         catch (Exception ex)
         {

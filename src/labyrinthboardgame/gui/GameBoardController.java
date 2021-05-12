@@ -13,8 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
+import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.TileSet;
 
@@ -22,7 +22,7 @@ import labyrinthboardgame.logic.TileSet;
  *
  * @author Corbi
  */
-public class GameBoardController implements Initializable
+public final class GameBoardController implements Initializable
 { 
     @FXML
     private PlayerIconTray playerIconTray;
@@ -38,11 +38,21 @@ public class GameBoardController implements Initializable
     private ArrayList<Player> players;
     private int currentPlayer;
     
+    private SceneController sceneController;
+    
+    private Game game;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
         currentPlayer = 0;
         players = new ArrayList<Player>();
+    }
+    
+    public void setSceneController(SceneController sc)
+    {
+        sceneController = sc;
+        game = new Game(this);
     }
     
     /**
@@ -151,7 +161,7 @@ public class GameBoardController implements Initializable
     {
         try
         {
-            LabyrinthBoardGame.getInstance().moveToMainMenuScene();
+            sceneController.moveToMainMenuScene();
         }
         catch (Exception ex)
         {

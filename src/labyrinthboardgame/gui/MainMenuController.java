@@ -6,7 +6,6 @@
 package labyrinthboardgame.gui;
 
 import java.net.URL;
-import javafx.fxml.FXML;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -16,8 +15,10 @@ import javafx.fxml.Initializable;
  *
  * @author Corbi
  */
-public class MainMenuController implements Initializable
+public final class MainMenuController implements Initializable
 {    
+    private SceneController sceneController;
+    
     /**
      * Initializes the controller class.
      */
@@ -25,6 +26,11 @@ public class MainMenuController implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
         // Do nothing
     }    
+    
+    public void setSceneController(SceneController sc)
+    {
+        sceneController = sc;
+    }
     
     /**
      * Moves to the Player Select Scene
@@ -34,7 +40,7 @@ public class MainMenuController implements Initializable
     {
         try
         {
-            LabyrinthBoardGame.getInstance().moveToPlayerSelectScene();
+            sceneController.moveToPlayerSelectScene();
         }
         catch (Exception ex)
         {

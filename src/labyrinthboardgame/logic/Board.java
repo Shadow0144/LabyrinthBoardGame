@@ -9,6 +9,6 @@ package labyrinthboardgame.logic;
  *
  * @author Corbi
  */
-public class Board {
+public final class Board {
     
 }

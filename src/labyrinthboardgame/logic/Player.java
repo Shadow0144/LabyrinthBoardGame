@@ -13,7 +13,7 @@ import labyrinthboardgame.gui.PlayerIcon;
  *
  * @author Corbi
  */
-public class Player
+public final class Player
 {
     private final int number;
     private final PlayerCharacter character;

@@ -101,12 +101,16 @@ public final class InsertTileButton extends StackPane
      */
     public void setPreviewTile(Tile previewTile)
     {
-        if (enabled)
+        if (previewTile != null)
         {
-            this.previewTile = previewTile;
-            previewTile.getTileView().setOpacity(PREVIEW_OPACITY);
-            getChildren().add(previewTile.getTileView());
-            setAlignment(previewTile.getTileView(), Pos.CENTER);
+            if (enabled)
+            {
+                this.previewTile = previewTile;
+                previewTile.getTileView().setOpacity(PREVIEW_OPACITY);
+                getChildren().add(previewTile.getTileView());
+                setAlignment(previewTile.getTileView(), Pos.CENTER);
+            }
+            else {}
         }
         else {}
     }

@@ -14,7 +14,7 @@ import labyrinthboardgame.logic.Tile;
  *
  * @author Corbi
  */
-public class PlayerIconTray extends VBox 
+public final class PlayerIconTray extends VBox 
 {
     private final PlayerIcon icon1;
     private final PlayerIcon icon2;
