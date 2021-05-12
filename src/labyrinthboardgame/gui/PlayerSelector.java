@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import labyrinthboardgame.logic.Player;
 
 /**
  *
@@ -29,14 +30,9 @@ public final class PlayerSelector extends VBox
     private final TextField nameText;
     private final Label playerTypeLabel;
     
-    private enum PlayerType
-    {
-        none,
-        human,
-        ai,
-        advanced_ai
-    };
-    private PlayerType playerType;
+    private Player.PlayerType playerType;
+    
+    private PlayerSelectController controller;
     
     /**
      * Allows selecting the player type (e.g. human or ai) for each player
@@ -85,7 +81,7 @@ public final class PlayerSelector extends VBox
             }
         });
         
-        playerType = PlayerType.human;
+        playerType = Player.PlayerType.human;
         updatePlayerTypeText();
         
         selectionBox.getChildren().add(leftButton);
@@ -95,6 +91,15 @@ public final class PlayerSelector extends VBox
         
         setMargin(this, new Insets(12, 12, 12, 12));
         this.setBackground(new Background(new BackgroundFill(playerColor, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+    
+    /**
+     * Sets the controller so it can alert it when changes occur
+     * @param controller The controller
+     */
+    public void setController(PlayerSelectController controller)
+    {
+        this.controller = controller;
     }
     
     /**
@@ -127,15 +132,18 @@ public final class PlayerSelector extends VBox
         switch (playerType)
         {
             case none:
-                playerType = PlayerType.advanced_ai;
+                playerType = Player.PlayerType.advanced_ai;
+                controller.increasePlayers();
+                break;
             case human:
-                playerType = PlayerType.none;
+                playerType = Player.PlayerType.none;
+                controller.decreasePlayers();
                 break;
             case ai:
-                playerType = PlayerType.human;
+                playerType = Player.PlayerType.human;
                 break;
             case advanced_ai:
-                playerType = PlayerType.ai;
+                playerType = Player.PlayerType.ai;
                 break;
         }
         updatePlayerTypeText();
@@ -149,18 +157,29 @@ public final class PlayerSelector extends VBox
         switch (playerType)
         {
             case none:
-                playerType = PlayerType.human;
+                playerType = Player.PlayerType.human;
+                controller.increasePlayers();
                 break;
             case human:
-                playerType = PlayerType.ai;
+                playerType = Player.PlayerType.ai;
                 break;
             case ai:
-                playerType = PlayerType.advanced_ai;
+                playerType = Player.PlayerType.advanced_ai;
                 break;
             case advanced_ai:
-                playerType = PlayerType.none;
+                playerType = Player.PlayerType.none;
+                controller.decreasePlayers();
                 break;
         }
         updatePlayerTypeText();
+    }
+    
+    /**
+     * Returns the player type
+     * @return The player type
+     */
+    public Player.PlayerType getPlayerType()
+    {
+        return playerType;
     }
 }

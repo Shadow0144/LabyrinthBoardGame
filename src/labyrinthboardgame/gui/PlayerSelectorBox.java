@@ -33,4 +33,16 @@ public final class PlayerSelectorBox extends VBox
             this.getChildren().add(selectors[i]);
         }
     }
+    
+    /**
+     * Sets the controller on all the selectors so they can alert it when changes occur
+     * @param controller The controller
+     */
+    public void setController(PlayerSelectController controller)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            selectors[i].setController(controller);
+        }
+    }
 }

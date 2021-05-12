@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import labyrinthboardgame.logic.Player;
 
 /**
  *
@@ -58,7 +59,7 @@ public final class SceneController
      * Sets up the board, treasures, and players
      * @throws Exception 
      */
-    public void moveToGameScene() throws Exception
+    public void moveToGameScene(Player[] players, int treasures) throws Exception
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();

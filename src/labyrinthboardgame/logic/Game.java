@@ -14,6 +14,7 @@ import labyrinthboardgame.gui.GameBoardController;
 public final class Game 
 {
     private final Player[] players;
+    
     private final TileSet tileSet;
     private final TreasureSet treasureSet;
     
@@ -29,7 +30,7 @@ public final class Game
         players = new Player[playerCount];
         for (int i = 0; i < playerCount; i++)
         {
-            players[i] = new Player(i+1);
+            players[i] = new Player(i+1, Player.PlayerType.human);
             controller.addPlayer(players[i]);
             treasureSet.assignTreasuresToPlayer(players[i], 0 / playerCount);
             players[i].showNextTreasure();

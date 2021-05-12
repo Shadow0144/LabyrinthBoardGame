@@ -15,7 +15,16 @@ import labyrinthboardgame.gui.PlayerIcon;
  */
 public final class Player
 {
-    private final int number;
+    public enum PlayerType
+    {
+        none,
+        human,
+        ai,
+        advanced_ai
+    };
+    private final PlayerType playerType;
+    
+    private final int number; // 1, 2, 3, or 4
     private final PlayerCharacter character;
     private PlayerIcon display;
     private Tile currentTile;
@@ -31,10 +40,12 @@ public final class Player
      * A player, which has a list of treasures to collect and a character to
      * move around the board
      * @param playerNumber The number of this player, which also determines
+     * @param playerType The type of player (e.g. absent, human, or an A.I.)
      * their color
      */
-    public Player(int playerNumber)
+    public Player(int playerNumber, PlayerType playerType)
     {
+        this.playerType = playerType;
         number = playerNumber;
         currentTile = null;
         hasWon = false;
@@ -43,6 +54,15 @@ public final class Player
         
         treasures = new LinkedList<Treasure>();
         playerTreasuresRemaining = 1; // Prevent off-by-one error
+    }
+    
+    /**
+     * Returns the player type
+     * @return The player type
+     */
+    public PlayerType getPlayerType()
+    {
+        return playerType;
     }
     
     /**
