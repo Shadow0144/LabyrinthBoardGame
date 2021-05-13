@@ -49,10 +49,16 @@ public final class GameBoardController implements Initializable
         players = new ArrayList<Player>();
     }
     
-    public void setSceneController(SceneController sc)
+    /**
+     * Setups the game with the players and treasures picked
+     * @param sc Pointer to the controller for controlling the scene
+     * @param players The players in the game
+     * @param treasureCount The amount of treasures per player
+     */
+    public void setupController(SceneController sc, Player[] players, int treasureCount)
     {
         sceneController = sc;
-        game = new Game(this);
+        game = new Game(this, players, treasureCount);
     }
     
     /**

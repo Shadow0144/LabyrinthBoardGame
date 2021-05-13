@@ -48,16 +48,16 @@
 <?import labyrinthboardgame.gui.BoardView?>
 <?import labyrinthboardgame.gui.PlayerIconTray?>
 
-<VBox fx:id="gameWindow" prefHeight="738.0" prefWidth="823.0" style="-fx-background-color: #A58772;" 
-      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="labyrinthboardgame.gui.GameBoardController">
+<VBox fx:id="gameWindow" prefHeight="738.0" prefWidth="823.0" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
   <children>
       <MenuBar fx:id="menuBar">
         <menus>
           <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save..." />
-                  <MenuItem fx:id="loadMenuItem" mnemonicParsing="false" text="Load..." />
-              <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#save" text="Save..." />
+                  <MenuItem fx:id="loadMenuItem" mnemonicParsing="false" onAction="#load" text="Load..." />
+              <MenuItem fx:id="mainMenuItem" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Main Menu" />
+              <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#exit" text="Quit" />
             </items>
           </Menu>
           <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">

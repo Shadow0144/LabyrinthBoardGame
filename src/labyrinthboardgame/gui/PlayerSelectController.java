@@ -202,7 +202,7 @@ public final class PlayerSelectController implements Initializable
     {
         try
         {
-            Player[] players = new Player[4];
+            Player[] players = playerSelectorBox.getPlayers();
             int treasureCount = treasures[numberOfPlayers - 2];
             sceneController.moveToGameScene(players, treasureCount);
         }

@@ -18,21 +18,19 @@ public final class Game
     private final TileSet tileSet;
     private final TreasureSet treasureSet;
     
-    public Game(GameBoardController controller)
+    public Game(GameBoardController controller, Player[] players, int treasureCount)
     {
         // Create a new set of tiles and fill the board with them
         tileSet = new TileSet();
         controller.setupBoard(tileSet);
         
         // Set up the players and treasures
-        int playerCount = 4;
         treasureSet = new TreasureSet();
-        players = new Player[playerCount];
-        for (int i = 0; i < playerCount; i++)
+        this.players = players;
+        for (int i = 0; i < 4; i++)
         {
-            players[i] = new Player(i+1, Player.PlayerType.human);
             controller.addPlayer(players[i]);
-            treasureSet.assignTreasuresToPlayer(players[i], 0 / playerCount);
+            treasureSet.assignTreasuresToPlayer(players[i], treasureCount);
             players[i].showNextTreasure();
         }
     }

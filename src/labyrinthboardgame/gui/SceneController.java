@@ -65,7 +65,7 @@ public final class SceneController
         Parent root = loader.load();
         Scene scene = new Scene(root);
         GameBoardController controller = loader.getController();
-        controller.setSceneController(this);
+        controller.setupController(this, players, treasures);
         
         // Create a listener for handling rotating tiles with the keyboard
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
