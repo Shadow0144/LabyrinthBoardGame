@@ -48,7 +48,8 @@
 <?import labyrinthboardgame.gui.BoardView?>
 <?import labyrinthboardgame.gui.PlayerIconTray?>
 
-<VBox fx:id="gameWindow" prefHeight="738.0" prefWidth="823.0" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
+<VBox fx:id="gameWindow" prefHeight="738.0" prefWidth="823.0" style="-fx-background-color: #A58772;" 
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="labyrinthboardgame.gui.GameBoardController">
   <children>
       <MenuBar fx:id="menuBar">
         <menus>

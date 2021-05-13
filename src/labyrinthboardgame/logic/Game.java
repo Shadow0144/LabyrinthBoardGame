@@ -30,8 +30,12 @@ public final class Game
         for (int i = 0; i < 4; i++)
         {
             controller.addPlayer(players[i]);
-            treasureSet.assignTreasuresToPlayer(players[i], treasureCount);
-            players[i].showNextTreasure();
+            if (players[i].inGame())
+            {
+                treasureSet.assignTreasuresToPlayer(players[i], treasureCount);
+                players[i].showNextTreasure();
+            }
+            else {}
         }
     }
 }

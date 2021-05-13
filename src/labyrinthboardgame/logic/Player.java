@@ -66,6 +66,15 @@ public final class Player
     }
     
     /**
+     * Returns if the player is in the game (i.e. not type none)
+     * @return If the player is in the game
+     */
+    public boolean inGame()
+    {
+        return (playerType != PlayerType.none);
+    }
+    
+    /**
      * Sets a reference to the icon for this player
      * @param icon This player's icon
      */

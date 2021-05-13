@@ -59,6 +59,7 @@ public final class GameBoardController implements Initializable
     {
         sceneController = sc;
         game = new Game(this, players, treasureCount);
+        playerIconTray.updatePlayers(players);
     }
     
     /**
@@ -80,10 +81,14 @@ public final class GameBoardController implements Initializable
      */
     public void addPlayer(Player player)
     {
-        player.setIcon(playerIconTray.getIcon(player.getPlayerNumber()));
-        gameBoard.addPlayerCharacterToBoard(player);
-        players.add(player);
-        players.get(currentPlayer).setActive();
+        if (player.inGame())
+        {
+            player.setIcon(playerIconTray.getIcon(player.getPlayerNumber()));
+            gameBoard.addPlayerCharacterToBoard(player);
+            players.add(player);
+            players.get(currentPlayer).setActive();
+        }
+        else {}
     }
     
     /**

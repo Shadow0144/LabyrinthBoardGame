@@ -8,6 +8,7 @@ package labyrinthboardgame.gui;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.Tile;
 
 /**
@@ -64,6 +65,22 @@ public final class PlayerIconTray extends VBox
                 break;
         }
         return rIcon;
+    }
+    
+    /**
+     * Disable showing players not playing
+     * @param players The players in the game (or not)
+     */
+    public void updatePlayers(Player[] players)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (!players[i].inGame())
+            {
+                getChildren().remove(getIcon(i+1));
+            }
+            else {}
+        }
     }
     
     /**
