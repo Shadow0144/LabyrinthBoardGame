@@ -23,10 +23,10 @@ public final class PlayerSelectorBox extends VBox
         setAlignment(Pos.CENTER);
         
         selectors = new PlayerSelector[4];
-        selectors[0] = new PlayerSelector(Color.YELLOW);
-        selectors[1] = new PlayerSelector(Color.BLUE);
-        selectors[2] = new PlayerSelector(Color.GREEN);
-        selectors[3] = new PlayerSelector(Color.RED);
+        selectors[0] = new PlayerSelector(1, Color.YELLOW);
+        selectors[1] = new PlayerSelector(2, Color.BLUE);
+        selectors[2] = new PlayerSelector(3, Color.GREEN);
+        selectors[3] = new PlayerSelector(4, Color.RED);
         
         for (int i = 0; i < 4; i++)
         {

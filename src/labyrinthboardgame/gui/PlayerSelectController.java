@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
 import labyrinthboardgame.logic.Player;
 
 /**
@@ -23,6 +24,14 @@ import labyrinthboardgame.logic.Player;
  */
 public final class PlayerSelectController implements Initializable
 {
+    @FXML
+    private ImageView player1ImageView;
+    @FXML
+    private ImageView player2ImageView;
+    @FXML
+    private ImageView player3ImageView;
+    @FXML
+    private ImageView player4ImageView;
     @FXML
     private PlayerSelectorBox playerSelectorBox;
     @FXML
@@ -95,7 +104,11 @@ public final class PlayerSelectController implements Initializable
         sceneController = sc;
     }
     
-    public void increasePlayers()
+    /**
+     * Adjusts the maximum number of treasures available and updates the characters
+     * @param playerNumber The player number (i.e. 1, 2, 3, or 4)
+     */
+    public void addPlayer(int playerNumber)
     {
         numberOfPlayers++;
         updateTreasureSlider();
@@ -104,9 +117,28 @@ public final class PlayerSelectController implements Initializable
             startButton.setDisable(false);
         }
         else {}
+        switch (playerNumber) // Reenable the character
+        {
+            case 1:
+                player1ImageView.setVisible(true);
+                break;
+            case 2:
+                player2ImageView.setVisible(true);
+                break;
+            case 3:
+                player3ImageView.setVisible(true);
+                break;
+            case 4:
+                player4ImageView.setVisible(true);
+                break;
+        }
     }
     
-    public void decreasePlayers()
+    /**
+     * Adjusts the maximum number of treasures available and updates the characters
+     * @param playerNumber The player number (i.e. 1, 2, 3, or 4)
+     */
+    public void removePlayer(int playerNumber)
     {
         numberOfPlayers--;
         updateTreasureSlider();
@@ -115,6 +147,21 @@ public final class PlayerSelectController implements Initializable
             startButton.setDisable(true);
         }
         else {}
+        switch (playerNumber) // Disable the character
+        {
+            case 1:
+                player1ImageView.setVisible(false);
+                break;
+            case 2:
+                player2ImageView.setVisible(false);
+                break;
+            case 3:
+                player3ImageView.setVisible(false);
+                break;
+            case 4:
+                player4ImageView.setVisible(false);
+                break;
+        }
     }
     
     private void updateTreasureSlider()

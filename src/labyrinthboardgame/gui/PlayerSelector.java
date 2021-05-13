@@ -34,14 +34,20 @@ public final class PlayerSelector extends VBox
     
     private PlayerSelectController controller;
     
+    private final int playerNumber;
+    private final Color playerColor;
+    
     /**
      * Allows selecting the player type (e.g. human or ai) for each player
+     * @param playerNumber The player number (i.e. 1, 2, 3, or 4)
      * @param playerColor The background color for this selector
      */
-    public PlayerSelector(Color playerColor)
+    public PlayerSelector(int playerNumber, Color playerColor)
     {
         super();
         setAlignment(Pos.CENTER);
+        this.playerNumber = playerNumber;
+        this.playerColor = playerColor;
         
         nameText = new TextField("Player Name");
         nameText.setAlignment(Pos.CENTER);
@@ -133,11 +139,13 @@ public final class PlayerSelector extends VBox
         {
             case none:
                 playerType = Player.PlayerType.advanced_ai;
-                controller.increasePlayers();
+                controller.addPlayer(playerNumber);
+                this.setBackground(new Background(new BackgroundFill(playerColor, CornerRadii.EMPTY, Insets.EMPTY)));
                 break;
             case human:
                 playerType = Player.PlayerType.none;
-                controller.decreasePlayers();
+                controller.removePlayer(playerNumber);
+                this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 break;
             case ai:
                 playerType = Player.PlayerType.human;
@@ -158,7 +166,8 @@ public final class PlayerSelector extends VBox
         {
             case none:
                 playerType = Player.PlayerType.human;
-                controller.increasePlayers();
+                controller.addPlayer(playerNumber);
+                this.setBackground(new Background(new BackgroundFill(playerColor, CornerRadii.EMPTY, Insets.EMPTY)));
                 break;
             case human:
                 playerType = Player.PlayerType.ai;
@@ -168,7 +177,8 @@ public final class PlayerSelector extends VBox
                 break;
             case advanced_ai:
                 playerType = Player.PlayerType.none;
-                controller.decreasePlayers();
+                controller.removePlayer(playerNumber);
+                this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 break;
         }
         updatePlayerTypeText();
