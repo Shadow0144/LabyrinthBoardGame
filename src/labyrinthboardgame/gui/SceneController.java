@@ -5,12 +5,14 @@
  */
 package labyrinthboardgame.gui;
 
+import java.io.File;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import labyrinthboardgame.logic.JSONParser;
 import labyrinthboardgame.logic.Player;
 
 /**
@@ -24,6 +26,11 @@ public final class SceneController
     public SceneController(Stage stage)
     {
         currentStage = stage;
+    }
+    
+    public Stage getStage()
+    {
+        return currentStage;
     }
     
     /**
@@ -57,10 +64,49 @@ public final class SceneController
     /**
      * Changes the current scene to be the game scene
      * Sets up the board, treasures, and players
+     * @param players The players in this game
+     * @param treasures The number of treasures per player
      * @throws Exception 
      */
     public void moveToGameScene(Player[] players, int treasures) throws Exception
     {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        GameBoardController controller = loader.getController();
+        controller.setupController(this, players, treasures);
+        
+        // Create a listener for handling rotating tiles with the keyboard
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.R) 
+            {
+                if (key.isShiftDown())
+                {
+                    controller.rotateTileCounterClockwise();
+                }
+                else
+                {
+                    controller.rotateTileClockwise();
+                }
+            }
+        });
+        
+        currentStage.setScene(scene);
+    }
+    
+    /**
+     * Changes the current scene to be the game scene
+     * Sets up the board, treasures, and players from a save file
+     * @param save The save to load from
+     * @throws Exception 
+     */
+    public void moveToGameScene(File save) throws Exception
+    {
+        JSONParser parser = new JSONParser();
+        parser.parseSave(save);
+        Player[] players = parser.getPlayers();
+        int treasures = 0; // TODO
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);

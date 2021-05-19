@@ -25,6 +25,8 @@ public final class Tile
     };
     private final Tile.Shape tileShape;
     private int currentRotation;
+    private int currentRow;
+    private int currentCol;
     
     private Treasure tileTreasure;
     private int playerStartNumber;

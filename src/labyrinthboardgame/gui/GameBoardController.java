@@ -5,6 +5,7 @@
  */
 package labyrinthboardgame.gui;
 
+import java.io.File;
 import labyrinthboardgame.logic.Tile;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.TileSet;
@@ -195,7 +197,23 @@ public final class GameBoardController implements Initializable
      */
     public void load(ActionEvent e)
     {
-        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JSON save", "*.json"));
+        File save = fileChooser.showOpenDialog(sceneController.getStage());
+        if (save != null)
+        {
+            try
+        {
+            sceneController.moveToGameScene(save);
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Error! Failed to move to Main Menu Screen.");
+        }
+        }
+        else {}
     }
     
     /**

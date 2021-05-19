@@ -5,6 +5,8 @@
  */
 package labyrinthboardgame.gui;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -34,11 +36,15 @@ public final class PlayerIconTray extends VBox
         icon4 = new PlayerIcon(Color.RED);
         nextTilePane = new Pane();
         
+        nextTilePane.setPadding(new Insets(4, 4, 4, 4));
+        
         getChildren().add(icon1);
         getChildren().add(icon2);
         getChildren().add(nextTilePane);
         getChildren().add(icon3);
         getChildren().add(icon4);
+        
+        setAlignment(Pos.CENTER);
     }
     
     /**
@@ -68,7 +74,7 @@ public final class PlayerIconTray extends VBox
     }
     
     /**
-     * Disable showing players not playing
+     * Disable showing players not playing and sets the name strings
      * @param players The players in the game (or not)
      */
     public void updatePlayers(Player[] players)
@@ -79,7 +85,10 @@ public final class PlayerIconTray extends VBox
             {
                 getChildren().remove(getIcon(i+1));
             }
-            else {}
+            else 
+            {
+                getIcon(i+1).setPlayerName(players[i].getPlayerName());
+            }
         }
     }
     

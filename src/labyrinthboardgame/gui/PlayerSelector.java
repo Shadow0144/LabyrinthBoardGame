@@ -49,7 +49,23 @@ public final class PlayerSelector extends VBox
         this.playerNumber = playerNumber;
         this.playerColor = playerColor;
         
-        nameText = new TextField("Player Name");
+        String defaultName = "";
+        switch (playerNumber)
+        {
+            case 1:
+                defaultName = "Yellow Mage";
+                break;
+            case 2:
+                defaultName = "Blue Wizard";
+                break;
+            case 3:
+                defaultName = "Green Warlock";
+                break;
+            case 4:
+                defaultName = "Susan";
+                break;
+        }
+        nameText = new TextField(defaultName);
         nameText.setAlignment(Pos.CENTER);
         nameText.setFont(Font.font(14));
         setMargin(nameText, new Insets(12, 12, 8, 12));
@@ -191,5 +207,14 @@ public final class PlayerSelector extends VBox
     public Player.PlayerType getPlayerType()
     {
         return playerType;
+    }
+    
+    /**
+     * Returns the player name
+     * @return The player name
+     */
+    public String getPlayerName()
+    {
+        return nameText.getText();
     }
 }

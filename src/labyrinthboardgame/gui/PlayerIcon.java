@@ -5,13 +5,16 @@
  */
 package labyrinthboardgame.gui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import static javafx.scene.layout.StackPane.setAlignment;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -21,11 +24,12 @@ import javafx.scene.text.TextAlignment;
  *
  * @author Corbi
  */
-public final class PlayerIcon extends StackPane
+public final class PlayerIcon extends VBox
 {
     private final Circle playerIcon;
     private final ImageView playerTreasure;
     private final Text playerTreasuresRemainingText;
+    private final Label playerNameLabel;
     
     private final int PLAYER_ICON_RADIUS = 30;
     private final int UNSELECTED_STROKE = 1;
@@ -42,13 +46,15 @@ public final class PlayerIcon extends StackPane
      */
     public PlayerIcon(Color color)
     {
+        StackPane innerPane = new StackPane();
+        
         playerIcon = new Circle();
         playerIcon.setRadius(PLAYER_ICON_RADIUS);
         playerIcon.setStroke(Color.BLACK);
         playerIcon.setStrokeWidth(UNSELECTED_STROKE);
         playerIcon.setFill(color);
         
-        getChildren().add(playerIcon);
+        innerPane.getChildren().add(playerIcon);
         
         AnchorPane treasuresRemainingPane = new AnchorPane();
         
@@ -69,11 +75,31 @@ public final class PlayerIcon extends StackPane
         playerTreasuresRemainingText.setTextOrigin(VPos.CENTER);
         treasuresRemainingPane.getChildren().add(playerTreasuresRemainingText);
         
-        getChildren().add(treasuresRemainingPane);
-        setAlignment(treasuresRemainingPane, Pos.TOP_RIGHT);
+        innerPane.getChildren().add(treasuresRemainingPane);
+        innerPane.setAlignment(treasuresRemainingPane, Pos.TOP_RIGHT);
         
         playerTreasure = new ImageView();
-        getChildren().add(playerTreasure);
+        innerPane.getChildren().add(playerTreasure);
+        
+        getChildren().add(innerPane);
+        
+        // Put the name below everything
+        playerNameLabel = new Label();
+        playerNameLabel.setAlignment(Pos.CENTER);
+        getChildren().add(playerNameLabel);
+        
+        setAlignment(Pos.CENTER);
+        
+        this.setPadding(new Insets(4, 4, 4, 4));
+    }
+    
+    /**
+     * Sets player name
+     * @param name The player name
+     */
+    public void setPlayerName(String name)
+    {
+        playerNameLabel.setText(name);
     }
     
     /**

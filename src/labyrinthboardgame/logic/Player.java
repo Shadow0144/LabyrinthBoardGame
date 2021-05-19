@@ -36,17 +36,21 @@ public final class Player
     private final LinkedList<Treasure> treasures;
     private Treasure currentTreasure;
     
+    private final String playerName;
+    
     /**
      * A player, which has a list of treasures to collect and a character to
      * move around the board
      * @param playerNumber The number of this player, which also determines
      * @param playerType The type of player (e.g. absent, human, or an A.I.)
      * their color
+     * @param playerName The name of the player
      */
-    public Player(int playerNumber, PlayerType playerType)
+    public Player(int playerNumber, PlayerType playerType, String playerName)
     {
         this.playerType = playerType;
-        number = playerNumber;
+        this.playerName = playerName;
+        this.number = playerNumber;
         currentTile = null;
         hasWon = false;
         
@@ -63,6 +67,15 @@ public final class Player
     public PlayerType getPlayerType()
     {
         return playerType;
+    }
+    
+    /**
+     * Returns the player name
+     * @return The player name
+     */
+    public String getPlayerName()
+    {
+        return playerName;
     }
     
     /**

@@ -57,7 +57,7 @@ public final class PlayerSelectorBox extends VBox
         
         for (int i = 0; i < 4; i++)
         {
-            players[i] = new Player(i+1, selectors[i].getPlayerType());
+            players[i] = new Player(i+1, selectors[i].getPlayerType(), selectors[i].getPlayerName());
         }
         
         return players;

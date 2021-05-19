@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -54,7 +55,11 @@ public final class MainMenuController implements Initializable
      */
     public void loadGame(ActionEvent e)
     {
-        // TODO
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JSON save", "*.json"));
+        fileChooser.showOpenDialog(sceneController.getStage());
     }
     
     /**
