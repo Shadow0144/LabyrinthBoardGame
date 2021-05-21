@@ -8,7 +8,6 @@ package labyrinthboardgame.logic;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import labyrinthboardgame.gui.BoardView;
 import labyrinthboardgame.gui.PlayerCharacter;
 import labyrinthboardgame.gui.TileView;
 
@@ -37,12 +36,13 @@ public final class Tile
     private boolean buildingPath;
     
     private TileView tileView;
+    private TileView previewTileView;
     
     /**
      * Copy constructor, used for creating a copy to display such as in previews
      * @param tile The tile to copy
      */
-    public Tile(Tile tile)
+    /*public Tile(Tile tile)
     {
         super();
         tileShape = tile.getTileShape();
@@ -85,7 +85,7 @@ public final class Tile
         tileView.setupPlayers();
         
         setupOverlays();
-    }
+    }*/
     
     /**
      * Creates a tile of a particular shape and rotation, but no treasure
@@ -159,6 +159,7 @@ public final class Tile
         if (treasure != null)
         {
             tileView.addTreasure(tileTreasure.getTreasureImageName());
+            previewTileView.addTreasure(tileTreasure.getTreasureImageName());
         }
         else {}
         tileView.setupPlayers();
@@ -173,6 +174,7 @@ public final class Tile
     {
         accessible = false;
         tileView = new TileView(tileShape, currentRotation);
+        previewTileView = new TileView(tileShape, currentRotation);
     }
     
     /**
@@ -201,16 +203,26 @@ public final class Tile
     }
     
     /**
-     * Adds a listener to move player characters
-     * @param gameBoard A reference to the parent game board
+     * Returns a reference to the graphical representation of the tile for previewing
+     * on the arrow buttons
+     * @return The preview tile view
      */
-    public void setListener(BoardView gameBoard)
+    public TileView getPreviewTileView()
+    {
+        return previewTileView;
+    }
+    
+    /**
+     * Adds a listener to move player characters
+     * @param game A reference to the parent game
+     */
+    public void setListener(Game game)
     {
         tileView.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
             { 
                 if (accessible)
                 {
-                    gameBoard.movePlayerToTile(this); 
+                    game.movePlayerToTile(this); 
                 }
                 else {}
             });
@@ -269,7 +281,8 @@ public final class Tile
     public void rotateClockwise()
     {
         currentRotation += 90;
-        tileView.setRotate(currentRotation);
+        tileView.setRotation(currentRotation);
+        previewTileView.setRotation(currentRotation);
         refreshPossibleNeighbors();
     }
     
@@ -279,7 +292,8 @@ public final class Tile
     public void rotateCounterClockwise()
     {
         currentRotation -= 90;
-        tileView.setRotate(currentRotation);
+        tileView.setRotation(currentRotation);
+        previewTileView.setRotation(currentRotation);
         refreshPossibleNeighbors();
     }
     

@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import static javafx.scene.layout.StackPane.setAlignment;
+import labyrinthboardgame.logic.Game;
 
 /**
  *
@@ -18,8 +19,6 @@ import static javafx.scene.layout.StackPane.setAlignment;
  */
 public final class InsertTileButton extends StackPane
 {
-    BoardView board;
-    
     // Position of the arrow
     public enum ArrowPosition
     {
@@ -41,13 +40,11 @@ public final class InsertTileButton extends StackPane
     
     /**
      * A button for inserting tiles into the board
-     * @param gameBoard A reference to the game board the arrow belongs to
+     * @param game A reference to the game the arrow belongs to
      * @param position The position the tiles are inserted from
      */
-    public InsertTileButton(BoardView gameBoard, ArrowPosition position)
+    public InsertTileButton(Game game, ArrowPosition position)
     {
-        board = gameBoard;
-        
         ImageView arrowImageView = new ImageView();
         String arrowImageString = getClass().getResource("assets/arrow.png").toString();
         Image arrowImage = new Image(arrowImageString, ARROW_SIZE, ARROW_SIZE, false, true);
@@ -83,13 +80,13 @@ public final class InsertTileButton extends StackPane
         arrowImageView.setRotate(rotation);
         
         this.setOnMouseEntered(event -> {
-            setPreviewTile(gameBoard.getNextTile());
+            setPreviewTile(game.getNextTile());
         });
         this.setOnMouseExited(event -> {
             removePreviewTile();
         });
         this.setOnMouseClicked(event -> {
-            insertTile();
+            game.insertTile(arrow);
         });
         
         enabled = true;
@@ -106,9 +103,9 @@ public final class InsertTileButton extends StackPane
             if (enabled)
             {
                 this.previewTile = previewTile;
-                previewTile.getTileView().setOpacity(PREVIEW_OPACITY);
-                getChildren().add(previewTile.getTileView());
-                setAlignment(previewTile.getTileView(), Pos.CENTER);
+                previewTile.getPreviewTileView().setOpacity(PREVIEW_OPACITY);
+                getChildren().add(previewTile.getPreviewTileView());
+                setAlignment(previewTile.getPreviewTileView(), Pos.CENTER);
             }
             else {}
         }
@@ -122,9 +119,10 @@ public final class InsertTileButton extends StackPane
     {
         if (previewTile != null)
         {
-            getChildren().remove(previewTile.getTileView());
+            getChildren().remove(previewTile.getPreviewTileView());
             previewTile = null;
         }
+        else {}
     }
     
     /**
@@ -146,22 +144,6 @@ public final class InsertTileButton extends StackPane
         if (enabled && previewTile != null)
         {
             previewTile.rotateCounterClockwise();
-        }
-    }
-    
-    /**
-     * Inserts the next tile into the board
-     */
-    private void insertTile()
-    {
-        if (enabled)
-        {
-            board.insertTile(arrow);
-            if (previewTile != null)
-            {
-                removePreviewTile();
-            }
-            else {}
         }
     }
     

@@ -94,6 +94,7 @@ public final class Player
     public void setIcon(PlayerIcon icon)
     {
         display = icon;
+        display.setPlayerName(playerName);
     }
     
     /**

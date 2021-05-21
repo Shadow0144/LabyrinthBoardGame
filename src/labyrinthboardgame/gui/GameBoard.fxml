@@ -73,7 +73,7 @@
          <children>
           <AnchorPane fx:id="boardPane">
               <children>
-                 <BoardView fx:id="gameBoard" alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                 <BoardView fx:id="gameBoardView" alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                    <columnConstraints>
                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

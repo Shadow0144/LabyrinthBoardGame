@@ -11,21 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import labyrinthboardgame.gui.PlayerSelectorBox?>
 
-<VBox fx:id="playerSelectBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="820.0" style="-fx-background-color: #A58772;" 
+<VBox fx:id="playerSelectBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #A58772;" 
       xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="labyrinthboardgame.gui.PlayerSelectController">
    <children>
-      <VBox fx:id="titleBox" alignment="CENTER" prefWidth="100.0" style="-fx-background-color: #604E43;">
-         <children>
-            <Label fx:id="titleLabel" alignment="CENTER" text="The AMAZEing Labyrinth" textAlignment="CENTER" underline="true">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-               </VBox.margin>
-            </Label>
-         </children>
-      </VBox>
       <HBox fx:id="playerCharacterBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #776252;">
          <children>
             <ImageView fx:id="player1ImageView" fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">

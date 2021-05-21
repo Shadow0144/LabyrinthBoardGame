@@ -8,7 +8,6 @@ package labyrinthboardgame.gui;
 import java.io.File;
 import labyrinthboardgame.logic.Tile;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +17,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.Player;
-import labyrinthboardgame.logic.TileSet;
 
 /**
  *
@@ -29,16 +27,11 @@ public final class GameBoardController implements Initializable
     @FXML
     private PlayerIconTray playerIconTray;
     @FXML
-    private Tile nextTile;
-    @FXML
     private VBox playerWonDisplay;
     @FXML
     private Label playerWonText;
     @FXML
-    private BoardView gameBoard;
-    
-    private ArrayList<Player> players;
-    private int currentPlayer;
+    private BoardView gameBoardView;
     
     private SceneController sceneController;
     
@@ -47,8 +40,7 @@ public final class GameBoardController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        currentPlayer = 0;
-        players = new ArrayList<Player>();
+        
     }
     
     /**
@@ -60,69 +52,27 @@ public final class GameBoardController implements Initializable
     public void setupController(SceneController sc, Player[] players, int treasureCount)
     {
         sceneController = sc;
-        game = new Game(this, players, treasureCount);
-        playerIconTray.updatePlayers(players);
+        game = new Game(this, players, treasureCount, gameBoardView, playerIconTray);
+        gameBoardView.setupArrows(game);
     }
     
-    /**
-     * Sets up the game board, filling in the tiles
-     * @param tileSet The set of tiles to fill the game board with
-     */
-    public void setupBoard(TileSet tileSet)
+    public void setWinningPlayer(int player)
     {
-        gameBoard.setGameBoardController(this);
-        gameBoard.setupTiles(tileSet);
-        updateNextTile();
-    }
-    
-    /**
-     * Stores a reference to a player,
-     * links the player to its icon and adds the player's character to the game board,
-     * and sets the current player (i.e. player 1) as active
-     * @param player - the player to store and update
-     */
-    public void addPlayer(Player player)
-    {
-        if (player.inGame())
+        playerWonDisplay.setVisible(true);
+        switch (player) // Current player (as opposed to player number) starts at 0
         {
-            player.setIcon(playerIconTray.getIcon(player.getPlayerNumber()));
-            gameBoard.addPlayerCharacterToBoard(player);
-            players.add(player);
-            players.get(currentPlayer).setActive();
-        }
-        else {}
-    }
-    
-    /**
-     * Checks if any players have won and displays a message if they have
-     * Otherwise switches the next player to active
-     */
-    public void switchPlayers()
-    {
-        if (!players.get(currentPlayer).getHasWon())
-        {
-            players.get(currentPlayer).setInactive();
-            currentPlayer = (currentPlayer + 1) % players.size();
-            players.get(currentPlayer).setActive();
-        }
-        else 
-        {
-            playerWonDisplay.setVisible(true);
-            switch (currentPlayer) // Current player (as opposed to player number) starts at 0
-            {
-                case 0:
-                    playerWonText.setText("Yellow Player Wins!");
-                    break;
-                case 1:
-                    playerWonText.setText("Blue Player Wins!");
-                    break;
-                case 2:
-                    playerWonText.setText("Green Player Wins!");
-                    break;
-                case 3:
-                    playerWonText.setText("Red Player Wins!");
-                    break;
-            }
+            case 0:
+                playerWonText.setText("Yellow Player Wins!");
+                break;
+            case 1:
+                playerWonText.setText("Blue Player Wins!");
+                break;
+            case 2:
+                playerWonText.setText("Green Player Wins!");
+                break;
+            case 3:
+                playerWonText.setText("Red Player Wins!");
+                break;
         }
     }
     
@@ -131,8 +81,7 @@ public final class GameBoardController implements Initializable
      */
     public void rotateTileClockwise()
     {
-        nextTile.rotateClockwise();
-        gameBoard.rotatePreviewClockwise();
+        game.rotateNextTileClockwise();
     }
     
     /**
@@ -140,8 +89,7 @@ public final class GameBoardController implements Initializable
      */
     public void rotateTileCounterClockwise()
     {
-        nextTile.rotateCounterClockwise();
-        gameBoard.rotatePreviewCounterClockwise();
+        game.rotateNextTileCounterClockwise();
     }
     
     /**
@@ -149,21 +97,8 @@ public final class GameBoardController implements Initializable
      */
     public void updateNextTile()
     {
-        nextTile = gameBoard.getNextTile();
-        playerIconTray.updateNextTile(nextTile);
-    }
-    
-    /**
-     * Enables drawing paths available to the current player
-     */
-    public void showPaths()
-    {
-        players.get(currentPlayer).showPaths();
-    }
-    
-    public Player getCurrentPlayer()
-    {
-        return players.get(currentPlayer);
+        /*nextTile = gameBoard.getNextTile();
+        playerIconTray.updateNextTile(nextTile);*/
     }
     
     /**
@@ -211,6 +146,7 @@ public final class GameBoardController implements Initializable
         catch (Exception ex)
         {
             System.out.println("Error! Failed to move to Main Menu Screen.");
+            System.out.println(ex);
         }
         }
         else {}

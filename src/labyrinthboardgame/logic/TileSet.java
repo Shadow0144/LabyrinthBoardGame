@@ -148,4 +148,14 @@ public final class TileSet
     {
         nextTile.setRotation(rotation);
     }
+    
+    public void rotateNextTileClockwise()
+    {
+        nextTile.rotateClockwise();
+    }
+    
+    public void rotateNextTileCounterClockwise()
+    {
+        nextTile.rotateCounterClockwise();
+    }
 }

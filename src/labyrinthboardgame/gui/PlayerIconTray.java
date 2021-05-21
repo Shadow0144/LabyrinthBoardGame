@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import labyrinthboardgame.logic.Player;
 import labyrinthboardgame.logic.Tile;
 
 /**
@@ -21,9 +20,10 @@ public final class PlayerIconTray extends VBox
 {
     private final PlayerIcon icon1;
     private final PlayerIcon icon2;
-    private final Pane nextTilePane;
+    private final VBox nextTilePane;
     private final PlayerIcon icon3;
     private final PlayerIcon icon4;
+    private Tile nextTile;
         
     /**
      * Builds a tray to hold the player icons and the next tile to be inserted
@@ -34,13 +34,13 @@ public final class PlayerIconTray extends VBox
         icon2 = new PlayerIcon(Color.BLUE);
         icon3 = new PlayerIcon(Color.GREEN);
         icon4 = new PlayerIcon(Color.RED);
-        nextTilePane = new Pane();
+        nextTilePane = new VBox();
         
-        nextTilePane.setPadding(new Insets(4, 4, 4, 4));
+        nextTilePane.setPadding(new Insets(8, 8, 8, 8));
         
+        getChildren().add(nextTilePane);
         getChildren().add(icon1);
         getChildren().add(icon2);
-        getChildren().add(nextTilePane);
         getChildren().add(icon3);
         getChildren().add(icon4);
         
@@ -52,7 +52,7 @@ public final class PlayerIconTray extends VBox
      * @param player The player number
      * @return A reference to a player icon
      */
-    public PlayerIcon getIcon(int player)
+    public PlayerIcon getPlayerIcon(int player)
     {
         PlayerIcon rIcon = null;
         switch (player)
@@ -74,22 +74,12 @@ public final class PlayerIconTray extends VBox
     }
     
     /**
-     * Disable showing players not playing and sets the name strings
-     * @param players The players in the game (or not)
+     * Disable showing players not playing
+     * @param playerNumber The players not in the game
      */
-    public void updatePlayers(Player[] players)
+    public void removePlayerIcon(int playerNumber)
     {
-        for (int i = 0; i < 4; i++)
-        {
-            if (!players[i].inGame())
-            {
-                getChildren().remove(getIcon(i+1));
-            }
-            else 
-            {
-                getIcon(i+1).setPlayerName(players[i].getPlayerName());
-            }
-        }
+        getChildren().remove(getPlayerIcon(playerNumber));
     }
     
     /**
@@ -98,7 +88,13 @@ public final class PlayerIconTray extends VBox
      */
     public void updateNextTile(Tile nextTile)
     {
+        this.nextTile = nextTile;
         nextTilePane.getChildren().clear();
         nextTilePane.getChildren().add(nextTile.getTileView());
+    }
+    
+    public void updateNextTileRotation(int rotation)
+    {
+        nextTile.setRotation(rotation);
     }
 }
