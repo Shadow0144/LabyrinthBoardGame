@@ -152,6 +152,16 @@ public final class Player
         display.updateTreasuresRemaining(--playerTreasuresRemaining);
     }
     
+    public LinkedList<Treasure> getTreasures()
+    {
+        return treasures;
+    }
+    
+    public Tile getCurrentTile()
+    {
+        return currentTile;
+    }
+    
     /**
      * Enables drawing paths from the player's current tile, showing all possible
      * paths from that tile

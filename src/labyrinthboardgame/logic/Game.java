@@ -20,31 +20,40 @@ public final class Game
     private final Player[] players;
     
     private final TileSet tileSet;
-    private final TreasureSet treasureSet;
     
     private final Board gameBoard;
     
     private final GameBoardController controller;
     
-    public Game(GameBoardController controller, Player[] players, int treasureCount, 
-            BoardView gameBoardView, PlayerIconTray playerIconTray)
+    public Game(GameBoardController controller, Player[] players, int treasureCount)
     {
         this.controller = controller;
         
-        // Set up the treasures
-        treasureSet = new TreasureSet();
-        
         // Create a new set of tiles and fill the board with them
         tileSet = new TileSet();
-        gameBoard = new Board(this, tileSet, gameBoardView, playerIconTray);
+        gameBoard = new Board(this, tileSet, controller.getGameBoardView(), controller.getPlayerIconTray());
         
         // Set up the players
         this.players = players;
-        setupPlayers(treasureCount, playerIconTray);
+        setupPlayers(treasureCount, controller.getPlayerIconTray());
+    }
+    
+    public Game(GameBoardController controller, Player[] players, Tile[][] tiles, Tile nextTile)
+    {
+        this.controller = controller;
+        
+        tileSet = new TileSet(tiles, nextTile);
+        gameBoard = new Board(this, tileSet, controller.getGameBoardView(), controller.getPlayerIconTray());
+        
+        // Set up the players
+        this.players = players;
     }
     
     private void setupPlayers(int treasureCount, PlayerIconTray playerIconTray)
     {
+        // Set up the treasures
+        TreasureSet treasureSet = new TreasureSet();
+        
         // Set up the players
         currentPlayer = -1;
         for (int i = 0; i < 4; i++)
@@ -90,6 +99,11 @@ public final class Game
     public int getCurrentPlayer()
     {
         return currentPlayer;
+    }
+    
+    public Player getPlayer(int playerIndex)
+    {
+        return players[playerIndex];
     }
     
     public Board getBoard()
@@ -144,5 +158,20 @@ public final class Game
     public void rotateNextTileCounterClockwise()
     {
         tileSet.rotateNextTileClockwise();
+    }
+    
+    public int findPlayerRow(int playerIndex)
+    {
+        return gameBoard.findTileRow(players[playerIndex].getCurrentTile());
+    }
+    
+    public int findPlayerCol(int playerIndex)
+    {
+        return gameBoard.findTileCol(players[playerIndex].getCurrentTile());
+    }
+    
+    public void save(String fileName)
+    {
+        GameSaver.saveGame(fileName, this);
     }
 }

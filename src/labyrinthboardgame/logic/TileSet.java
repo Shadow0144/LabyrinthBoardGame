@@ -104,6 +104,26 @@ public final class TileSet
         nextTile = tiles.get(33); // 34 tiles
     }
     
+    public TileSet(Tile[][] loadedTiles, Tile loadedNextTile)
+    {
+        tiles = new ArrayList<Tile>();
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (((i % 2) == 0) && ((j % 2) == 0))
+                {
+                    // Throw out the static tiles
+                }
+                else
+                {
+                    tiles.add(loadedTiles[i][j]);
+                }
+            }
+        }
+        nextTile = loadedNextTile;
+    }
+    
     /**
      * Returns the next tile to add to the board
      * @return The next tile to add to the board

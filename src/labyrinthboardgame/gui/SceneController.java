@@ -12,7 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import labyrinthboardgame.logic.JSONParser;
+import labyrinthboardgame.logic.Game;
+import labyrinthboardgame.logic.GameLoader;
+import labyrinthboardgame.logic.GameSaver;
 import labyrinthboardgame.logic.Player;
 
 /**
@@ -102,16 +104,13 @@ public final class SceneController
      */
     public void moveToGameScene(File save) throws Exception
     {
-        JSONParser parser = new JSONParser();
-        parser.parseSave(save);
-        Player[] players = parser.getPlayers();
-        int treasures = 0; // TODO
-        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         GameBoardController controller = loader.getController();
-        controller.setupController(this, players, treasures);
+        
+        Game game = GameLoader.loadGame(save.toString(), controller);
+        controller.setupController(this, game);
         
         // Create a listener for handling rotating tiles with the keyboard
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {

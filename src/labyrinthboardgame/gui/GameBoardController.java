@@ -6,7 +6,6 @@
 package labyrinthboardgame.gui;
 
 import java.io.File;
-import labyrinthboardgame.logic.Tile;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -52,7 +51,19 @@ public final class GameBoardController implements Initializable
     public void setupController(SceneController sc, Player[] players, int treasureCount)
     {
         sceneController = sc;
-        game = new Game(this, players, treasureCount, gameBoardView, playerIconTray);
+        game = new Game(this, players, treasureCount);
+        gameBoardView.setupArrows(game);
+    }
+    
+    /**
+     * Setups the game with the players and treasures picked
+     * @param sc Pointer to the controller for controlling the scene
+     * @param loadedGame A game loaded from a save
+     */
+    public void setupController(SceneController sc, Game loadedGame)
+    {
+        sceneController = sc;
+        game = loadedGame;
         gameBoardView.setupArrows(game);
     }
     
@@ -74,6 +85,16 @@ public final class GameBoardController implements Initializable
                 playerWonText.setText("Red Player Wins!");
                 break;
         }
+    }
+    
+    public BoardView getGameBoardView()
+    {
+        return gameBoardView;
+    }
+    
+    public PlayerIconTray getPlayerIconTray()
+    {
+        return playerIconTray;
     }
     
     /**
@@ -123,7 +144,7 @@ public final class GameBoardController implements Initializable
      */
     public void save(ActionEvent e)
     {
-        
+        game.save("test.json");
     }
     
     /**
@@ -140,14 +161,14 @@ public final class GameBoardController implements Initializable
         if (save != null)
         {
             try
-        {
-            sceneController.moveToGameScene(save);
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Error! Failed to move to Main Menu Screen.");
-            System.out.println(ex);
-        }
+            {
+                sceneController.moveToGameScene(save);
+            }
+            catch (Exception ex)
+            {
+                System.out.println("Error! Failed to move to Main Menu Screen.");
+                System.out.println(ex);
+            }
         }
         else {}
     }

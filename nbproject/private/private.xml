@@ -5,12 +5,7 @@
         <group>
             <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/GameBoardController.java</file>
             <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/Game.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/PlayerIconTray.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/PlayerSelectController.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/InsertTileButton.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/Board.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/SceneController.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/BoardView.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/JSONParser.java</file>
         </group>
     </open-files>
 </project-private>

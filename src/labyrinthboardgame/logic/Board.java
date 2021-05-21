@@ -278,4 +278,47 @@ public final class Board
             }
         }
     }
+    
+    public Tile getTile(int i, int j)
+    {
+        return tiles[i][j];
+    }
+    
+    public int findTileRow(Tile tile)
+    {
+        int r = -1;
+        
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (tile == tiles[i][j])
+                {
+                    return i; // Return early
+                }
+                else {}
+            }
+        }
+        
+        return r;
+    }
+    
+    public int findTileCol(Tile tile)
+    {
+        int r = -1;
+        
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (tile == tiles[i][j])
+                {
+                    return j; // Return early
+                }
+                else {}
+            }
+        }
+        
+        return r;
+    }
 }
