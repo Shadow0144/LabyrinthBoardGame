@@ -5,6 +5,7 @@
  */
 package labyrinthboardgame.gui;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -57,10 +58,28 @@ public final class MainMenuController implements Initializable
     public void loadGame(ActionEvent e)
     {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("Load Saved Game");
+        fileChooser.setInitialDirectory(new File("."));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("JSON save", "*.json"));
-        fileChooser.showOpenDialog(sceneController.getStage());
+        File file = fileChooser.showOpenDialog(sceneController.getStage());
+        
+        if (file != null) 
+        {
+            try
+            {
+                sceneController.moveToGameScene(file);
+            }
+            catch (Exception ex)
+            {
+                System.out.println("Error! Failed to move to Game Screen.");
+                System.out.println(ex);
+            }
+        } 
+        else 
+        {
+            // Do nothing
+        }
     }
     
     /**

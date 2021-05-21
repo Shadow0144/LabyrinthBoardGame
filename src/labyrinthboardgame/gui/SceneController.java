@@ -14,7 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.GameLoader;
-import labyrinthboardgame.logic.GameSaver;
 import labyrinthboardgame.logic.Player;
 
 /**

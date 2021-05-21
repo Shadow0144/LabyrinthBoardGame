@@ -106,6 +106,7 @@ public final class TileSet
     
     public TileSet(Tile[][] loadedTiles, Tile loadedNextTile)
     {
+        tileIndex = 0;
         tiles = new ArrayList<Tile>();
         for (int i = 0; i < 7; i++)
         {

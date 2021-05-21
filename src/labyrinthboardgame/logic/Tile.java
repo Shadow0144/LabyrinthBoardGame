@@ -37,55 +37,6 @@ public final class Tile
     private TileView previewTileView;
     
     /**
-     * Copy constructor, used for creating a copy to display such as in previews
-     * @param tile The tile to copy
-     */
-    /*public Tile(Tile tile)
-    {
-        super();
-        tileShape = tile.getTileShape();
-        currentRotation = tile.getRotation();
-        setupTile();
-        if (tile.getTreasure() != null) // Has treasure
-        {
-            playerStartNumber = -1;
-            tileTreasure = tile.getTreasure();
-            if (tileTreasure != null)
-            {
-                tileView.addTreasure(tileTreasure.getTreasureImageName());
-            }
-            else {}
-        }
-        else if (tile.getPlayer() != -1) // Hsa a player start
-        {
-            tileTreasure = null;
-            playerStartNumber = tile.getPlayer();
-            switch (playerStartNumber)
-            {
-                case 1:
-                    tileView.addPlayerStart(Color.YELLOW);
-                    break;
-                case 2:
-                    tileView.addPlayerStart(Color.BLUE);
-                    break;
-                case 3:
-                    tileView.addPlayerStart(Color.GREEN);
-                    break;
-                case 4:
-                    tileView.addPlayerStart(Color.RED);
-                    break;
-            }
-        }
-        else
-        {
-            // Nothing to add
-        }
-        tileView.setupPlayers();
-        
-        setupOverlays();
-    }*/
-    
-    /**
      * Creates a tile of a particular shape and rotation, but no treasure
      * or starting area
      * @param shape The shape of the tile (i.e. I, L, or T)

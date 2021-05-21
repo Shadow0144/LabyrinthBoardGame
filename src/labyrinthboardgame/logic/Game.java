@@ -5,7 +5,8 @@
  */
 package labyrinthboardgame.logic;
 
-import labyrinthboardgame.gui.BoardView;
+import java.io.File;
+import javafx.stage.FileChooser;
 import labyrinthboardgame.gui.GameBoardController;
 import labyrinthboardgame.gui.InsertTileButton;
 import labyrinthboardgame.gui.PlayerIconTray;
@@ -38,7 +39,7 @@ public final class Game
         setupPlayers(treasureCount, controller.getPlayerIconTray());
     }
     
-    public Game(GameBoardController controller, Player[] players, Tile[][] tiles, Tile nextTile)
+    public Game(GameBoardController controller, Player[] players, int currentPlayer, Tile[][] tiles, Tile nextTile)
     {
         this.controller = controller;
         
@@ -47,6 +48,27 @@ public final class Game
         
         // Set up the players
         this.players = players;
+        this.currentPlayer = currentPlayer;
+        setupLoadedPlayers(controller.getPlayerIconTray());
+    }
+    
+    private void setupLoadedPlayers(PlayerIconTray playerIconTray)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[i].inGame())
+            {
+                // Move the player character onto the board
+                Tile loadedTile = gameBoard.getTile(players[i].getLoadedX(), players[i].getLoadedY());
+                players[i].moveCharacter(loadedTile);
+                players[i].showNextTreasure();
+            }
+            else // Hide inactive players
+            {
+                playerIconTray.removePlayerIcon(i+1); // Pass the player number
+            }
+        }
+        players[currentPlayer].setActive();
     }
     
     private void setupPlayers(int treasureCount, PlayerIconTray playerIconTray)
@@ -168,10 +190,5 @@ public final class Game
     public int findPlayerCol(int playerIndex)
     {
         return gameBoard.findTileCol(players[playerIndex].getCurrentTile());
-    }
-    
-    public void save(String fileName)
-    {
-        GameSaver.saveGame(fileName, this);
     }
 }

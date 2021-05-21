@@ -5,8 +5,10 @@
  */
 package labyrinthboardgame.logic;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import static java.lang.Integer.max;
 import java.util.LinkedList;
 
 /**
@@ -15,7 +17,7 @@ import java.util.LinkedList;
  */
 public class GameSaver 
 {
-    public static void saveGame(String fileName, Game game)
+    public static void saveGame(File file, Game game)
     {
         String JSON = "";
         JSON += "{\n";
@@ -43,7 +45,7 @@ public class GameSaver
         
         JSON += "}";
         
-        try (FileWriter outputStream = new FileWriter(fileName))
+        try (FileWriter outputStream = new FileWriter(file))
         {
             outputStream.write(JSON);
         }
@@ -145,6 +147,6 @@ public class GameSaver
     
     private static int convertAIToInt(Player.PlayerType playerType)
     {
-        return playerType.ordinal();
+        return (max(0, (playerType.ordinal() - 1))); // None will also be 0
     }
 }

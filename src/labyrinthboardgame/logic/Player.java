@@ -38,6 +38,10 @@ public final class Player
     
     private final String playerName;
     
+    // For loading
+    private int x;
+    private int y;
+    
     /**
      * A player, which has a list of treasures to collect and a character to
      * move around the board
@@ -154,12 +158,35 @@ public final class Player
     
     public LinkedList<Treasure> getTreasures()
     {
-        return treasures;
+        LinkedList<Treasure> allTreasures = new LinkedList<Treasure>();
+        if (currentTreasure != null) // The current treasure is popped off the list, so we need to readd it
+        {
+            allTreasures.add(currentTreasure);
+        }
+        else {}
+        allTreasures.addAll(treasures);
+        return allTreasures;
     }
     
     public Tile getCurrentTile()
     {
         return currentTile;
+    }
+    
+    public void setLoadedTilePosition(int loadedX, int loadedY)
+    {
+        x = loadedX;
+        y = loadedY;
+    }
+    
+    public int getLoadedX()
+    {
+        return x;
+    }
+    
+    public int getLoadedY()
+    {
+        return y;
     }
     
     /**

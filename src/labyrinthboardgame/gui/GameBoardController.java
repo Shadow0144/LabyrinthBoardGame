@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import labyrinthboardgame.logic.Game;
+import labyrinthboardgame.logic.GameSaver;
 import labyrinthboardgame.logic.Player;
 
 /**
@@ -144,7 +145,18 @@ public final class GameBoardController implements Initializable
      */
     public void save(ActionEvent e)
     {
-        game.save("test.json");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Game");
+        fileChooser.setInitialDirectory(new File("."));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JSON save", "*.json"));
+        File save = fileChooser.showSaveDialog(sceneController.getStage());
+        
+        if (save != null)
+        {
+            GameSaver.saveGame(save, game);
+        }
+        else {}
     }
     
     /**
@@ -154,19 +166,21 @@ public final class GameBoardController implements Initializable
     public void load(ActionEvent e)
     {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("Load Saved Game");
+        fileChooser.setInitialDirectory(new File("."));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("JSON save", "*.json"));
-        File save = fileChooser.showOpenDialog(sceneController.getStage());
-        if (save != null)
+        File open = fileChooser.showOpenDialog(sceneController.getStage());
+        
+        if (open != null)
         {
             try
             {
-                sceneController.moveToGameScene(save);
+                sceneController.moveToGameScene(open);
             }
             catch (Exception ex)
             {
-                System.out.println("Error! Failed to move to Main Menu Screen.");
+                System.out.println("Error! Failed to move to Game Screen.");
                 System.out.println(ex);
             }
         }
