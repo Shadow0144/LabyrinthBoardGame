@@ -13,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -27,16 +26,14 @@ import javafx.scene.text.TextAlignment;
 public final class PlayerIcon extends VBox
 {
     private final Circle playerIcon;
-    private final ImageView playerTreasure;
     private final Text playerTreasuresRemainingText;
     private final Label playerNameLabel;
+    private final Color playerColor;
     
     private final int PLAYER_ICON_RADIUS = 30;
     private final int UNSELECTED_STROKE = 1;
     private final int SELECTED_STROKE = 3;
     private final int VICTORY_STROKE = 5;
-    
-    private final int PLAYER_TREASURE_SIZE = 50;
     
     /**
      * Creates an icon for displaying details about a player, such as their current
@@ -46,6 +43,8 @@ public final class PlayerIcon extends VBox
      */
     public PlayerIcon(Color color)
     {
+        playerColor = color;
+        
         StackPane innerPane = new StackPane();
         
         playerIcon = new Circle();
@@ -78,9 +77,6 @@ public final class PlayerIcon extends VBox
         innerPane.getChildren().add(treasuresRemainingPane);
         innerPane.setAlignment(treasuresRemainingPane, Pos.TOP_RIGHT);
         
-        playerTreasure = new ImageView();
-        innerPane.getChildren().add(playerTreasure);
-        
         getChildren().add(innerPane);
         
         // Put the name below everything
@@ -93,6 +89,11 @@ public final class PlayerIcon extends VBox
         this.setPadding(new Insets(4, 4, 4, 4));
     }
     
+    public Color getColor()
+    {
+        return playerColor;
+    }
+    
     /**
      * Sets player name
      * @param name The player name
@@ -100,21 +101,6 @@ public final class PlayerIcon extends VBox
     public void setPlayerName(String name)
     {
         playerNameLabel.setText(name);
-    }
-    
-    /**
-     * Updates the player's current treasure goal image
-     * @param treasureType The name of the image of the treasure (if not null)
-     */
-    public void updateTreasureImage(String treasureType)
-    {
-        if (treasureType != null)
-        {
-            String treasureImageString = getClass().getResource("assets/" + treasureType + ".png").toString();
-            Image treasureImage = new Image(treasureImageString, PLAYER_TREASURE_SIZE, PLAYER_TREASURE_SIZE, false, true);
-            playerTreasure.setImage(treasureImage);
-        }
-        else {}
     }
     
     /**

@@ -5,8 +5,6 @@
  */
 package labyrinthboardgame.logic;
 
-import java.io.File;
-import javafx.stage.FileChooser;
 import labyrinthboardgame.gui.GameBoardController;
 import labyrinthboardgame.gui.InsertTileButton;
 import labyrinthboardgame.gui.PlayerIconTray;
@@ -98,6 +96,8 @@ public final class Game
             }
         }
         players[currentPlayer].setActive();
+        controller.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+                players[currentPlayer].getPlayerColor());
     }
     
     public void switchPlayers()
@@ -111,6 +111,10 @@ public final class Game
             }
             while (!players[currentPlayer].inGame()); // Skip players not in the game
             players[currentPlayer].setActive();
+            controller.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+                    players[currentPlayer].getPlayerColor());
+            
+            players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
         }
         else 
         {
@@ -167,7 +171,7 @@ public final class Game
         // Otherwise enable them
         if (!players[currentPlayer].getHasWon())
         {
-            gameBoard.enableArrows();
+            gameBoard.enableArrows((players[currentPlayer].getPlayerType() == Player.PlayerType.human));
         }
         else {}
     }
@@ -179,7 +183,7 @@ public final class Game
     
     public void rotateNextTileCounterClockwise()
     {
-        tileSet.rotateNextTileClockwise();
+        tileSet.rotateNextTileCounterClockwise();
     }
     
     public int findPlayerRow(int playerIndex)

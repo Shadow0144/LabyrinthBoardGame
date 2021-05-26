@@ -7,10 +7,20 @@ package labyrinthboardgame.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import static javafx.scene.layout.StackPane.setAlignment;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import labyrinthboardgame.logic.Tile;
+import labyrinthboardgame.logic.Treasure;
 
 /**
  *
@@ -18,27 +28,58 @@ import labyrinthboardgame.logic.Tile;
  */
 public final class PlayerIconTray extends VBox 
 {
+    private final VBox nextTilePane;
+    private final ImageView currentTreasureImageView;
+    private final Circle currentPlayerCircle;
     private final PlayerIcon icon1;
     private final PlayerIcon icon2;
-    private final VBox nextTilePane;
     private final PlayerIcon icon3;
     private final PlayerIcon icon4;
     private Tile nextTile;
+    
+    private final int PLAYER_TREASURE_SIZE = 75;
+    
+    private boolean showTreasure; // or show circle
         
     /**
      * Builds a tray to hold the player icons and the next tile to be inserted
      */
     public PlayerIconTray()
     {
+        Label nextTileLabel = new Label("Next Tile:");
+        nextTilePane = new VBox();
+        nextTilePane.setPadding(new Insets(8, 8, 8, 8));
+        
+        Label currentTreasureLabel = new Label("Current Treasure:");
+        VBox currentTreasureBox = new VBox(); // For centering
+        currentTreasureBox.setBackground(new Background(new BackgroundFill(
+                Color.rgb(253, 254, 242), CornerRadii.EMPTY, Insets.EMPTY)));
+        currentTreasureBox.setAlignment(Pos.CENTER);
+        currentTreasureBox.setPadding(new Insets(8, 8, 8, 8));
+        
+        StackPane currentTreasurePane = new StackPane();
+        currentTreasureBox.getChildren().add(currentTreasurePane);
+        
+        currentTreasureImageView = new ImageView();
+        currentTreasurePane.getChildren().add(currentTreasureImageView);
+        
+        currentPlayerCircle = new Circle(PLAYER_TREASURE_SIZE / 2);
+        currentPlayerCircle.setStroke(Color.BLACK);
+        currentPlayerCircle.setStrokeWidth(1);
+        currentTreasurePane.getChildren().add(currentPlayerCircle);
+        Label showCurrentTreasureLabel = new Label("Hold 'H' to\nshow treasure");
+        showCurrentTreasureLabel.setAlignment(Pos.CENTER);
+        
         icon1 = new PlayerIcon(Color.YELLOW);
         icon2 = new PlayerIcon(Color.BLUE);
         icon3 = new PlayerIcon(Color.GREEN);
         icon4 = new PlayerIcon(Color.RED);
-        nextTilePane = new VBox();
         
-        nextTilePane.setPadding(new Insets(8, 8, 8, 8));
-        
+        getChildren().add(nextTileLabel);
         getChildren().add(nextTilePane);
+        getChildren().add(currentTreasureLabel);
+        getChildren().add(currentTreasureBox);
+        getChildren().add(showCurrentTreasureLabel);
         getChildren().add(icon1);
         getChildren().add(icon2);
         getChildren().add(icon3);
@@ -96,5 +137,42 @@ public final class PlayerIconTray extends VBox
     public void updateNextTileRotation(int rotation)
     {
         nextTile.setRotation(rotation);
+    }
+    
+    public void updateCurrentTreasure(Treasure currentTreasure, Color playerColor)
+    {
+        if (currentTreasure != null)
+        {
+            String treasureType = currentTreasure.getTreasureImageName();
+            String treasureImageString = getClass().getResource("assets/" + treasureType + ".png").toString();
+            Image treasureImage = new Image(treasureImageString, PLAYER_TREASURE_SIZE, PLAYER_TREASURE_SIZE, false, true);
+            currentTreasureImageView.setImage(treasureImage);
+            showTreasure = true;
+            hideTreasure();
+        }
+        else
+        {
+            currentTreasureImageView.setImage(null);
+            currentPlayerCircle.setFill(playerColor);
+            showTreasure = false;
+        }
+    }
+    
+    public void showTreasure()
+    {
+        if (showTreasure)
+        {
+            currentTreasureImageView.setOpacity(1);
+        }
+        else
+        {
+            currentPlayerCircle.setOpacity(1);
+        }
+    }
+    
+    public void hideTreasure()
+    {
+        currentTreasureImageView.setOpacity(0);
+        currentPlayerCircle.setOpacity(0);
     }
 }

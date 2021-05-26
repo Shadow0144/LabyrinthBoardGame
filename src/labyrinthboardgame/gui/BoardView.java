@@ -6,7 +6,6 @@
 package labyrinthboardgame.gui;
 
 import javafx.geometry.Insets;
-import labyrinthboardgame.logic.Tile;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -14,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import labyrinthboardgame.logic.Game;
-import labyrinthboardgame.logic.Player;
 
 /**
  *
@@ -84,13 +82,13 @@ public final class BoardView extends GridPane
         disabledArrow = disabled;
     }
     
-    public void enableArrows()
+    public void enableArrows(boolean human)
     {
         for (int i = 0; i < 12; i++)
         {
             if (i != disabledArrow)
             {
-                arrows[i].enable();
+                arrows[i].enable(human);
             }
             else {}
         }

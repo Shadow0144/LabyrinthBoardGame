@@ -149,10 +149,12 @@ public final class InsertTileButton extends StackPane
     
     /**
      * Enables the button
+     * @param human Only enable the button for pressing for human players
      */
-    public void enable()
+    public void enable(boolean human)
     {
-        enabled = true;
+        enabled = human;
+        setDisable(!human);
         setOpacity(1);
     }
     
@@ -162,6 +164,7 @@ public final class InsertTileButton extends StackPane
     public void disable()
     {
         enabled = false;
+        setDisable(true);
         setOpacity(DISABLED);
     }
 }

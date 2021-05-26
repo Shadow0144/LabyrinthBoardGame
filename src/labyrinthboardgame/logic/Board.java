@@ -35,6 +35,7 @@ public final class Board
     
     /**
      * Fill the board with tiles
+     * @param game A reference to the game
      */
     public void setupTiles(Game game)
     {                
@@ -133,9 +134,9 @@ public final class Board
         return r;
     }
     
-    public void enableArrows()
+    public void enableArrows(boolean human)
     {
-        boardView.enableArrows();
+        boardView.enableArrows(human);
     }
     
     /**

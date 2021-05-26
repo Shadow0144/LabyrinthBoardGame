@@ -7,6 +7,7 @@ package labyrinthboardgame.logic;
 
 import labyrinthboardgame.gui.PlayerCharacter;
 import java.util.LinkedList;
+import javafx.scene.paint.Color;
 import labyrinthboardgame.gui.PlayerIcon;
 
 /**
@@ -42,6 +43,9 @@ public final class Player
     private int x;
     private int y;
     
+    private BasicAI basicAI;
+    private AdvancedAI advancedAI;
+    
     /**
      * A player, which has a list of treasures to collect and a character to
      * move around the board
@@ -62,6 +66,19 @@ public final class Player
         
         treasures = new LinkedList<Treasure>();
         playerTreasuresRemaining = 1; // Prevent off-by-one error
+        
+        switch (playerType) 
+        {
+            case ai:
+                basicAI = new BasicAI();
+                break;
+            case advanced_ai:
+                advancedAI = new AdvancedAI();
+                break;
+            default:
+                // Do nothing
+                break;
+        }
     }
     
     /**
@@ -80,6 +97,11 @@ public final class Player
     public String getPlayerName()
     {
         return playerName;
+    }
+    
+    public Treasure getCurrentTreasure()
+    {
+        return currentTreasure;
     }
     
     /**
@@ -108,6 +130,11 @@ public final class Player
     public PlayerIcon getIcon()
     {
         return display;
+    }
+    
+    public Color getPlayerColor()
+    {
+        return display.getColor();
     }
     
     /**
@@ -145,14 +172,6 @@ public final class Player
     public void showNextTreasure()
     {
         currentTreasure = treasures.poll();
-        if (currentTreasure != null)
-        {
-            display.updateTreasureImage(currentTreasure.getTreasureImageName());
-        }
-        else 
-        {
-            display.updateTreasureImage(null);
-        }
         display.updateTreasuresRemaining(--playerTreasuresRemaining);
     }
     
@@ -270,5 +289,22 @@ public final class Player
     public void setInactive()
     {
         display.setInactive();
+    }
+    
+    public void performTurn()
+    {
+        switch (playerType)
+        {
+            case none:
+            case human:
+                // Do nothing
+                break;
+            case ai:
+                basicAI.performTurn();
+                break;
+            case advanced_ai:
+                advancedAI.performTurn();
+                break;
+        }
     }
 }

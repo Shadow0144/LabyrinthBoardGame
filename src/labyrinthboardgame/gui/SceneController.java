@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.GameLoader;
@@ -77,19 +79,42 @@ public final class SceneController
         GameBoardController controller = loader.getController();
         controller.setupController(this, players, treasures);
         
-        // Create a listener for handling rotating tiles with the keyboard
+        // Create a listener for handling rotating tiles with the keyboard and mouse
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.R) 
-            {
-                if (key.isShiftDown())
-                {
-                    controller.rotateTileCounterClockwise();
-                }
-                else
-                {
-                    controller.rotateTileClockwise();
-                }
+            switch (key.getCode()) {
+                case R:
+                    if (key.isShiftDown())
+                    {
+                        controller.rotateTileCounterClockwise();
+                    }
+                    else
+                    {
+                        controller.rotateTileClockwise();
+                    }   break;
+                case H:
+                    controller.showTreasure();
+                    break;
+                default:
+                    break;
             }
+        });
+        scene.addEventHandler(ScrollEvent.SCROLL, (scroll) -> {
+            if (scroll.getDeltaY() > 0) 
+            {
+                controller.rotateTileCounterClockwise();
+            }
+            else
+            {
+                controller.rotateTileClockwise();
+            }
+        });
+        
+        scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> {
+            if (key.getCode() == KeyCode.H)
+            {
+                controller.hideTreasure();
+            }
+            else {}
         });
         
         currentStage.setScene(scene);

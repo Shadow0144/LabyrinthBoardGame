@@ -13,10 +13,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.GameSaver;
 import labyrinthboardgame.logic.Player;
+import labyrinthboardgame.logic.Treasure;
 
 /**
  *
@@ -114,13 +116,19 @@ public final class GameBoardController implements Initializable
         game.rotateNextTileCounterClockwise();
     }
     
-    /**
-     * Updates the player icon tray to display the next tile
-     */
-    public void updateNextTile()
+    public void updateCurrentTreasure(Treasure treasure, Color playerColor)
     {
-        /*nextTile = gameBoard.getNextTile();
-        playerIconTray.updateNextTile(nextTile);*/
+        playerIconTray.updateCurrentTreasure(treasure, playerColor);
+    }
+    
+    public void showTreasure()
+    {
+        playerIconTray.showTreasure();
+    }
+    
+    public void hideTreasure()
+    {
+        playerIconTray.hideTreasure();
     }
     
     /**

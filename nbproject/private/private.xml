@@ -4,8 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/GameBoardController.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/test.json</file>
             <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/Game.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/JSONParser.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/GameSaver.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/SceneController.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/GameLoader.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/MainMenuController.java</file>
         </group>
     </open-files>
 </project-private>
