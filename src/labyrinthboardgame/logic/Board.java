@@ -5,6 +5,7 @@
  */
 package labyrinthboardgame.logic;
 
+import java.util.LinkedList;
 import labyrinthboardgame.gui.BoardView;
 import labyrinthboardgame.gui.InsertTileButton;
 import labyrinthboardgame.gui.PlayerIconTray;
@@ -22,6 +23,8 @@ public final class Board
     private Tile nextTile;
     private final TileSet tileSet;
     
+    private int disabledArrow;
+    
     public Board(Game game,
             TileSet tileSet, 
             BoardView boardView, 
@@ -30,6 +33,7 @@ public final class Board
         this.tileSet = tileSet;
         this.boardView = boardView;
         this.playerIconTray = playerIconTray;
+        this.disabledArrow = -1;
         setupTiles(game);
     }
     
@@ -139,13 +143,36 @@ public final class Board
         boardView.enableArrows(human);
     }
     
+    public boolean isInsertAvailable(InsertTileButton.ArrowPosition arrowPosition)
+    {
+        return (arrowPosition.ordinal() != disabledArrow);
+    }
+    
+    public LinkedList<Tile> getAccessibleTiles()
+    {
+        LinkedList<Tile> tileList = new LinkedList<Tile>();
+        
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (tiles[i][j].getAccessible())
+                {
+                    tileList.add(tiles[i][j]);
+                }
+            }
+        }
+        
+        return tileList;
+    }
+    
     /**
      * Inserts the next tile into the game board, moving all tiles in that line, and updating the new next tile
      * @param position Where and which direction to insert the next tile
      */
     public void insertTile(InsertTileButton.ArrowPosition position)
     {
-        int disabledArrow = -1;
+        disabledArrow = -1;
         switch (position)
         {
             // Top

@@ -5,11 +5,23 @@
         <group>
             <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/GameBoardController.java</file>
             <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/test.json</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/Game.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/GameSaver.java</file>
-            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/SceneController.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/Treasure.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/LabyrinthBoardGame.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/InsertTileButton.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/Board.java</file>
             <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/GameLoader.java</file>
             <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/MainMenuController.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/TileView.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/Game.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/BasicAI.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/PlayerIconTray.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/GameSaver.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/SceneController.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/Player.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/PlayerIcon.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/gui/BoardView.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/TileSet.java</file>
+            <file>file:/C:/Users/Corbi/Documents/NetBeansProjects/LabyrinthBoardGame/src/labyrinthboardgame/logic/AdvancedAI.java</file>
         </group>
     </open-files>
 </project-private>

@@ -66,14 +66,17 @@ public final class Player
         
         treasures = new LinkedList<Treasure>();
         playerTreasuresRemaining = 1; // Prevent off-by-one error
-        
+    }
+    
+    public void setupAI(Game game)
+    {
         switch (playerType) 
         {
             case ai:
-                basicAI = new BasicAI();
+                basicAI = new BasicAI(this, game);
                 break;
             case advanced_ai:
-                advancedAI = new AdvancedAI();
+                advancedAI = new AdvancedAI(this, game);
                 break;
             default:
                 // Do nothing

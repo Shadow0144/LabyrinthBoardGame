@@ -5,6 +5,7 @@
  */
 package labyrinthboardgame.logic;
 
+import java.util.LinkedList;
 import labyrinthboardgame.gui.GameBoardController;
 import labyrinthboardgame.gui.InsertTileButton;
 import labyrinthboardgame.gui.PlayerIconTray;
@@ -50,25 +51,6 @@ public final class Game
         setupLoadedPlayers(controller.getPlayerIconTray());
     }
     
-    private void setupLoadedPlayers(PlayerIconTray playerIconTray)
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            if (players[i].inGame())
-            {
-                // Move the player character onto the board
-                Tile loadedTile = gameBoard.getTile(players[i].getLoadedX(), players[i].getLoadedY());
-                players[i].moveCharacter(loadedTile);
-                players[i].showNextTreasure();
-            }
-            else // Hide inactive players
-            {
-                playerIconTray.removePlayerIcon(i+1); // Pass the player number
-            }
-        }
-        players[currentPlayer].setActive();
-    }
-    
     private void setupPlayers(int treasureCount, PlayerIconTray playerIconTray)
     {
         // Set up the treasures
@@ -89,6 +71,7 @@ public final class Game
                 treasureSet.assignTreasuresToPlayer(players[i], treasureCount);
                 players[i].showNextTreasure();
                 addPlayerCharacterToBoard(players[i]);
+                players[i].setupAI(this);
             }
             else // Hide inactive players
             {
@@ -98,6 +81,30 @@ public final class Game
         players[currentPlayer].setActive();
         controller.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
                 players[currentPlayer].getPlayerColor());
+        players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
+    }
+    
+    private void setupLoadedPlayers(PlayerIconTray playerIconTray)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[i].inGame())
+            {
+                // Move the player character onto the board
+                Tile loadedTile = gameBoard.getTile(players[i].getLoadedX(), players[i].getLoadedY());
+                players[i].moveCharacter(loadedTile);
+                players[i].showNextTreasure();
+                players[i].setupAI(this);
+            }
+            else // Hide inactive players
+            {
+                playerIconTray.removePlayerIcon(i+1); // Pass the player number
+            }
+        }
+        players[currentPlayer].setActive();
+        controller.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+                players[currentPlayer].getPlayerColor());
+        players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
     }
     
     public void switchPlayers()
@@ -151,11 +158,21 @@ public final class Game
         player.moveCharacter(gameBoard.getStartingTile(player.getPlayerNumber()));
     }
     
+    public boolean isInsertAvailable(InsertTileButton.ArrowPosition arrowPosition)
+    {
+        return gameBoard.isInsertAvailable(arrowPosition);
+    }
+    
     public void insertTile(InsertTileButton.ArrowPosition arrowPosition)
     {
         gameBoard.insertTile(arrowPosition);
         // Switch to next phase
         players[currentPlayer].showPaths();
+    }
+    
+    public LinkedList<Tile> getAvailableTiles()
+    {
+        return gameBoard.getAccessibleTiles();
     }
     
     /**
