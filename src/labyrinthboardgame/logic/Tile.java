@@ -44,7 +44,6 @@ public final class Tile
      */
     public Tile(Shape shape, int rotation)
     {
-        super();
         tileShape = shape;
         currentRotation = rotation;
         setupTile();
@@ -63,7 +62,6 @@ public final class Tile
      */
     public Tile(Shape shape, int rotation, int player)
     {
-        super();
         tileShape = shape;
         currentRotation = rotation;
         setupTile();
@@ -98,7 +96,6 @@ public final class Tile
      */
     public Tile(Shape shape, int rotation, Treasure treasure)
     {
-        super();
         tileShape = shape;
         currentRotation = rotation;
         setupTile();
@@ -113,6 +110,17 @@ public final class Tile
         else {}
         tileView.setupPlayers();
         
+        setupOverlays();
+    }
+    
+    public Tile(Tile copy)
+    {
+        tileShape = copy.tileShape;
+        currentRotation = copy.currentRotation;
+        accessible = false;
+        
+        playerStartNumber = copy.playerStartNumber;
+        tileTreasure = copy.tileTreasure;
         setupOverlays();
     }
     
@@ -229,9 +237,13 @@ public final class Tile
      */
     public void rotateClockwise()
     {
-        currentRotation += 90;
-        tileView.setRotation(currentRotation);
-        previewTileView.setRotation(currentRotation);
+        currentRotation = (360 + currentRotation + 90) % 360;
+        if (tileView != null)
+        {
+            tileView.setRotation(currentRotation);
+            previewTileView.setRotation(currentRotation);
+        }
+        else {}
         refreshPossibleNeighbors();
     }
     
@@ -240,9 +252,13 @@ public final class Tile
      */
     public void rotateCounterClockwise()
     {
-        currentRotation -= 90;
-        tileView.setRotation(currentRotation);
-        previewTileView.setRotation(currentRotation);
+        currentRotation = (360 + currentRotation - 90) % 360;
+        if (tileView != null)
+        {
+            tileView.setRotation(currentRotation);
+            previewTileView.setRotation(currentRotation);
+        }
+        else {}
         refreshPossibleNeighbors();
     }
     
@@ -325,17 +341,29 @@ public final class Tile
                     playerColor = Color.RED;
                     break;
             }
-            tileView.showIntersection(playerColor);
+            if (tileView != null)
+            {
+                tileView.showIntersection(playerColor);
+            }
+            else {}
             for (int i = 0; i < 4; i++)
             {
                 if (connectedNeighbors[i] != null)
                 {
-                    tileView.showPath(i, playerColor);
+                    if (tileView != null)
+                    {
+                        tileView.showPath(i, playerColor);
+                    }
+                    else {}
                     connectedNeighbors[i].showPaths(player);
                 }
                 else 
                 {
-                    tileView.hidePath(i);
+                    if (tileView != null)
+                    {
+                        tileView.hidePath(i);
+                    }
+                    else {}
                 }
             }
             buildingPath = false;
@@ -352,7 +380,11 @@ public final class Tile
             buildingPath = true;
             accessible = false;
             
-            tileView.hideAllPaths();
+            if (tileView != null)
+            {
+                tileView.hideAllPaths();
+            }
+            else {}
             for (int i = 0; i < 4; i++)
             {
                 if (connectedNeighbors[i] != null)
@@ -469,7 +501,11 @@ public final class Tile
      */
     public void addPlayerCharacter(PlayerCharacter player)
     {
-        tileView.addPlayerCharacter(player);
+        if (tileView != null)
+        {
+            tileView.addPlayerCharacter(player);
+        }
+        else {}
     }
     
     /**
@@ -478,7 +514,11 @@ public final class Tile
      */
     public void removePlayerCharacter(PlayerCharacter player)
     {
-        tileView.removePlayerCharacter(player);
+        if (tileView != null)
+        {
+            tileView.removePlayerCharacter(player);
+        }
+        else {}
     }
     
     /**
@@ -488,6 +528,10 @@ public final class Tile
      */
     public void movePlayers(Tile newTile)
     {
-        tileView.moveCharacters(newTile);
+        if (tileView != null)
+        {
+            tileView.moveCharacters(newTile);
+        }
+        else {}
     }
 }

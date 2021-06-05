@@ -51,6 +51,14 @@ public final class Game
         setupLoadedPlayers(controller.getPlayerIconTray());
     }
     
+    public void killAllTimers()
+    {
+        for (Player player : players)
+        {
+            player.killAllTimers();
+        }
+    }
+    
     private void setupPlayers(int treasureCount, PlayerIconTray playerIconTray)
     {
         // Set up the treasures

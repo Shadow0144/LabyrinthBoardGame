@@ -25,6 +25,12 @@ public final class LabyrinthBoardGame extends Application
         stage.setTitle("Labyrinth Board Game");
         stage.show();
     }
+    
+    @Override
+    public void stop()
+    {
+        sceneController.killAllTimers();
+    }
 
     /**
      * @param args the command line arguments

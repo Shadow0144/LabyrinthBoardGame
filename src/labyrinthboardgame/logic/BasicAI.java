@@ -45,6 +45,12 @@ public class BasicAI
         this.rand = new Random();
     }
     
+    public void killTimer()
+    {
+        timerTask.cancel();
+        timer.cancel();
+    }
+    
     public void performTurn()
     {
         this.currentState = aiState.rotating;

@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
 import labyrinthboardgame.logic.Game;
@@ -26,14 +25,27 @@ public final class SceneController
 {
     private final Stage currentStage;
     
+    private GameBoardController gbController;
+    
     public SceneController(Stage stage)
     {
         currentStage = stage;
+        gbController = null;
     }
     
     public Stage getStage()
     {
         return currentStage;
+    }
+    
+    public void killAllTimers()
+    {
+        if (gbController != null)
+        {
+            gbController.killAllTimers();
+        }
+        else {}
+        gbController = null;
     }
     
     /**
@@ -42,6 +54,7 @@ public final class SceneController
      */
     public void moveToMainMenuScene() throws Exception
     {
+        killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -56,6 +69,7 @@ public final class SceneController
      */
     public void moveToPlayerSelectScene() throws Exception
     {
+        killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerSelect.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -73,6 +87,7 @@ public final class SceneController
      */
     public void moveToGameScene(Player[] players, int treasures) throws Exception
     {
+        killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -117,6 +132,7 @@ public final class SceneController
             else {}
         });
         
+        gbController = controller;
         currentStage.setScene(scene);
     }
     
@@ -128,6 +144,7 @@ public final class SceneController
      */
     public void moveToGameScene(File save) throws Exception
     {
+        killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -174,6 +191,7 @@ public final class SceneController
             else {}
         });
         
+        gbController = controller;
         currentStage.setScene(scene);
     }
 }

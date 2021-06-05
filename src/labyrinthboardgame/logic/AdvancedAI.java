@@ -22,6 +22,7 @@ public class AdvancedAI
     
     private final Player player;
     private final Game game;
+    private Board boardClone;
     
     private Timer timer;
     private TimerTask timerTask;
@@ -30,38 +31,151 @@ public class AdvancedAI
     
     private enum aiState
     {
+        predicting,
         rotating,
         placing,
         moving,
         none
     };
     private aiState currentState;
+    private aiState predictingState;
+    private boolean targetFound;
+    
+    private int rotation;
+    private int arrowNum;
+    private Tile targetTile;
+    
+    private int maxMoves;
+    private int maxRotation;
+    private int maxArrowNum;
     
     public AdvancedAI(Player aiPlayer, Game game)
     {
         this.player = aiPlayer;
         this.game = game;
-        this.currentState = aiState.none;
+        this.currentState = aiState.predicting;
+        this.predictingState = aiState.none;
         this.rand = new Random();
+        this.rotation = 0;
+        this.arrowNum = 0;
+        this.targetFound = false;
+    }
+    
+    public void killTimer()
+    {
+        timerTask.cancel();
+        timer.cancel();
     }
     
     public void performTurn()
     {
-        this.currentState = aiState.rotating;
-        this.timer = new Timer();
-        this.timerTask = new java.util.TimerTask() 
+        this.rotation = 0;
+        this.arrowNum = 0;
+        this.targetTile = null;
+        this.targetFound = false;
+        this.maxMoves = 0;
+        this.maxRotation = 0;
+        this.maxArrowNum = 0;
+        this.predictingState = aiState.rotating;
+        this.currentState = aiState.predicting;
+        predictNextAction();
+    }
+    
+    private void performPredictedActions()
+    {
+        this.timer = new Timer(); 
+        this.timerTask = new java.util.TimerTask()
+        {
+            @Override
+            public void run() 
             {
-                @Override
-                public void run() 
-                {
-                    performNextAction();
-                }
-            };
+                performNextAction();
+            }
+        };
         timer.schedule(
-            timerTask,
-            MILLISECONDS_TO_WAIT,
-            MILLISECONDS_TO_WAIT
+                timerTask,
+                MILLISECONDS_TO_WAIT,
+                MILLISECONDS_TO_WAIT
         );
+    }
+    
+    public void predictNextAction()
+    {
+        Platform.runLater(() -> {
+            while (currentState == aiState.predicting)
+            {
+                switch (predictingState)
+                {
+                    case rotating:
+                        boardClone = new Board(game.getBoard());
+                        switch (rotation)
+                        {
+                            case 0:
+                                // Do nothing
+                                break;
+                            case 1:
+                                boardClone.getTileSet().rotateNextTileClockwise();
+                                break;
+                            case 2:
+                                boardClone.getTileSet().rotateNextTileCounterClockwise();
+                                break;
+                            case 3:
+                                boardClone.getTileSet().rotateNextTileClockwise();
+                                boardClone.getTileSet().rotateNextTileClockwise();
+                                break;
+                        }
+                        predictingState = aiState.placing;
+                        break;
+                    case placing:
+                        InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[arrowNum];
+                        if (boardClone.isInsertAvailable(place))
+                        {
+                            boardClone.insertTile(place);
+                        }
+                        else {}
+                        predictingState = aiState.moving;
+                        break;
+                    case moving:
+                        Tile startTile = boardClone.getTile(
+                                game.findPlayerRow(player.getPlayerNumber()-1),
+                                game.findPlayerCol(player.getPlayerNumber()-1));
+                        startTile.showPaths(0);
+                        int moves = findTarget(startTile, boardClone);
+                        if (moves > maxMoves)
+                        {
+                            maxMoves = moves;
+                            maxRotation = rotation;
+                            maxArrowNum = arrowNum;
+                        }
+                        else {}
+                        rotation++;
+                        if (rotation == 4)
+                        {
+                            rotation = 0;
+                            arrowNum++;
+                            if (!game.getBoard().isInsertAvailable(arrowNum))
+                            {
+                                arrowNum++;
+                            }
+                            else {}
+                        }
+                        else {}
+                        if (targetFound || arrowNum == 12)
+                        {
+                            predictingState = aiState.rotating;
+                            currentState = aiState.rotating;
+                            performPredictedActions();
+                        }
+                        else
+                        {
+                            predictingState = aiState.rotating;
+                        }
+                    case none:
+                        // Do nothing - some kind of error though
+                        break;
+            }
+                    }
+        });
     }
     
     public void performNextAction()
@@ -70,7 +184,15 @@ public class AdvancedAI
             switch (currentState)
             {
                 case rotating:
-                    int rotate = rand.nextInt(4);
+                    int rotate;
+                    if (targetFound)
+                    {
+                        rotate = rotation;
+                    }
+                    else
+                    {
+                        rotate = maxRotation; //rand.nextInt(4);
+                    }
                     switch (rotate)
                     {
                         case 0:
@@ -90,49 +212,40 @@ public class AdvancedAI
                     currentState = aiState.placing;
                     break;
                 case placing:
-                    boolean placed = false;
-                    do
-                    {   
-                        InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[rand.nextInt(12)];
-                        if (game.isInsertAvailable(place))
-                        {
-                            game.insertTile(place);
-                            placed = true;
-                        }
-                        else {}
+                    if (targetFound)
+                    {
+                        InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[arrowNum];
+                        game.insertTile(place);
                     }
-                    while (!placed);
+                    else
+                    {
+                        /*boolean placed = false;
+                        do
+                        {   
+                            InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[rand.nextInt(12)];
+                            if (game.isInsertAvailable(place))
+                            {
+                                game.insertTile(place);
+                                placed = true;
+                            }
+                            else {}
+                        }
+                        while (!placed);*/
+                        InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[maxArrowNum];
+                        game.insertTile(place);
+                    }
                     currentState = aiState.moving;
                     break;
                 case moving:
-                    Tile targetTile = player.getCurrentTile();
-                    LinkedList<Tile> tiles = game.getAvailableTiles();
-                    Treasure playerTreasure = player.getCurrentTreasure();
-                    if (playerTreasure != null) // Treasures remain
+                    if (targetFound)
                     {
-                        for (Tile tile : tiles)
-                        {
-                            Treasure tileTreasure = tile.getTreasure();
-                            if (tileTreasure != null && tileTreasure.getTreasureType() == playerTreasure.getTreasureType())
-                            {
-                                targetTile = tile;
-                                break;
-                            }
-                            else {}
-                        }
+                        findTarget(player.getCurrentTile(), game.getBoard());
                     }
-                    else // Return to start
+                    else // Move to random tile if the target tile was not found
                     {
-                        for (Tile tile : tiles)
-                        {
-                            int tilePlayer = tile.getPlayer();
-                            if (tilePlayer == player.getPlayerNumber())
-                            {
-                                targetTile = tile;
-                                break;
-                            }
-                            else {}
-                        }
+                        LinkedList<Tile> tiles = game.getAvailableTiles();
+                        int index = rand.nextInt(tiles.size());
+                        targetTile = tiles.get(index);
                     }
                     game.movePlayerToTile(targetTile);
                     timerTask.cancel();
@@ -143,5 +256,41 @@ public class AdvancedAI
                     break;
         }
         });
+    }
+    
+    public int findTarget(Tile startTile, Board board)
+    {
+        targetTile = startTile;
+        LinkedList<Tile> tiles = board.getAccessibleTiles();
+        Treasure playerTreasure = player.getCurrentTreasure();
+        if (playerTreasure != null) // Treasures remain
+        {
+            for (Tile tile : tiles)
+            {
+                Treasure tileTreasure = tile.getTreasure();
+                if (tileTreasure != null && tileTreasure.getTreasureType() == playerTreasure.getTreasureType())
+                {
+                    targetTile = tile;
+                    targetFound = true;
+                    break;
+                }
+                else {}
+            }
+        }
+        else // Return to start
+        {
+            for (Tile tile : tiles)
+            {
+                int tilePlayer = tile.getPlayer();
+                if (tilePlayer == player.getPlayerNumber())
+                {
+                    targetTile = tile;
+                    targetFound = true;
+                    break;
+                }
+                else {}
+            }
+        }
+        return tiles.size();
     }
 }

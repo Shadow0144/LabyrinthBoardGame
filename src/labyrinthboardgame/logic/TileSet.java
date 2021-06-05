@@ -125,6 +125,11 @@ public final class TileSet
         nextTile = loadedNextTile;
     }
     
+    public TileSet(TileSet copy)
+    {
+        nextTile = new Tile(copy.nextTile);
+    }
+    
     /**
      * Returns the next tile to add to the board
      * @return The next tile to add to the board

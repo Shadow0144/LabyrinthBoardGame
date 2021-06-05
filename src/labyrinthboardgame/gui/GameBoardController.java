@@ -70,6 +70,15 @@ public final class GameBoardController implements Initializable
         gameBoardView.setupArrows(game);
     }
     
+    public void killAllTimers()
+    {
+        if (game != null)
+        {
+            game.killAllTimers();
+        }
+        else {}
+    }
+    
     public void setWinningPlayer(int player)
     {
         playerWonDisplay.setVisible(true);
@@ -139,6 +148,11 @@ public final class GameBoardController implements Initializable
     {
         try
         {
+            if (game != null)
+            {
+                game.killAllTimers();
+            }
+            else {}
             sceneController.moveToMainMenuScene();
         }
         catch (Exception ex)

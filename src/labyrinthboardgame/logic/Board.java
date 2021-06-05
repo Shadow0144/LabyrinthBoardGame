@@ -14,7 +14,7 @@ import labyrinthboardgame.gui.PlayerIconTray;
  *
  * @author Corbi
  */
-public final class Board 
+public final class Board implements Cloneable
 {
     private final BoardView boardView;
     private final PlayerIconTray playerIconTray;
@@ -35,6 +35,15 @@ public final class Board
         this.playerIconTray = playerIconTray;
         this.disabledArrow = -1;
         setupTiles(game);
+    }
+    
+    public Board(Board copy)
+    {
+        this.tileSet = new TileSet(copy.tileSet);
+        this.boardView = null;
+        this.playerIconTray = null;
+        this.disabledArrow = copy.disabledArrow;
+        setupTiles(copy);
     }
     
     /**
@@ -117,6 +126,22 @@ public final class Board
         updateTileNeighbors(); // Update the paths between tiles
     }
     
+    private void setupTiles(Board copy)
+    {                
+        tiles = new Tile[7][7];
+        
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                tiles[i][j] = new Tile(copy.tiles[i][j]);
+            }
+        }
+        
+        nextTile = copy.nextTile;
+        updateTileNeighbors(); // Update the paths between tiles
+    }
+    
     public Tile getStartingTile(int playerNumber)
     {
         Tile r = null;
@@ -140,12 +165,21 @@ public final class Board
     
     public void enableArrows(boolean human)
     {
-        boardView.enableArrows(human);
+        if (boardView != null)
+        {
+            boardView.enableArrows(human);
+        }
+        else {}
     }
     
     public boolean isInsertAvailable(InsertTileButton.ArrowPosition arrowPosition)
     {
         return (arrowPosition.ordinal() != disabledArrow);
+    }
+    
+    public boolean isInsertAvailable(int arrowPosition)
+    {
+        return (arrowPosition != disabledArrow);
     }
     
     public LinkedList<Tile> getAccessibleTiles()
@@ -231,8 +265,12 @@ public final class Board
         updateTileNeighbors(); // Refresh the paths between tiles
         
         // Disable all the arrows and move into the player move phase
-        boardView.disableArrows(disabledArrow);
-        playerIconTray.updateNextTile(nextTile);
+        if (boardView != null & playerIconTray != null)
+        {
+            boardView.disableArrows(disabledArrow);
+            playerIconTray.updateNextTile(nextTile);
+        }
+        else {}
     }
     
     /**
@@ -246,18 +284,30 @@ public final class Board
         int j = column;
         int next = (fromAbove) ? -1 : +1;
         Tile temp = tiles[i][j]; // The tile to remove
-        boardView.getChildren().remove(temp.getTileView());
+        if (boardView != null)
+        {
+            boardView.getChildren().remove(temp.getTileView());
+        }
+        else {}
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i+next][j];
-            boardView.getChildren().remove(tiles[i][j].getTileView());
-            boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+            if (boardView != null)
+            {
+                boardView.getChildren().remove(tiles[i][j].getTileView());
+                boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+            }
+            else {}
             i += next;
         }
         Tile newTile = tileSet.getNextTile();
         temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
-        boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+        if (boardView != null)
+        {
+            boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+        }
+        else {}
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
     }
@@ -273,18 +323,30 @@ public final class Board
         int j = (fromLeft) ? 6 : 0;
         int next = (fromLeft) ? -1 : +1;
         Tile temp = tiles[i][j]; // The tile to remove
-        boardView.getChildren().remove(temp.getTileView());
+        if (boardView != null)
+        {
+            boardView.getChildren().remove(temp.getTileView());
+        }
+        else {}
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i][j+next];
-            boardView.getChildren().remove(tiles[i][j].getTileView());
-            boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+            if (boardView != null)
+            {
+                boardView.getChildren().remove(tiles[i][j].getTileView());
+                boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+            }
+            else {}
             j += next;
         }
         Tile newTile = tileSet.getNextTile();
         temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
-        boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+        if (boardView != null)
+        {
+            boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+        }
+        else {}
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
     }
@@ -305,6 +367,11 @@ public final class Board
                 tiles[i][j].updateConnectedNeighbors(top, right, bottom, left);
             }
         }
+    }
+    
+    public TileSet getTileSet()
+    {
+        return tileSet;
     }
     
     public Tile getTile(int i, int j)

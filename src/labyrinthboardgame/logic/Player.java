@@ -74,14 +74,31 @@ public final class Player
         {
             case ai:
                 basicAI = new BasicAI(this, game);
+                advancedAI = null;
                 break;
             case advanced_ai:
+                basicAI = null;
                 advancedAI = new AdvancedAI(this, game);
                 break;
             default:
-                // Do nothing
+                basicAI = null;
+                advancedAI = null;
                 break;
         }
+    }
+    
+    public void killAllTimers()
+    {
+        if (basicAI != null)
+        {
+            basicAI.killTimer();
+        }
+        else {}
+        if (advancedAI != null)
+        {
+            advancedAI.killTimer();
+        }
+        else {}
     }
     
     /**

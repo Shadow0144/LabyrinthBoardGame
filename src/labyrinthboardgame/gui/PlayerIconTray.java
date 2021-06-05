@@ -19,6 +19,7 @@ import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 import labyrinthboardgame.logic.Tile;
 import labyrinthboardgame.logic.Treasure;
 
@@ -47,10 +48,12 @@ public final class PlayerIconTray extends VBox
     public PlayerIconTray()
     {
         Label nextTileLabel = new Label("Next Tile:");
+        nextTileLabel.setTextAlignment(TextAlignment.CENTER);
         nextTilePane = new VBox();
         nextTilePane.setPadding(new Insets(8, 8, 8, 8));
         
         Label currentTreasureLabel = new Label("Current Treasure:");
+        currentTreasureLabel.setTextAlignment(TextAlignment.CENTER);
         VBox currentTreasureBox = new VBox(); // For centering
         currentTreasureBox.setBackground(new Background(new BackgroundFill(
                 Color.rgb(253, 254, 242), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -69,6 +72,7 @@ public final class PlayerIconTray extends VBox
         currentTreasurePane.getChildren().add(currentPlayerCircle);
         Label showCurrentTreasureLabel = new Label("Hold 'H' to\nshow treasure");
         showCurrentTreasureLabel.setAlignment(Pos.CENTER);
+        showCurrentTreasureLabel.setTextAlignment(TextAlignment.CENTER);
         
         icon1 = new PlayerIcon(Color.YELLOW);
         icon2 = new PlayerIcon(Color.BLUE);
