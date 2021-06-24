@@ -22,7 +22,7 @@ public class GameSaver
         String JSON = "";
         JSON += "{\n";
         
-        JSON += "  \"field\": [\n";
+        JSON += "  \"field\" [\n";
         for (int i = 0; i < 7; i++)
         {
             JSON += addBoardRow(i, game);
