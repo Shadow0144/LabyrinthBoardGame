@@ -182,8 +182,12 @@ public class GameLoader
         {
             String treasureString = treasuresTokenizer.nextToken();
             treasureString = treasureString.replaceAll("[^\\d.]", "");
-            int treasure = Integer.parseInt(treasureString);
-            treasures.add(new Treasure(Treasure.TreasureType.values()[treasure-1]));
+            if (treasureString.length() != 0) // Add a treasure if the string contains a number
+            {
+                int treasure = Integer.parseInt(treasureString);
+                treasures.add(new Treasure(Treasure.TreasureType.values()[treasure-1]));
+            }
+            else {}
         }
         
         inputStream.readLine(); // Skip this line
