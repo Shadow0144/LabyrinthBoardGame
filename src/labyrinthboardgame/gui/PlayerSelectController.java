@@ -47,7 +47,9 @@ public final class PlayerSelectController implements Initializable
     private boolean doNotUpdateSlider; // Don't store the changed slider value when we are changing it by code
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
+     * @param url Unused
+     * @param rb Unused
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -164,6 +166,9 @@ public final class PlayerSelectController implements Initializable
         }
     }
     
+    /**
+     * Updates the treasure slider based on the number of players
+     */
     private void updateTreasureSlider()
     {
         doNotUpdateSlider = true;

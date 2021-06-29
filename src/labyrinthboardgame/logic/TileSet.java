@@ -175,11 +175,17 @@ public final class TileSet
         nextTile.setRotation(rotation);
     }
     
+    /**
+     * Rotates the next tile clockwise
+     */
     public void rotateNextTileClockwise()
     {
         nextTile.rotateClockwise();
     }
     
+    /**
+     * Rotates the next tile counterclockwise
+     */
     public void rotateNextTileCounterClockwise()
     {
         nextTile.rotateCounterClockwise();

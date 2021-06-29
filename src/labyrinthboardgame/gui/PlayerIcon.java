@@ -9,8 +9,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -89,14 +87,18 @@ public final class PlayerIcon extends VBox
         this.setPadding(new Insets(4, 4, 4, 4));
     }
     
+    /**
+     * Returns the player's color
+     * @return The player's color
+     */
     public Color getColor()
     {
         return playerColor;
     }
     
     /**
-     * Sets player name
-     * @param name The player name
+     * Sets the player's name
+     * @param name The player's name
      */
     public void setPlayerName(String name)
     {

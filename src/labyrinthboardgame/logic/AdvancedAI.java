@@ -61,12 +61,18 @@ public class AdvancedAI
         this.targetFound = false;
     }
     
+    /**
+     * Kills the AI timers
+     */
     public void killTimer()
     {
         timerTask.cancel();
         timer.cancel();
     }
     
+    /**
+     * Sets up and performs the AI's turn
+     */
     public void performTurn()
     {
         this.rotation = 0;
@@ -81,6 +87,9 @@ public class AdvancedAI
         predictNextAction();
     }
     
+    /**
+     * Sets up the timer to perform the predicted best action
+     */
     private void performPredictedActions()
     {
         this.timer = new Timer(); 
@@ -99,6 +108,9 @@ public class AdvancedAI
         );
     }
     
+    /**
+     * Tests every possible move and selects the best action
+     */
     public void predictNextAction()
     {
         Platform.runLater(() -> {
@@ -178,6 +190,9 @@ public class AdvancedAI
         });
     }
     
+    /**
+     * Performs a step of the selected move
+     */
     public void performNextAction()
     {
         Platform.runLater(() -> {
@@ -219,18 +234,6 @@ public class AdvancedAI
                     }
                     else
                     {
-                        /*boolean placed = false;
-                        do
-                        {   
-                            InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[rand.nextInt(12)];
-                            if (game.isInsertAvailable(place))
-                            {
-                                game.insertTile(place);
-                                placed = true;
-                            }
-                            else {}
-                        }
-                        while (!placed);*/
                         InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[maxArrowNum];
                         game.insertTile(place);
                     }
@@ -258,6 +261,12 @@ public class AdvancedAI
         });
     }
     
+    /**
+     * Finds the target on a board
+     * @param startTile The tile the current player is on
+     * @param board The board to search on
+     * @return The number of accessible ti
+     */
     public int findTarget(Tile startTile, Board board)
     {
         targetTile = startTile;

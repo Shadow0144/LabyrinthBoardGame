@@ -23,12 +23,18 @@ public final class MainMenuController implements Initializable
     
     /**
      * Initializes the controller class.
+     * @param url Unused
+     * @param rb Unused
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Do nothing
     }    
     
+    /**
+     * Sets a reference to the SceneController
+     * @param sc the SceneController
+     */
     public void setSceneController(SceneController sc)
     {
         sceneController = sc;

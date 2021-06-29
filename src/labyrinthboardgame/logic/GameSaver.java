@@ -17,6 +17,11 @@ import java.util.LinkedList;
  */
 public class GameSaver 
 {
+    /**
+     * Saves the current game to a file
+     * @param file The name of the file to save to
+     * @param game The game to save
+     */
     public static void saveGame(File file, Game game)
     {
         String JSON = "";
@@ -55,6 +60,12 @@ public class GameSaver
         }
     }
     
+    /**
+     * Creates a String to add a row of the board to the save file
+     * @param row The current row
+     * @param game The game to save
+     * @return A String containing the data of a row of the game board
+     */
     private static String addBoardRow(int row, Game game)
     {
         String r = "";
@@ -75,6 +86,11 @@ public class GameSaver
         return r;
     }
     
+    /**
+     * Creates a String to add the next tile of the board to the save file
+     * @param game The game to save
+     * @return A String containing the data of the next tile
+     */
     private static String addNextTile(Game game)
     {
         Tile tile = game.getNextTile();
@@ -88,6 +104,12 @@ public class GameSaver
         return r;
     }
     
+    /**
+     * Creates a String to add a player to the save file
+     * @param playerIndex The index (i.e. 0-3) of the player to save
+     * @param game The game to save
+     * @return A String containing the data of a player
+     */
     private static String addPlayerRow(int playerIndex, Game game)
     {
         Player player = game.getPlayer(playerIndex);
@@ -112,6 +134,11 @@ public class GameSaver
         return r;
     }
     
+    /**
+     * Gets an int from a Shape
+     * @param shape The Shape of a tile
+     * @return The int associated with that Shape
+     */
     private static int convertShapeToInt(Tile.Shape shape)
     {
         int r = -1;
@@ -130,6 +157,11 @@ public class GameSaver
         return r;
     }
     
+    /**
+     * Gets an int from a Treasure
+     * @param treasure The Treasure of a tile
+     * @return The int associated with that Treasure
+     */
     private static int convertTreasureToInt(Treasure treasure)
     {
         int r;
@@ -145,6 +177,11 @@ public class GameSaver
         return r;
     }
     
+    /**
+     * Gets an int from a AI
+     * @param playerType The PlayerType of a player
+     * @return The int associated with that PlayerType
+     */
     private static int convertAIToInt(Player.PlayerType playerType)
     {
         return (max(0, (playerType.ordinal() - 1))); // None will also be 0

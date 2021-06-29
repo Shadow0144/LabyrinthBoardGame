@@ -126,6 +126,10 @@ public final class Board implements Cloneable
         updateTileNeighbors(); // Update the paths between tiles
     }
     
+    /**
+     * Sets up the tiles during copy construction
+     * @param copy The board to copy from
+     */
     private void setupTiles(Board copy)
     {                
         tiles = new Tile[7][7];
@@ -142,6 +146,11 @@ public final class Board implements Cloneable
         updateTileNeighbors(); // Update the paths between tiles
     }
     
+    /**
+     * Get the starting tile for a player
+     * @param playerNumber The player's number
+     * @return The starting tile for that player
+     */
     public Tile getStartingTile(int playerNumber)
     {
         Tile r = null;
@@ -163,6 +172,10 @@ public final class Board implements Cloneable
         return r;
     }
     
+    /**
+     * Enables the arrow buttons on the board
+     * @param human If the current player is human or not
+     */
     public void enableArrows(boolean human)
     {
         if (boardView != null)
@@ -172,16 +185,30 @@ public final class Board implements Cloneable
         else {}
     }
     
+    /**
+     * Returns if the arrow button is unavailable
+     * @param arrowPosition The arrow button to check
+     * @return If the arrow button is unavailable
+     */
     public boolean isInsertAvailable(InsertTileButton.ArrowPosition arrowPosition)
     {
         return (arrowPosition.ordinal() != disabledArrow);
     }
     
+    /**
+     * Returns if the arrow button is unavailable
+     * @param arrowPosition The arrow button to check
+     * @return If the arrow button is unavailable
+     */
     public boolean isInsertAvailable(int arrowPosition)
     {
         return (arrowPosition != disabledArrow);
     }
     
+    /**
+     * Returns a list of tiles who have been flagged as accessible
+     * @return All accessible tiles
+     */
     public LinkedList<Tile> getAccessibleTiles()
     {
         LinkedList<Tile> tileList = new LinkedList<Tile>();
@@ -369,16 +396,31 @@ public final class Board implements Cloneable
         }
     }
     
+    /**
+     * Returns the tile set used
+     * @return The tile set used
+     */
     public TileSet getTileSet()
     {
         return tileSet;
     }
     
+    /**
+     * Returns a tile at position (i, j)
+     * @param i The row of the tile
+     * @param j The column of the tile
+     * @return The tile at position (i, j)
+     */
     public Tile getTile(int i, int j)
     {
         return tiles[i][j];
     }
     
+    /**
+     * Finds the row of a tile in the board
+     * @param tile The tile to locate
+     * @return The row of the tile in the board
+     */
     public int findTileRow(Tile tile)
     {
         int r = -1;
@@ -398,6 +440,11 @@ public final class Board implements Cloneable
         return r;
     }
     
+    /**
+     * Finds the column of a tile in the board
+     * @param tile The tile to locate
+     * @return The column of the tile in the board
+     */
     public int findTileCol(Tile tile)
     {
         int r = -1;

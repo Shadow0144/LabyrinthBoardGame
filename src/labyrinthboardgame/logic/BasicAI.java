@@ -45,12 +45,18 @@ public class BasicAI
         this.rand = new Random();
     }
     
+    /**
+     * Kills the AI timers
+     */
     public void killTimer()
     {
         timerTask.cancel();
         timer.cancel();
     }
     
+    /**
+     * Sets up and performs the AI's turn
+     */
     public void performTurn()
     {
         this.currentState = aiState.rotating;
@@ -70,6 +76,9 @@ public class BasicAI
         );
     }
     
+    /**
+     * Performs a step of the move
+     */
     public void performNextAction()
     {
         Platform.runLater(() -> {

@@ -73,6 +73,11 @@ public final class BoardView extends GridPane
         disabledArrow = -1;
     }
     
+    /**
+     * Disables the arrow buttons and stores the button opposite the last
+     * one pressed so it remains disabled when the others are enabled
+     * @param disabled The arrow button to remain disabled
+     */
     public void disableArrows(int disabled)
     {
         for (int i = 0; i < 12; i++)
@@ -82,6 +87,12 @@ public final class BoardView extends GridPane
         disabledArrow = disabled;
     }
     
+    /**
+     * Re-enables the arrow buttons (aside from the button opposite the one
+     * last pressed)
+     * @param human If human, enable the buttons for pressing; otherwise
+     * the change is only visual
+     */
     public void enableArrows(boolean human)
     {
         for (int i = 0; i < 12; i++)

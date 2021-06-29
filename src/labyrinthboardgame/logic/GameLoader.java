@@ -18,6 +18,12 @@ import labyrinthboardgame.gui.GameBoardController;
  */
 public class GameLoader 
 {
+    /**
+     * Loads a game from a save file
+     * @param fileName The name of the file to load
+     * @param controller A reference to the GameBoardController
+     * @return A game loaded from the file
+     */
     public static Game loadGame(String fileName, GameBoardController controller)
     {
         Player[] players = new Player[4];
@@ -69,6 +75,13 @@ public class GameLoader
         return game;
     }
     
+    /**
+     * Loads a tile from a String
+     * @param tileString The String to parse and create a tile from
+     * @param i The current row
+     * @param j The current column
+     * @return A new tile constructed from the String
+     */
     private static Tile loadTile(String tileString, int i, int j)
     {
         Tile rTile; 
@@ -108,6 +121,11 @@ public class GameLoader
         return rTile;
     }
     
+    /**
+     * Gets the shape of a tile from a String
+     * @param shapeString The String to load the shape from
+     * @return The shape of the loaded tile
+     */
     private static Tile.Shape getShapeFromString(String shapeString)
     {
         Tile.Shape rShape = null;
@@ -128,6 +146,11 @@ public class GameLoader
         return rShape;
     }
     
+    /**
+     * Gets the rotation of a tile from a String
+     * @param rotationString The String to load the rotation from
+     * @return The rotation of the loaded tile
+     */
     private static int getRotationFromString(String rotationString)
     {
         rotationString = rotationString.replaceAll("[^\\d.]", "");
@@ -135,6 +158,11 @@ public class GameLoader
         return rotation;
     }
     
+    /**
+     * Gets the treasure of a tile from a String
+     * @param treasureString The String to load the treasure from
+     * @return The treasure of the loaded tile
+     */
     private static Treasure getTreasureFromString(String treasureString)
     {
         Treasure rTreasure = null;
@@ -152,6 +180,14 @@ public class GameLoader
         return rTreasure;
     }
     
+    /**
+     * Loads a player from a String
+     * @param playerNumber The number of the player (i.e. 1-4)
+     * @param inputStream The stream to load from
+     * @param controller A reference to the GameBoardController
+     * @return A loaded player
+     * @throws IOException 
+     */
     private static Player getPlayerFromStrings(int playerNumber,
             BufferedReader inputStream, GameBoardController controller) throws IOException
     {

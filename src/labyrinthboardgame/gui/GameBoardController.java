@@ -39,8 +39,13 @@ public final class GameBoardController implements Initializable
     
     private Game game;
     
+    /**
+     * Initializes
+     * @param location Unused
+     * @param resources Unused
+     */
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
+    public void initialize(URL location, ResourceBundle resources) 
     {
         
     }
@@ -70,6 +75,9 @@ public final class GameBoardController implements Initializable
         gameBoardView.setupArrows(game);
     }
     
+    /**
+     * Kills all timers used by AIs
+     */
     public void killAllTimers()
     {
         if (game != null)
@@ -79,6 +87,10 @@ public final class GameBoardController implements Initializable
         else {}
     }
     
+    /**
+     * Displays the winning player
+     * @param player The winning player
+     */
     public void setWinningPlayer(int player)
     {
         playerWonDisplay.setVisible(true);
@@ -99,11 +111,19 @@ public final class GameBoardController implements Initializable
         }
     }
     
+    /**
+     * Returns the BoardView
+     * @return The BoardView
+     */
     public BoardView getGameBoardView()
     {
         return gameBoardView;
     }
     
+    /**
+     * Returns the PlayerIconTray
+     * @return The PlayerIconTray
+     */
     public PlayerIconTray getPlayerIconTray()
     {
         return playerIconTray;
@@ -125,16 +145,27 @@ public final class GameBoardController implements Initializable
         game.rotateNextTileCounterClockwise();
     }
     
+    /**
+     * Updates the player icon tray with the current treasure
+     * @param treasure The current treasure
+     * @param playerColor The current player's color
+     */
     public void updateCurrentTreasure(Treasure treasure, Color playerColor)
     {
         playerIconTray.updateCurrentTreasure(treasure, playerColor);
     }
     
+    /**
+     * Makes the current treasure visible in the tray
+     */
     public void showTreasure()
     {
         playerIconTray.showTreasure();
     }
     
+    /**
+     * Makes the current treasure invisible in the tray
+     */
     public void hideTreasure()
     {
         playerIconTray.hideTreasure();

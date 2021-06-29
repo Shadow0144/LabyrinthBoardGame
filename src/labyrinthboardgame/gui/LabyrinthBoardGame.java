@@ -16,6 +16,11 @@ public final class LabyrinthBoardGame extends Application
 {    
     private SceneController sceneController;
     
+    /**
+     * Starts the program and moves to the main menu
+     * @param stage Reference to the Stage
+     * @throws Exception 
+     */
     @Override
     public void start(Stage stage) throws Exception
     {
@@ -26,6 +31,9 @@ public final class LabyrinthBoardGame extends Application
         stage.show();
     }
     
+    /**
+     * Stops the game and kills all AI threads
+     */
     @Override
     public void stop()
     {
@@ -33,7 +41,7 @@ public final class LabyrinthBoardGame extends Application
     }
 
     /**
-     * @param args the command line arguments
+     * @param args The command line arguments
      */
     public static void main(String[] args) {
         launch(args);

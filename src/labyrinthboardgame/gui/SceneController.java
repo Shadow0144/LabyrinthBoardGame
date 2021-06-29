@@ -33,11 +33,18 @@ public final class SceneController
         gbController = null;
     }
     
+    /**
+     * Returns the current stage
+     * @return The current stage
+     */
     public Stage getStage()
     {
         return currentStage;
     }
     
+    /**
+     * Kills all AI timers when the scene ends
+     */
     public void killAllTimers()
     {
         if (gbController != null)

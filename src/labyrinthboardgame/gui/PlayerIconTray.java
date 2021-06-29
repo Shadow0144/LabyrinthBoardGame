@@ -13,9 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -138,11 +136,20 @@ public final class PlayerIconTray extends VBox
         nextTilePane.getChildren().add(nextTile.getTileView());
     }
     
+    /**
+     * Set the next tile's rotation
+     * @param rotation The rotation of the next tile
+     */
     public void updateNextTileRotation(int rotation)
     {
         nextTile.setRotation(rotation);
     }
     
+    /**
+     * Updates the current treasure to display and the player color
+     * @param currentTreasure The current treasure to display
+     * @param playerColor The current player's color
+     */
     public void updateCurrentTreasure(Treasure currentTreasure, Color playerColor)
     {
         if (currentTreasure != null)
@@ -162,6 +169,9 @@ public final class PlayerIconTray extends VBox
         }
     }
     
+    /**
+     * Makes the current treasure image visible
+     */
     public void showTreasure()
     {
         if (showTreasure)
@@ -174,6 +184,9 @@ public final class PlayerIconTray extends VBox
         }
     }
     
+    /**
+     * Makes the current treasure image invisible
+     */
     public void hideTreasure()
     {
         currentTreasureImageView.setOpacity(0);

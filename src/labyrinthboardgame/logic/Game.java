@@ -51,6 +51,9 @@ public final class Game
         setupLoadedPlayers(controller.getPlayerIconTray());
     }
     
+    /**
+     * Kills all AI timers when the game ends
+     */
     public void killAllTimers()
     {
         for (Player player : players)
@@ -59,6 +62,11 @@ public final class Game
         }
     }
     
+    /**
+     * Sets up the players
+     * @param treasureCount How many treasures each player should have
+     * @param playerIconTray A reference to the PlayerIconTray
+     */
     private void setupPlayers(int treasureCount, PlayerIconTray playerIconTray)
     {
         // Set up the treasures
@@ -91,7 +99,10 @@ public final class Game
                 players[currentPlayer].getPlayerColor());
         players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
     }
-    
+    /**
+     * Sets up players when the game has been loaded from a file
+     * @param playerIconTray A reference to the PlayerIconTray
+     */
     private void setupLoadedPlayers(PlayerIconTray playerIconTray)
     {
         for (int i = 0; i < 4; i++)
@@ -115,6 +126,9 @@ public final class Game
         players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
     }
     
+    /**
+     * Moves to the next player and checks if a player has won
+     */
     public void switchPlayers()
     {
         if (!players[currentPlayer].getHasWon())
@@ -137,21 +151,38 @@ public final class Game
         }
     }
     
+    /**
+     * Returns the current player
+     * @return The current player
+     */
     public int getCurrentPlayer()
     {
         return currentPlayer;
     }
     
+    /**
+     * Gets the player at the index playerIndex
+     * @param playerIndex The index of the player (i.e. 0-3)
+     * @return The player at the index playerIndex
+     */
     public Player getPlayer(int playerIndex)
     {
         return players[playerIndex];
     }
     
+    /**
+     * Returns the reference to the board
+     * @return The reference to the board
+     */
     public Board getBoard()
     {
         return gameBoard;
     }
     
+    /**
+     * Returns the next tile
+     * @return The next tile
+     */
     public Tile getNextTile()
     {
         return tileSet.getNextTile();
@@ -166,11 +197,20 @@ public final class Game
         player.moveCharacter(gameBoard.getStartingTile(player.getPlayerNumber()));
     }
     
+    /**
+     * Returns if the arrow button can be used
+     * @param arrowPosition The arrow button to check
+     * @return If the arrow button can be used
+     */
     public boolean isInsertAvailable(InsertTileButton.ArrowPosition arrowPosition)
     {
         return gameBoard.isInsertAvailable(arrowPosition);
     }
     
+    /**
+     * Inserts a tile at the position indicated by the arrow button
+     * @param arrowPosition The arrow button used
+     */
     public void insertTile(InsertTileButton.ArrowPosition arrowPosition)
     {
         gameBoard.insertTile(arrowPosition);
@@ -178,6 +218,10 @@ public final class Game
         players[currentPlayer].showPaths();
     }
     
+    /**
+     * Gets a list of tiles marked as accessible
+     * @return A list of tiles marked as accessible
+     */
     public LinkedList<Tile> getAvailableTiles()
     {
         return gameBoard.getAccessibleTiles();
@@ -201,21 +245,37 @@ public final class Game
         else {}
     }
     
+    /**
+     * Rotates the next tile clockwise
+     */
     public void rotateNextTileClockwise()
     {
         tileSet.rotateNextTileClockwise();
     }
     
+    /**
+     * Rotates the next tile counterclockwise
+     */
     public void rotateNextTileCounterClockwise()
     {
         tileSet.rotateNextTileCounterClockwise();
     }
     
+    /**
+     * Finds the row of the tile the player is currently on
+     * @param playerIndex The index (i.e. 0-3) of the player to locate
+     * @return The row the player is currently on
+     */
     public int findPlayerRow(int playerIndex)
     {
         return gameBoard.findTileRow(players[playerIndex].getCurrentTile());
     }
     
+    /**
+     * Finds the column of the tile the player is currently on
+     * @param playerIndex The index (i.e. 0-3) of the player to locate
+     * @return The column the player is currently on
+     */
     public int findPlayerCol(int playerIndex)
     {
         return gameBoard.findTileCol(players[playerIndex].getCurrentTile());

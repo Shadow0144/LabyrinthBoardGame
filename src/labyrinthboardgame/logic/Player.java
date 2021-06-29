@@ -68,6 +68,10 @@ public final class Player
         playerTreasuresRemaining = 1; // Prevent off-by-one error
     }
     
+    /**
+     * Sets up the AIs
+     * @param game A reference to the Game
+     */
     public void setupAI(Game game)
     {
         switch (playerType) 
@@ -87,6 +91,9 @@ public final class Player
         }
     }
     
+    /**
+     * Kills all AI timers
+     */
     public void killAllTimers()
     {
         if (basicAI != null)
@@ -119,6 +126,10 @@ public final class Player
         return playerName;
     }
     
+    /**
+     * Returns the current treasure
+     * @return The current Treasure
+     */
     public Treasure getCurrentTreasure()
     {
         return currentTreasure;
@@ -152,6 +163,10 @@ public final class Player
         return display;
     }
     
+    /**
+     * Returns the player's color
+     * @return The player's color
+     */
     public Color getPlayerColor()
     {
         return display.getColor();
@@ -195,6 +210,10 @@ public final class Player
         display.updateTreasuresRemaining(--playerTreasuresRemaining);
     }
     
+    /**
+     * Returns a list of treasures the player must collect
+     * @return A list of treasures the player must collect
+     */
     public LinkedList<Treasure> getTreasures()
     {
         LinkedList<Treasure> allTreasures = new LinkedList<Treasure>();
@@ -207,22 +226,39 @@ public final class Player
         return allTreasures;
     }
     
+    /**
+     * Returns the current tile
+     * @return The current tile
+     */
     public Tile getCurrentTile()
     {
         return currentTile;
     }
     
+    /**
+     * Sets the position of the player when loading
+     * @param loadedX The row of the loaded player
+     * @param loadedY The column of the loaded player
+     */
     public void setLoadedTilePosition(int loadedX, int loadedY)
     {
         x = loadedX;
         y = loadedY;
     }
     
+    /**
+     * Returns the row of the loaded player
+     * @return the row of the loaded player
+     */
     public int getLoadedX()
     {
         return x;
     }
     
+    /**
+     * Returns the column of the loaded player
+     * @return the column of the loaded player
+     */
     public int getLoadedY()
     {
         return y;
@@ -311,6 +347,9 @@ public final class Player
         display.setInactive();
     }
     
+    /**
+     * Performs the player's turn if it is AI-controlled
+     */
     public void performTurn()
     {
         switch (playerType)
