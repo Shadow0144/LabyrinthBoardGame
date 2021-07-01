@@ -10,7 +10,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
-import labyrinthboardgame.gui.InsertTileButton;
 
 /**
  *
@@ -108,7 +107,7 @@ public class BasicAI
                     boolean placed = false;
                     do
                     {   
-                        InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[rand.nextInt(12)];
+                        Board.ArrowPosition place = Board.ArrowPosition.values()[rand.nextInt(12)];
                         if (game.isInsertAvailable(place))
                         {
                             game.insertTile(place);

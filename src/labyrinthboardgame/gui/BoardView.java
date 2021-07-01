@@ -12,6 +12,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import labyrinthboardgame.logic.Board;
 import labyrinthboardgame.logic.Game;
 
 /**
@@ -42,32 +43,32 @@ public final class BoardView extends GridPane
         arrows = new InsertTileButton[12];
         
         // Top
-        arrows[0] = new InsertTileButton(game, InsertTileButton.ArrowPosition.TopLeft);
+        arrows[0] = new InsertTileButton(game, Board.ArrowPosition.TopLeft);
         this.add(arrows[0], 2, 0);
-        arrows[1] = new InsertTileButton(game, InsertTileButton.ArrowPosition.TopCenter);
+        arrows[1] = new InsertTileButton(game, Board.ArrowPosition.TopCenter);
         this.add(arrows[1], 4, 0);
-        arrows[2] = new InsertTileButton(game, InsertTileButton.ArrowPosition.TopRight);
+        arrows[2] = new InsertTileButton(game, Board.ArrowPosition.TopRight);
         this.add(arrows[2], 6, 0);
         // Left
-        arrows[3] = new InsertTileButton(game, InsertTileButton.ArrowPosition.LeftTop);
+        arrows[3] = new InsertTileButton(game, Board.ArrowPosition.LeftTop);
         this.add(arrows[3], 0, 2);
-        arrows[4] = new InsertTileButton(game, InsertTileButton.ArrowPosition.LeftCenter);
+        arrows[4] = new InsertTileButton(game, Board.ArrowPosition.LeftCenter);
         this.add(arrows[4], 0, 4);
-        arrows[5] = new InsertTileButton(game, InsertTileButton.ArrowPosition.LeftBottom);
+        arrows[5] = new InsertTileButton(game, Board.ArrowPosition.LeftBottom);
         this.add(arrows[5], 0, 6);
         // Bottom
-        arrows[6] = new InsertTileButton(game, InsertTileButton.ArrowPosition.BottomLeft);
+        arrows[6] = new InsertTileButton(game, Board.ArrowPosition.BottomLeft);
         this.add(arrows[6], 2, 8);
-        arrows[7] = new InsertTileButton(game, InsertTileButton.ArrowPosition.BottomCenter);
+        arrows[7] = new InsertTileButton(game, Board.ArrowPosition.BottomCenter);
         this.add(arrows[7], 4, 8);
-        arrows[8] = new InsertTileButton(game, InsertTileButton.ArrowPosition.BottomRight);
+        arrows[8] = new InsertTileButton(game, Board.ArrowPosition.BottomRight);
         this.add(arrows[8], 6, 8);
         // Right
-        arrows[9] = new InsertTileButton(game, InsertTileButton.ArrowPosition.RightTop);
+        arrows[9] = new InsertTileButton(game, Board.ArrowPosition.RightTop);
         this.add(arrows[9], 8, 2);
-        arrows[10] = new InsertTileButton(game, InsertTileButton.ArrowPosition.RightCenter);
+        arrows[10] = new InsertTileButton(game, Board.ArrowPosition.RightCenter);
         this.add(arrows[10], 8, 4);
-        arrows[11] = new InsertTileButton(game, InsertTileButton.ArrowPosition.RightBottom);
+        arrows[11] = new InsertTileButton(game, Board.ArrowPosition.RightBottom);
         this.add(arrows[11], 8, 6);
         
         disabledArrow = -1;

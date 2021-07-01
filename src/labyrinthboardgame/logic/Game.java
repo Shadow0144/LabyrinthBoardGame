@@ -7,7 +7,6 @@ package labyrinthboardgame.logic;
 
 import java.util.LinkedList;
 import labyrinthboardgame.gui.GameBoardController;
-import labyrinthboardgame.gui.InsertTileButton;
 import labyrinthboardgame.gui.PlayerIconTray;
 
 /**
@@ -31,7 +30,8 @@ public final class Game
         
         // Create a new set of tiles and fill the board with them
         tileSet = new TileSet();
-        gameBoard = new Board(this, tileSet, controller.getGameBoardView(), controller.getPlayerIconTray());
+        GUIConnector.setupBoard(controller.getGameBoardView(), controller.getPlayerIconTray());
+        gameBoard = new Board(this, tileSet);
         
         // Set up the players
         this.players = players;
@@ -43,7 +43,8 @@ public final class Game
         this.controller = controller;
         
         tileSet = new TileSet(tiles, nextTile);
-        gameBoard = new Board(this, tileSet, controller.getGameBoardView(), controller.getPlayerIconTray());
+        GUIConnector.setupBoard(controller.getGameBoardView(), controller.getPlayerIconTray());
+        gameBoard = new Board(this, tileSet);
         
         // Set up the players
         this.players = players;
@@ -202,7 +203,7 @@ public final class Game
      * @param arrowPosition The arrow button to check
      * @return If the arrow button can be used
      */
-    public boolean isInsertAvailable(InsertTileButton.ArrowPosition arrowPosition)
+    public boolean isInsertAvailable(Board.ArrowPosition arrowPosition)
     {
         return gameBoard.isInsertAvailable(arrowPosition);
     }
@@ -211,7 +212,7 @@ public final class Game
      * Inserts a tile at the position indicated by the arrow button
      * @param arrowPosition The arrow button used
      */
-    public void insertTile(InsertTileButton.ArrowPosition arrowPosition)
+    public void insertTile(Board.ArrowPosition arrowPosition)
     {
         gameBoard.insertTile(arrowPosition);
         // Switch to next phase

@@ -10,7 +10,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
-import labyrinthboardgame.gui.InsertTileButton;
 
 /**
  *
@@ -139,7 +138,7 @@ public class AdvancedAI
                         predictingState = aiState.placing;
                         break;
                     case placing:
-                        InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[arrowNum];
+                        Board.ArrowPosition place = Board.ArrowPosition.values()[arrowNum];
                         if (boardClone.isInsertAvailable(place))
                         {
                             boardClone.insertTile(place);
@@ -229,12 +228,12 @@ public class AdvancedAI
                 case placing:
                     if (targetFound)
                     {
-                        InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[arrowNum];
+                        Board.ArrowPosition place = Board.ArrowPosition.values()[arrowNum];
                         game.insertTile(place);
                     }
                     else
                     {
-                        InsertTileButton.ArrowPosition place = InsertTileButton.ArrowPosition.values()[maxArrowNum];
+                        Board.ArrowPosition place = Board.ArrowPosition.values()[maxArrowNum];
                         game.insertTile(place);
                     }
                     currentState = aiState.moving;

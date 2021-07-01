@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import static javafx.scene.layout.StackPane.setAlignment;
+import labyrinthboardgame.logic.Board;
 import labyrinthboardgame.logic.Game;
 
 /**
@@ -19,15 +20,7 @@ import labyrinthboardgame.logic.Game;
  */
 public final class InsertTileButton extends StackPane
 {
-    // Position of the arrow
-    public enum ArrowPosition
-    {
-        TopLeft, TopCenter, TopRight,
-        LeftTop, LeftCenter, LeftBottom,
-        BottomLeft, BottomCenter, BottomRight,
-        RightTop, RightCenter, RightBottom,
-    };
-    private final ArrowPosition arrow;
+    private final Board.ArrowPosition arrow;
     
     private final int ARROW_SIZE = 20;
     
@@ -43,7 +36,7 @@ public final class InsertTileButton extends StackPane
      * @param game A reference to the game the arrow belongs to
      * @param position The position the tiles are inserted from
      */
-    public InsertTileButton(Game game, ArrowPosition position)
+    public InsertTileButton(Game game, Board.ArrowPosition position)
     {
         ImageView arrowImageView = new ImageView();
         String arrowImageString = getClass().getResource("assets/arrow.png").toString();

@@ -6,9 +6,6 @@
 package labyrinthboardgame.logic;
 
 import java.util.LinkedList;
-import labyrinthboardgame.gui.BoardView;
-import labyrinthboardgame.gui.InsertTileButton;
-import labyrinthboardgame.gui.PlayerIconTray;
 
 /**
  *
@@ -16,8 +13,14 @@ import labyrinthboardgame.gui.PlayerIconTray;
  */
 public final class Board implements Cloneable
 {
-    private final BoardView boardView;
-    private final PlayerIconTray playerIconTray;
+    // Position of the arrow
+    public enum ArrowPosition
+    {
+        TopLeft, TopCenter, TopRight,
+        LeftTop, LeftCenter, LeftBottom,
+        BottomLeft, BottomCenter, BottomRight,
+        RightTop, RightCenter, RightBottom,
+    };
     
     private Tile[][] tiles;
     private Tile nextTile;
@@ -25,14 +28,9 @@ public final class Board implements Cloneable
     
     private int disabledArrow;
     
-    public Board(Game game,
-            TileSet tileSet, 
-            BoardView boardView, 
-            PlayerIconTray playerIconTray)
+    public Board(Game game, TileSet tileSet)
     {
         this.tileSet = tileSet;
-        this.boardView = boardView;
-        this.playerIconTray = playerIconTray;
         this.disabledArrow = -1;
         setupTiles(game);
     }
@@ -40,8 +38,6 @@ public final class Board implements Cloneable
     public Board(Board copy)
     {
         this.tileSet = new TileSet(copy.tileSet);
-        this.boardView = null;
-        this.playerIconTray = null;
         this.disabledArrow = copy.disabledArrow;
         setupTiles(copy);
     }
@@ -115,14 +111,15 @@ public final class Board implements Cloneable
         {
             for (int j = 0; j < 7; j++)
             {
-                boardView.add(tiles[i][j].getTileView(), j+1, i+1);
+                // Add tiles to view
+                GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
                 tiles[i][j].setListener(game);
             }
         }
         
         nextTile = tileSet.getNextTile();
         nextTile.setListener(game); // Add a listener to the last remaining tile as well
-        playerIconTray.updateNextTile(nextTile);
+        GUIConnector.updateTrayNextTile(nextTile);
         updateTileNeighbors(); // Update the paths between tiles
     }
     
@@ -178,11 +175,7 @@ public final class Board implements Cloneable
      */
     public void enableArrows(boolean human)
     {
-        if (boardView != null)
-        {
-            boardView.enableArrows(human);
-        }
-        else {}
+        GUIConnector.enableArrows(human);
     }
     
     /**
@@ -190,7 +183,7 @@ public final class Board implements Cloneable
      * @param arrowPosition The arrow button to check
      * @return If the arrow button is unavailable
      */
-    public boolean isInsertAvailable(InsertTileButton.ArrowPosition arrowPosition)
+    public boolean isInsertAvailable(ArrowPosition arrowPosition)
     {
         return (arrowPosition.ordinal() != disabledArrow);
     }
@@ -231,7 +224,7 @@ public final class Board implements Cloneable
      * Inserts the next tile into the game board, moving all tiles in that line, and updating the new next tile
      * @param position Where and which direction to insert the next tile
      */
-    public void insertTile(InsertTileButton.ArrowPosition position)
+    public void insertTile(ArrowPosition position)
     {
         disabledArrow = -1;
         switch (position)
@@ -292,12 +285,8 @@ public final class Board implements Cloneable
         updateTileNeighbors(); // Refresh the paths between tiles
         
         // Disable all the arrows and move into the player move phase
-        if (boardView != null & playerIconTray != null)
-        {
-            boardView.disableArrows(disabledArrow);
-            playerIconTray.updateNextTile(nextTile);
-        }
-        else {}
+        GUIConnector.disableArrows(disabledArrow);
+        GUIConnector.updateTrayNextTile(nextTile);
     }
     
     /**
@@ -311,30 +300,19 @@ public final class Board implements Cloneable
         int j = column;
         int next = (fromAbove) ? -1 : +1;
         Tile temp = tiles[i][j]; // The tile to remove
-        if (boardView != null)
-        {
-            boardView.getChildren().remove(temp.getTileView());
-        }
-        else {}
+        // Remove temp
+        GUIConnector.removeTileView(temp.getTileView());
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i+next][j];
-            if (boardView != null)
-            {
-                boardView.getChildren().remove(tiles[i][j].getTileView());
-                boardView.add(tiles[i][j].getTileView(), j+1, i+1);
-            }
-            else {}
+            GUIConnector.removeTileView(tiles[i][j].getTileView());
+            GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
             i += next;
         }
         Tile newTile = tileSet.getNextTile();
         temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
-        if (boardView != null)
-        {
-            boardView.add(tiles[i][j].getTileView(), j+1, i+1);
-        }
-        else {}
+        GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
     }
@@ -350,30 +328,18 @@ public final class Board implements Cloneable
         int j = (fromLeft) ? 6 : 0;
         int next = (fromLeft) ? -1 : +1;
         Tile temp = tiles[i][j]; // The tile to remove
-        if (boardView != null)
-        {
-            boardView.getChildren().remove(temp.getTileView());
-        }
-        else {}
+        GUIConnector.removeTileView(temp.getTileView());
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i][j+next];
-            if (boardView != null)
-            {
-                boardView.getChildren().remove(tiles[i][j].getTileView());
-                boardView.add(tiles[i][j].getTileView(), j+1, i+1);
-            }
-            else {}
+            GUIConnector.removeTileView(tiles[i][j].getTileView());
+            GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
             j += next;
         }
         Tile newTile = tileSet.getNextTile();
         temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
-        if (boardView != null)
-        {
-            boardView.add(tiles[i][j].getTileView(), j+1, i+1);
-        }
-        else {}
+        GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
     }
