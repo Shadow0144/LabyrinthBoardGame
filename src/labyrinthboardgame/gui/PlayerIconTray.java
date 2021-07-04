@@ -133,7 +133,11 @@ public final class PlayerIconTray extends VBox
     {
         this.nextTile = nextTile;
         nextTilePane.getChildren().clear();
-        nextTilePane.getChildren().add(nextTile.getTileView());
+        if (nextTile.getTileView() != null)
+        {
+            nextTilePane.getChildren().add(nextTile.getTileView());
+        }
+        else {}
     }
     
     /**

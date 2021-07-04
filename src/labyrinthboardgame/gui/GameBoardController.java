@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.GameSaver;
 import labyrinthboardgame.logic.Player;
@@ -59,7 +60,8 @@ public final class GameBoardController implements Initializable
     public void setupController(SceneController sc, Player[] players, int treasureCount)
     {
         sceneController = sc;
-        game = new Game(this, players, treasureCount);
+        GUIConnector.setupBoard(this);
+        game = new Game(players, treasureCount);
         gameBoardView.setupArrows(game);
     }
     
@@ -127,6 +129,11 @@ public final class GameBoardController implements Initializable
     public PlayerIconTray getPlayerIconTray()
     {
         return playerIconTray;
+    }
+    
+    public Game getGame()
+    {
+        return game;
     }
     
     /**

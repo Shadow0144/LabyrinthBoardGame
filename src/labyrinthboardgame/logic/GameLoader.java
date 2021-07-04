@@ -70,7 +70,8 @@ public class GameLoader
             System.out.println(ex);
         }
         
-        Game game = new Game(controller, players, currentPlayer, tiles, nextTile);
+        GUIConnector.setupBoard(controller);
+        Game game = new Game(players, currentPlayer, tiles, nextTile);
         
         return game;
     }
@@ -229,7 +230,6 @@ public class GameLoader
         inputStream.readLine(); // Skip this line
         
         Player loadedPlayer = new Player(playerNumber, playerType, name);
-        loadedPlayer.setIcon(controller.getPlayerIconTray().getPlayerIcon(playerNumber));
         for (int i = 0; i < treasures.size(); i++)
         {
             loadedPlayer.assignTreasure(treasures.get(i));

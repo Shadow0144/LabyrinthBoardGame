@@ -5,10 +5,7 @@
  */
 package labyrinthboardgame.logic;
 
-import labyrinthboardgame.gui.PlayerCharacter;
 import java.util.LinkedList;
-import javafx.scene.paint.Color;
-import labyrinthboardgame.gui.PlayerIcon;
 
 /**
  *
@@ -26,8 +23,6 @@ public final class Player
     private final PlayerType playerType;
     
     private final int number; // 1, 2, 3, or 4
-    private final PlayerCharacter character;
-    private PlayerIcon display;
     private Tile currentTile;
     
     private int playerTreasuresRemaining;
@@ -62,9 +57,7 @@ public final class Player
         currentTile = null;
         hasWon = false;
         
-        character = new PlayerCharacter(this);
-        
-        treasures = new LinkedList<Treasure>();
+        treasures = new LinkedList<>();
         playerTreasuresRemaining = 1; // Prevent off-by-one error
     }
     
@@ -146,39 +139,10 @@ public final class Player
     
     /**
      * Sets a reference to the icon for this player
-     * @param icon This player's icon
      */
-    public void setIcon(PlayerIcon icon)
+    public void setupIcon()
     {
-        display = icon;
-        display.setPlayerName(playerName);
-    }
-    
-    /**
-     * Returns a reference to this player's icon
-     * @return This player's icon
-     */
-    public PlayerIcon getIcon()
-    {
-        return display;
-    }
-    
-    /**
-     * Returns the player's color
-     * @return The player's color
-     */
-    public Color getPlayerColor()
-    {
-        return display.getColor();
-    }
-    
-    /**
-     * Gets a reference to this player's character on the board
-     * @return This player's character
-     */
-    public PlayerCharacter getCharacter()
-    {
-        return character;
+        GUIConnector.setIconPlayerName(number, playerName);
     }
     
     /**
@@ -198,7 +162,7 @@ public final class Player
     public void assignTreasure(Treasure treasure)
     {
         treasures.add(treasure);
-        display.updateTreasuresRemaining(++playerTreasuresRemaining);
+        GUIConnector.updateTreasuresRemaining(number-1, ++playerTreasuresRemaining);
     }
     
     /**
@@ -207,7 +171,7 @@ public final class Player
     public void showNextTreasure()
     {
         currentTreasure = treasures.poll();
-        display.updateTreasuresRemaining(--playerTreasuresRemaining);
+        GUIConnector.updateTreasuresRemaining(number-1, --playerTreasuresRemaining);
     }
     
     /**
@@ -299,11 +263,11 @@ public final class Player
         hidePaths();
         if (currentTile != null)
         {
-            currentTile.removePlayerCharacter(character);
+            currentTile.removePlayerCharacter(number-1);
         }
         else {}
         currentTile = tile;
-        currentTile.addPlayerCharacter(character);
+        currentTile.addPlayerCharacter(number-1);
         
         Treasure treasure = tile.getTreasure();
         if (treasure != null && currentTreasure != null &&
@@ -317,7 +281,7 @@ public final class Player
                 && tile.getPlayer() == number)
         {
             hasWon = true;
-            display.setHasWon();
+            GUIConnector.setIconHasWon(number);
         }
         else {}
     }
@@ -336,7 +300,7 @@ public final class Player
      */
     public void setActive()
     {
-        display.setActive();
+        GUIConnector.setIconActive(number-1);
     }
     
     /**
@@ -344,7 +308,7 @@ public final class Player
      */
     public void setInactive()
     {
-        display.setInactive();
+        GUIConnector.setInactive(number-1);
     }
     
     /**

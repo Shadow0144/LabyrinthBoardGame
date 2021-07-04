@@ -6,8 +6,6 @@
 package labyrinthboardgame.logic;
 
 import java.util.LinkedList;
-import labyrinthboardgame.gui.GameBoardController;
-import labyrinthboardgame.gui.PlayerIconTray;
 
 /**
  *
@@ -22,34 +20,26 @@ public final class Game
     
     private final Board gameBoard;
     
-    private final GameBoardController controller;
-    
-    public Game(GameBoardController controller, Player[] players, int treasureCount)
-    {
-        this.controller = controller;
-        
+    public Game(Player[] players, int treasureCount)
+    {        
         // Create a new set of tiles and fill the board with them
         tileSet = new TileSet();
-        GUIConnector.setupBoard(controller.getGameBoardView(), controller.getPlayerIconTray());
         gameBoard = new Board(this, tileSet);
         
         // Set up the players
         this.players = players;
-        setupPlayers(treasureCount, controller.getPlayerIconTray());
+        setupPlayers(treasureCount);
     }
     
-    public Game(GameBoardController controller, Player[] players, int currentPlayer, Tile[][] tiles, Tile nextTile)
+    public Game(Player[] players, int currentPlayer, Tile[][] tiles, Tile nextTile)
     {
-        this.controller = controller;
-        
         tileSet = new TileSet(tiles, nextTile);
-        GUIConnector.setupBoard(controller.getGameBoardView(), controller.getPlayerIconTray());
         gameBoard = new Board(this, tileSet);
         
         // Set up the players
         this.players = players;
         this.currentPlayer = currentPlayer;
-        setupLoadedPlayers(controller.getPlayerIconTray());
+        setupLoadedPlayers();
     }
     
     /**
@@ -66,9 +56,8 @@ public final class Game
     /**
      * Sets up the players
      * @param treasureCount How many treasures each player should have
-     * @param playerIconTray A reference to the PlayerIconTray
      */
-    private void setupPlayers(int treasureCount, PlayerIconTray playerIconTray)
+    private void setupPlayers(int treasureCount)
     {
         // Set up the treasures
         TreasureSet treasureSet = new TreasureSet();
@@ -84,27 +73,26 @@ public final class Game
                     currentPlayer = i;
                 }
                 else {}
-                players[i].setIcon(playerIconTray.getPlayerIcon(i+1));
                 treasureSet.assignTreasuresToPlayer(players[i], treasureCount);
                 players[i].showNextTreasure();
+                GUIConnector.createPlayerCharacter(i, players[i]);
                 addPlayerCharacterToBoard(players[i]);
                 players[i].setupAI(this);
             }
             else // Hide inactive players
             {
-                playerIconTray.removePlayerIcon(i+1); // Pass the player number
+                GUIConnector.removePlayerIcon(i+1); // Pass the player number
             }
         }
         players[currentPlayer].setActive();
-        controller.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
-                players[currentPlayer].getPlayerColor());
+        GUIConnector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+                players[currentPlayer].getPlayerNumber());
         players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
     }
     /**
      * Sets up players when the game has been loaded from a file
-     * @param playerIconTray A reference to the PlayerIconTray
      */
-    private void setupLoadedPlayers(PlayerIconTray playerIconTray)
+    private void setupLoadedPlayers()
     {
         for (int i = 0; i < 4; i++)
         {
@@ -118,12 +106,12 @@ public final class Game
             }
             else // Hide inactive players
             {
-                playerIconTray.removePlayerIcon(i+1); // Pass the player number
+                GUIConnector.removePlayerIcon(i+1); // Pass the player number
             }
         }
         players[currentPlayer].setActive();
-        controller.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
-                players[currentPlayer].getPlayerColor());
+        GUIConnector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+                players[currentPlayer].getPlayerNumber());
         players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
     }
     
@@ -141,14 +129,14 @@ public final class Game
             }
             while (!players[currentPlayer].inGame()); // Skip players not in the game
             players[currentPlayer].setActive();
-            controller.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
-                    players[currentPlayer].getPlayerColor());
+            GUIConnector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+                    players[currentPlayer].getPlayerNumber());
             
             players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
         }
         else 
         {
-            controller.setWinningPlayer(currentPlayer);
+            GUIConnector.setWinningPlayer(currentPlayer);
         }
     }
     

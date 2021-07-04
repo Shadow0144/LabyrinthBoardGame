@@ -28,8 +28,11 @@ public final class Board implements Cloneable
     
     private int disabledArrow;
     
+    private final boolean visible;
+    
     public Board(Game game, TileSet tileSet)
     {
+        this.visible = true;
         this.tileSet = tileSet;
         this.disabledArrow = -1;
         setupTiles(game);
@@ -37,6 +40,7 @@ public final class Board implements Cloneable
     
     public Board(Board copy)
     {
+        this.visible = false;
         this.tileSet = new TileSet(copy.tileSet);
         this.disabledArrow = copy.disabledArrow;
         setupTiles(copy);
@@ -114,6 +118,7 @@ public final class Board implements Cloneable
                 // Add tiles to view
                 GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
                 tiles[i][j].setListener(game);
+                tiles[i][j].setRowAndCol(i, j);
             }
         }
         
@@ -204,7 +209,7 @@ public final class Board implements Cloneable
      */
     public LinkedList<Tile> getAccessibleTiles()
     {
-        LinkedList<Tile> tileList = new LinkedList<Tile>();
+        LinkedList<Tile> tileList = new LinkedList<>();
         
         for (int i = 0; i < 7; i++)
         {
@@ -282,7 +287,17 @@ public final class Board implements Cloneable
                 disabledArrow = 5;
                 break;
         }
-        updateTileNeighbors(); // Refresh the paths between tiles
+        updateTileNeighbors(); 
+
+        // Update the positions
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                tiles[i][j].setRowAndCol(i, j);
+            }
+        }
+        nextTile.setRowAndCol(-1, -1);
         
         // Disable all the arrows and move into the player move phase
         GUIConnector.disableArrows(disabledArrow);
@@ -305,14 +320,22 @@ public final class Board implements Cloneable
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i+next][j];
-            GUIConnector.removeTileView(tiles[i][j].getTileView());
-            GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
+            if (visible)
+            {
+                GUIConnector.removeTileView(tiles[i][j].getTileView());
+                GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
+            }
+            else {}
             i += next;
         }
         Tile newTile = tileSet.getNextTile();
         temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
-        GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
+        if (visible)
+        {
+            GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
+        }
+        else {}
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
     }

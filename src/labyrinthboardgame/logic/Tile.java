@@ -8,7 +8,6 @@ package labyrinthboardgame.logic;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import labyrinthboardgame.gui.PlayerCharacter;
 import labyrinthboardgame.gui.TileView;
 
 /**
@@ -35,6 +34,9 @@ public final class Tile
     
     private TileView tileView;
     private TileView previewTileView;
+    
+    private int row;
+    private int col;
     
     /**
      * Creates a tile of a particular shape and rotation, but no treasure
@@ -118,6 +120,8 @@ public final class Tile
         tileShape = copy.tileShape;
         currentRotation = copy.currentRotation;
         accessible = false;
+        row = copy.row;
+        col = copy.col;
         
         playerStartNumber = copy.playerStartNumber;
         tileTreasure = copy.tileTreasure;
@@ -129,6 +133,8 @@ public final class Tile
      */
     private void setupTile()
     {
+        row = -1;
+        col = -1;
         accessible = false;
         tileView = new TileView(tileShape, currentRotation);
         previewTileView = new TileView(tileShape, currentRotation);
@@ -495,30 +501,28 @@ public final class Tile
         }
     }
     
+    public void setRowAndCol(int newRow, int newCol)
+    {
+        row = newRow;
+        col = newCol;
+    }
+    
     /**
      * Adds a player's character to this tile to be displayed
      * @param player The character to add to this tile
      */
-    public void addPlayerCharacter(PlayerCharacter player)
+    public void addPlayerCharacter(int playerIndex)
     {
-        if (tileView != null)
-        {
-            tileView.addPlayerCharacter(player);
-        }
-        else {}
+        GUIConnector.addPlayerCharacter(row, col, playerIndex);
     }
     
     /**
      * Removes a player's character from being displayed on this tile
      * @param player The character to remove from this tile
      */
-    public void removePlayerCharacter(PlayerCharacter player)
+    public void removePlayerCharacter(int playerIndex)
     {
-        if (tileView != null)
-        {
-            tileView.removePlayerCharacter(player);
-        }
-        else {}
+        GUIConnector.removePlayerCharacter(playerIndex);
     }
     
     /**

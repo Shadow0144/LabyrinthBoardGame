@@ -6,6 +6,7 @@
 package labyrinthboardgame.gui;
 
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -14,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import labyrinthboardgame.logic.Board;
 import labyrinthboardgame.logic.Game;
+import labyrinthboardgame.logic.Player;
 
 /**
  *
@@ -24,6 +26,8 @@ public final class BoardView extends GridPane
     private InsertTileButton[] arrows;
     private int disabledArrow;
     
+    private final PlayerCharacter[] characters;
+    
     /**
      * The main game board, which holds all the tiles and treasures and players
      */
@@ -31,7 +35,36 @@ public final class BoardView extends GridPane
     {
         super();
         
+        characters = new PlayerCharacter[4];
+        
         addEmptyTiles();
+    }
+    
+    public void createPlayerCharacter(int playerIndex, Player player)
+    {
+        characters[playerIndex] = new PlayerCharacter(player);
+    }
+    
+    public PlayerCharacter getPlayerCharacter(int playerIndex)
+    {
+        return characters[playerIndex];
+    }
+    
+    public TileView getTileView(int row, int col)
+    {
+        TileView rTileView = null;
+        for (Node view : getChildren())
+        {
+            Integer r = getRowIndex(view);
+            Integer c = getColumnIndex(view);
+            if (r != null && r == (row+1) && c != null && c == (col+1))
+            {
+                rTileView = ((TileView)(view));
+                break;
+            }
+            else {}
+        }
+        return rTileView;
     }
     
     /**
