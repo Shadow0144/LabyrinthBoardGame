@@ -52,7 +52,7 @@ public class JavaFXGUI implements GUIConnector
             ObservableList<Node> children = boardView.getChildren();
             for(Node node : children) 
             {
-                if(node instanceof TileView && boardView.getRowIndex(node) == i && boardView.getColumnIndex(node) == j) 
+                if(node instanceof TileView && BoardView.getRowIndex(node) == i && BoardView.getColumnIndex(node) == j) 
                 {
                     TileView tileView = (TileView)(node); // use what you want to remove
                     boardView.getChildren().remove(tileView);
@@ -152,6 +152,7 @@ public class JavaFXGUI implements GUIConnector
     
     /**
      * Sets this player as active, which updates the player's icon
+     * @param playerIndex The index of the player whose icon is to be retrieved
      */
     @Override
     public void setIconActive(int playerIndex)
@@ -161,6 +162,7 @@ public class JavaFXGUI implements GUIConnector
     
     /**
      * Sets this player as inactive, which updates the player's icon
+     * @param playerIndex The index of the player whose icon is to be set inactive
      */
     @Override
     public void setInactive(int playerIndex)

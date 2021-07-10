@@ -133,6 +133,10 @@ public final class GameBoardController implements Initializable
         return playerIconTray;
     }
     
+    /**
+     * Returns a reference to the game
+     * @return A reference to the game
+     */
     public Game getGame()
     {
         return game;

@@ -114,18 +114,12 @@ public class FakeGUI implements GUIConnector
         
     }
     
-    /**
-     * Sets this player as active, which updates the player's icon
-     */
     @Override
     public void setIconActive(int playerIndex)
     {
         
     }
     
-    /**
-     * Sets this player as inactive, which updates the player's icon
-     */
     @Override
     public void setInactive(int playerIndex)
     {
@@ -138,20 +132,12 @@ public class FakeGUI implements GUIConnector
         
     }
     
-    /**
-     * Adds a player's character to this tile to be displayed
-     * @param player The character to add to this tile
-     */
     @Override
     public void addPlayerCharacter(int row, int col, int playerIndex)
     {
         
     }
     
-    /**
-     * Removes a player's character from being displayed on this tile
-     * @param player The character to remove from this tile
-     */
     @Override
     public void removePlayerCharacter(int playerIndex)
     {

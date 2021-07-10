@@ -91,6 +91,7 @@ public final class SceneController
      * Sets up the board, treasures, and players
      * @param players The players in this game
      * @param treasures The number of treasures per player
+     * @param connector Connects the logic and GUI packages
      * @throws Exception 
      */
     public void moveToGameScene(Player[] players, int treasures, GUIConnector connector) throws Exception

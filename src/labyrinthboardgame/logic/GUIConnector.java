@@ -11,7 +11,6 @@ import labyrinthboardgame.gui.GameBoardController;
 import labyrinthboardgame.gui.JavaFXGUI;
 import labyrinthboardgame.gui.PlayerCharacter;
 import labyrinthboardgame.gui.PlayerIcon;
-import labyrinthboardgame.gui.TileView;
 
 /**
  *

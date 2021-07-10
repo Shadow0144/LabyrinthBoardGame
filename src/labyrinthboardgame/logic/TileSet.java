@@ -33,7 +33,7 @@ public final class TileSet
     public TileSet()
     {
         tileIndex = 0;
-        tiles = new ArrayList<Tile>();
+        tiles = new ArrayList<>();
         
         random = new Random();
         
@@ -107,7 +107,7 @@ public final class TileSet
     public TileSet(Tile[][] loadedTiles, Tile loadedNextTile)
     {
         tileIndex = 0;
-        tiles = new ArrayList<Tile>();
+        tiles = new ArrayList<>();
         for (int i = 0; i < 7; i++)
         {
             for (int j = 0; j < 7; j++)

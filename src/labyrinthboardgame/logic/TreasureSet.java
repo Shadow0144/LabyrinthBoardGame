@@ -22,7 +22,7 @@ public final class TreasureSet
      */
     public TreasureSet()
     {
-        treasures = new ArrayList<Treasure>();
+        treasures = new ArrayList<>();
         for (int i = 0; i < 24; i++)
         {
             treasures.add(new Treasure(Treasure.TreasureType.values()[i]));

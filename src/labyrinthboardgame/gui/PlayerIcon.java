@@ -73,7 +73,7 @@ public final class PlayerIcon extends VBox
         treasuresRemainingPane.getChildren().add(playerTreasuresRemainingText);
         
         innerPane.getChildren().add(treasuresRemainingPane);
-        innerPane.setAlignment(treasuresRemainingPane, Pos.TOP_RIGHT);
+        StackPane.setAlignment(treasuresRemainingPane, Pos.TOP_RIGHT);
         
         getChildren().add(innerPane);
         
@@ -129,6 +129,7 @@ public final class PlayerIcon extends VBox
      */
     public void setActive()
     {
+        playerIcon.setStroke(Color.AQUAMARINE);
         playerIcon.setStrokeWidth(SELECTED_STROKE);
     }
     
@@ -138,6 +139,7 @@ public final class PlayerIcon extends VBox
      */
     public void setInactive()
     {
+        playerIcon.setStroke(Color.BLACK);
         playerIcon.setStrokeWidth(UNSELECTED_STROKE);
     }
 }

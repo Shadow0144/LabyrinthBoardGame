@@ -63,7 +63,7 @@ public class GameLoader
             // Load the players
             for (int i = 0; i < 4; i++)
             {
-                players[i] = getPlayerFromStrings((i+1), inputStream, controller, connector);
+                players[i] = getPlayerFromStrings((i+1), inputStream, connector);
             }
             
             // The rest of the lines aren't necessary
@@ -187,13 +187,12 @@ public class GameLoader
      * Loads a player from a String
      * @param playerNumber The number of the player (i.e. 1-4)
      * @param inputStream The stream to load from
-     * @param controller A reference to the GameBoardController
+     * @param connector Connects the logic and GUI packages
      * @return A loaded player
      * @throws IOException 
      */
     private static Player getPlayerFromStrings(int playerNumber,
-            BufferedReader inputStream, GameBoardController controller,
-            GUIConnector connector) throws IOException
+            BufferedReader inputStream, GUIConnector connector) throws IOException
     {
         inputStream.readLine(); // Skip this line
         
@@ -215,7 +214,7 @@ public class GameLoader
         String yString = positionTokenizer.nextToken().replaceAll("[^\\d.]", "");
         int y = Integer.parseInt(yString);
         
-        LinkedList<Treasure> treasures = new LinkedList<Treasure>();
+        LinkedList<Treasure> treasures = new LinkedList<>();
         String treasuresString = inputStream.readLine();
         StringTokenizer treasuresTokenizer = new StringTokenizer(treasuresString, ",");
         while (treasuresTokenizer.hasMoreTokens())

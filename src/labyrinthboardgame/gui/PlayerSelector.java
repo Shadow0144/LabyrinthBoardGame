@@ -76,9 +76,10 @@ public final class PlayerSelector extends VBox
         
         Button leftButton = new Button("<");
         leftButton.setAlignment(Pos.CENTER);
-        selectionBox.setMargin(leftButton, new Insets(0, 12, 12, 12));
+        HBox.setMargin(leftButton, new Insets(0, 12, 12, 12));
         leftButton.setOnAction(new EventHandler<ActionEvent>() 
         {
+            @Override
             public void handle(ActionEvent event)
             {
                 leftPressed();
@@ -90,13 +91,14 @@ public final class PlayerSelector extends VBox
         playerTypeLabel.setMinWidth(100); // Prevents the buttons from moving when we change the text
         playerTypeLabel.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
         playerTypeLabel.setFont(Font.font(14));
-        selectionBox.setMargin(playerTypeLabel, new Insets(0, 12, 12, 12));
+        HBox.setMargin(playerTypeLabel, new Insets(0, 12, 12, 12));
         
         Button rightButton = new Button(">");
         rightButton.setAlignment(Pos.CENTER);
-        selectionBox.setMargin(rightButton, new Insets(0, 12, 12, 12));
+        HBox.setMargin(rightButton, new Insets(0, 12, 12, 12));
         rightButton.setOnAction(new EventHandler<ActionEvent>() 
         {
+            @Override
             public void handle(ActionEvent event)
             {
                 rightPressed();

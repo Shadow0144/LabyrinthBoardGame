@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="LabyrinthBoardGame.jar" size="9421071" download="eager" />
+    <jar href="LabyrinthBoardGame.jar" size="9421098" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="labyrinthboardgame.gui.LabyrinthBoardGame"  name="LabyrinthBoardGame" />
   <update check="always"/>

@@ -130,6 +130,7 @@ public final class PlayerIconTray extends VBox
     
     /**
      * Updates the preview of the next tile to be inserted
+     * @param game A reference to the game
      * @param nextTile The next tile
      */
     public void updateNextTile(Game game, Tile nextTile)

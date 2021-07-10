@@ -112,6 +112,10 @@ public final class TileView extends StackPane
         showingPath = false;
     }
     
+    /**
+     * Sets up the tile view based on a tile
+     * @param tile A tile to build the view from
+     */
     public void setupTileView(Tile tile)
     {
         switch (tile.getType())
@@ -176,6 +180,11 @@ public final class TileView extends StackPane
         setAlignment(playerStart, Pos.CENTER);
     }
     
+    /**
+     * Sets up listeners for mouse events
+     * @param game A reference to the game
+     * @param tile A reference to the underlying tile
+     */
     public void setListener(Game game, Tile tile)
     {
         addEventHandler(MouseEvent.MOUSE_ENTERED, (e) ->
@@ -227,11 +236,17 @@ public final class TileView extends StackPane
         return tileImage;
     }
     
+    /**
+     * Enables displaying which tiles are accessible or not
+     */
     public void showPath()
     {
         showingPath = true;
     }
     
+    /**
+     * Disables displaying which tiles are accessible or not
+     */
     public void hidePath()
     {
         showingPath = false;
@@ -296,6 +311,11 @@ public final class TileView extends StackPane
         }
     }
     
+    /**
+     * Moves player characters from this tile to a new tile
+     * @param connector Connects the logic and GUI packages
+     * @param newTileView The tile to move the player characters to
+     */
     public void movePlayerCharacters(GUIConnector connector, TileView newTileView)
     {
         if (newTileView != null)
@@ -317,6 +337,11 @@ public final class TileView extends StackPane
         else {}
     }
     
+    /**
+     * Adds a list of player characters to the tile view
+     * @param connector Connects the logic and GUI packages
+     * @param players The list of player characters to add by index
+     */
     public void addPlayerCharacters(GUIConnector connector, boolean[] players)
     {
         for (int i = 0; i < 4; i++)
@@ -329,6 +354,9 @@ public final class TileView extends StackPane
         }
     }
     
+    /**
+     * Removes all player characters from the tile view
+     */
     public void removePlayerCharacters()
     {
         playerGridPane.getChildren().clear();

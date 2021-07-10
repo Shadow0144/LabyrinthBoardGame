@@ -50,6 +50,7 @@ public final class PlayerSelectorBox extends VBox
     
     /**
      * Returns an array of players based on the player selectors
+     * @param connector Connects the logic and GUI packages
      * @return Array of 4 Players
      */
     public Player[] getPlayers(GUIConnector connector)

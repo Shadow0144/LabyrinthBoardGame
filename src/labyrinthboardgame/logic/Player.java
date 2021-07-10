@@ -49,6 +49,7 @@ public final class Player
      * @param playerNumber The number of this player, which also determines
      * @param playerType The type of player (e.g. absent, human, or an A.I.)
      * their color
+     * @param connector Connects the logic and GUI packages
      * @param playerName The name of the player
      */
     public Player(int playerNumber, PlayerType playerType, String playerName, GUIConnector connector)

@@ -40,16 +40,32 @@ public final class BoardView extends GridPane
         addEmptyTiles();
     }
     
+    /**
+     * Creates a player character from a player
+     * @param playerIndex The index of the player
+     * @param player The player to make a character for
+     */
     public void createPlayerCharacter(int playerIndex, Player player)
     {
         characters[playerIndex] = new PlayerCharacter(player);
     }
     
+    /**
+     * Returns the player character
+     * @param playerIndex The index of player
+     * @return The player character
+     */
     public PlayerCharacter getPlayerCharacter(int playerIndex)
     {
         return characters[playerIndex];
     }
     
+    /**
+     * Returns a tile view at row and col
+     * @param row The row of the tile view
+     * @param col The column of the tile view
+     * @return A tile view at row and col
+     */
     public TileView getTileView(int row, int col)
     {
         TileView rTileView = null;
@@ -208,6 +224,9 @@ public final class BoardView extends GridPane
         this.add(emptyTilePane, i, j);
     }
     
+    /**
+     * Enables viewing which tiles can be moved to
+     */
     public void showPaths()
     {
         getChildren().forEach(view -> {
@@ -219,6 +238,9 @@ public final class BoardView extends GridPane
         });
     }
     
+    /**
+     * Disables viewing which tiles can be moved to
+     */
     public void hidePaths()
     {
         getChildren().forEach(view -> {

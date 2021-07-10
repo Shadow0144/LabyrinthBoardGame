@@ -125,14 +125,15 @@ public final class Tile
         tileTreasure = copy.tileTreasure;
         
         players = new boolean[4];
-        for (int i = 0; i < 4; i++)
-        {
-            players[i] = copy.players[i];
-        }
+        System.arraycopy(copy.players, 0, players, 0, 4);
         
         setupOverlays();
     }
     
+    /**
+     * Returns the type of the tile
+     * @return The type of the tile
+     */
     public Type getType()
     {
         return type;
@@ -414,34 +415,61 @@ public final class Tile
         }
     }
     
+    /**
+     * Updates the row and column of the tile
+     * @param newRow The new row of the tile
+     * @param newCol The new column of the tile
+     */
     public void setRowAndCol(int newRow, int newCol)
     {
         row = newRow;
         col = newCol;
     }
     
+    /**
+     * Returns the row of the tile
+     * @return The row of the tile
+     */
     public int getRow()
     {
         return row;
     }
     
+    /**
+     * Returns the column of the tile
+     * @return The column of the tile
+     */
     public int getCol()
     {
         return col;
     }
     
+    /**
+     * Adds a player character to the connected tile view
+     * @param connector Connects the logic and GUI packages
+     * @param playerIndex The index of the player character to add
+     */
     public void addPlayerCharacter(GUIConnector connector, int playerIndex)
     {
         players[playerIndex] = true;
         connector.addPlayerCharacter(row, col, playerIndex);
     }
     
+    /**
+     * Removes a player character from the connected tile view
+     * @param connector Connects the logic and GUI packages
+     * @param playerIndex The index of the player character to remove
+     */
     public void removePlayerCharacter(GUIConnector connector, int playerIndex)
     {
         players[playerIndex] = false;
         connector.removePlayerCharacter(playerIndex);
     }
     
+    /**
+     * Returns a list of the players on this tile
+     * @return A list of the players on this tile
+     */
     public boolean[] getPlayers()
     {
         return players;

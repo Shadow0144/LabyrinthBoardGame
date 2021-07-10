@@ -47,6 +47,10 @@ public final class Game
         setupLoadedPlayers();
     }
     
+    /**
+     * Returns a reference to the GUIConnector used
+     * @return A reference to the GUIConnector used
+     */
     public GUIConnector getConnector()
     {
         return connector;
@@ -99,6 +103,7 @@ public final class Game
                 players[currentPlayer].getPlayerNumber());
         players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
     }
+    
     /**
      * Sets up players when the game has been loaded from a file
      */
