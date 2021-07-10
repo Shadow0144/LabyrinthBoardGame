@@ -263,7 +263,11 @@ public final class TileView extends StackPane
         playerGridPane.getChildren().clear();
         for (int i = 0; i < 4; i++)
         {
-            if (playerCharacters[i] == null)
+            if (playerCharacters[i] == player) // No duplicates
+            {
+                break;
+            }
+            else if (playerCharacters[i] == null)
             {
                 playerCharacters[i] = player;
                 playerGridPane.add(playerCharacters[i], i % 2, (i < 2) ? 0 : 1);

@@ -474,4 +474,17 @@ public final class Tile
     {
         return players;
     }
+    
+    /**
+     * Moves the players to this tile
+     * @param movingPlayers The players to move over to this tile
+     */
+    public void setPlayers(boolean[] movingPlayers)
+    {
+        System.arraycopy(movingPlayers, 0, players, 0, 4);
+        for (int i = 0; i < 4; i++)
+        {
+            movingPlayers[i] = false;
+        }
+    }
 }

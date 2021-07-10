@@ -327,6 +327,7 @@ public final class Board implements Cloneable
             i += next;
         }
         Tile newTile = tileSet.getNextTile();
+        newTile.setPlayers(temp.getPlayers());
         tiles[i][j] = newTile;
         newTile.setRowAndCol(i, j);
         if (visible)
@@ -367,6 +368,7 @@ public final class Board implements Cloneable
             j += next;
         }
         Tile newTile = tileSet.getNextTile();
+        newTile.setPlayers(temp.getPlayers());
         tiles[i][j] = newTile;
         newTile.setRowAndCol(i, j);
         if (visible)
