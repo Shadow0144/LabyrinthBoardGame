@@ -312,32 +312,6 @@ public final class TileView extends StackPane
     }
     
     /**
-     * Moves player characters from this tile to a new tile
-     * @param connector Connects the logic and GUI packages
-     * @param newTileView The tile to move the player characters to
-     */
-    public void movePlayerCharacters(GUIConnector connector, TileView newTileView)
-    {
-        if (newTileView != null)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (newTileView.playerCharacters[i] != null)
-                {
-                    addPlayerCharacter(newTileView.playerCharacters[i]);
-                    newTileView.playerCharacters[i] = null;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            newTileView.playerGridPane.getChildren().clear();
-        }
-        else {}
-    }
-    
-    /**
      * Adds a list of player characters to the tile view
      * @param connector Connects the logic and GUI packages
      * @param players The list of player characters to add by index
