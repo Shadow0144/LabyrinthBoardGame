@@ -118,7 +118,7 @@ public class AdvancedAI
                 switch (predictingState)
                 {
                     case rotating:
-                        boardClone = new Board(game.getBoard());
+                        boardClone = new Board(game.getBoard(), GUIConnector.getFakeGUI());
                         switch (rotation)
                         {
                             case 0:

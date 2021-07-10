@@ -53,17 +53,21 @@ public final class BoardView extends GridPane
     public TileView getTileView(int row, int col)
     {
         TileView rTileView = null;
-        for (Node view : getChildren())
+        if (row >= 0 && row <= 6 && col >= 0 && col <= 6)
         {
-            Integer r = getRowIndex(view);
-            Integer c = getColumnIndex(view);
-            if (r != null && r == (row+1) && c != null && c == (col+1))
+            for (Node view : getChildren())
             {
-                rTileView = ((TileView)(view));
-                break;
+                Integer r = getRowIndex(view);
+                Integer c = getColumnIndex(view);
+                if (r != null && r == (row+1) && c != null && c == (col+1))
+                {
+                    rTileView = ((TileView)(view));
+                    break;
+                }
+                else {}
             }
-            else {}
         }
+        else {}
         return rTileView;
     }
     
@@ -202,5 +206,27 @@ public final class BoardView extends GridPane
         emptyTilePane.setBackground(new Background(new BackgroundFill(Color.rgb(119, 98, 82), 
                 CornerRadii.EMPTY, Insets.EMPTY)));
         this.add(emptyTilePane, i, j);
+    }
+    
+    public void showPaths()
+    {
+        getChildren().forEach(view -> {
+            if (view instanceof TileView)
+            {
+                ((TileView)view).showPath();
+            }
+            else {}
+        });
+    }
+    
+    public void hidePaths()
+    {
+        getChildren().forEach(view -> {
+            if (view instanceof TileView)
+            {
+                ((TileView)view).hidePath();
+            }
+            else {}
+        });
     }
 }

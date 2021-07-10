@@ -5,11 +5,6 @@
  */
 package labyrinthboardgame.logic;
 
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import labyrinthboardgame.gui.TileView;
-
 /**
  *
  * @author Corbi
@@ -24,19 +19,25 @@ public final class Tile
     private final Tile.Shape tileShape;
     private int currentRotation;
     
-    private Treasure tileTreasure;
-    private int playerStartNumber;
+    private final Treasure tileTreasure;
+    private final int playerStartNumber;
     
     private boolean[] possibleNeighbors;
     private Tile[] connectedNeighbors;
     private boolean accessible;
     private boolean buildingPath;
     
-    private TileView tileView;
-    private TileView previewTileView;
-    
     private int row;
     private int col;
+    
+    public enum Type {
+        None,
+        Treasure,
+        Start
+    };
+    private final Tile.Type type;
+    
+    private final boolean[] players;
     
     /**
      * Creates a tile of a particular shape and rotation, but no treasure
@@ -48,10 +49,15 @@ public final class Tile
     {
         tileShape = shape;
         currentRotation = rotation;
+        type = Type.None;
         setupTile();
         tileTreasure = null;
         playerStartNumber = -1;
-        tileView.setupPlayers();
+        players = new boolean[4];
+        for (int i = 0; i < 4; i++)
+        {
+            players[i] = false;
+        }
         setupOverlays();
     }
     
@@ -66,26 +72,17 @@ public final class Tile
     {
         tileShape = shape;
         currentRotation = rotation;
+        type = Type.Start;
         setupTile();
         
         tileTreasure = null;
         this.playerStartNumber = player;
-        switch (player)
+        
+        players = new boolean[4];
+        for (int i = 0; i < 4; i++)
         {
-            case 1:
-                tileView.addPlayerStart(Color.YELLOW);
-                break;
-            case 2:
-                tileView.addPlayerStart(Color.BLUE);
-                break;
-            case 3:
-                tileView.addPlayerStart(Color.GREEN);
-                break;
-            case 4:
-                tileView.addPlayerStart(Color.RED);
-                break;
+            players[i] = false;
         }
-        tileView.setupPlayers();
         
         setupOverlays();
     }
@@ -100,17 +97,17 @@ public final class Tile
     {
         tileShape = shape;
         currentRotation = rotation;
+        type = Type.Treasure;
         setupTile();
         
         playerStartNumber = -1;
         tileTreasure = treasure;
-        if (treasure != null)
+        
+        players = new boolean[4];
+        for (int i = 0; i < 4; i++)
         {
-            tileView.addTreasure(tileTreasure.getTreasureImageName());
-            previewTileView.addTreasure(tileTreasure.getTreasureImageName());
+            players[i] = false;
         }
-        else {}
-        tileView.setupPlayers();
         
         setupOverlays();
     }
@@ -119,13 +116,26 @@ public final class Tile
     {
         tileShape = copy.tileShape;
         currentRotation = copy.currentRotation;
+        type = copy.type;
         accessible = false;
         row = copy.row;
         col = copy.col;
         
         playerStartNumber = copy.playerStartNumber;
         tileTreasure = copy.tileTreasure;
+        
+        players = new boolean[4];
+        for (int i = 0; i < 4; i++)
+        {
+            players[i] = copy.players[i];
+        }
+        
         setupOverlays();
+    }
+    
+    public Type getType()
+    {
+        return type;
     }
     
     /**
@@ -136,8 +146,6 @@ public final class Tile
         row = -1;
         col = -1;
         accessible = false;
-        tileView = new TileView(tileShape, currentRotation);
-        previewTileView = new TileView(tileShape, currentRotation);
     }
     
     /**
@@ -157,48 +165,12 @@ public final class Tile
     }
     
     /**
-     * Returns a reference to the graphical representation of the tile
-     * @return The tile view
-     */
-    public TileView getTileView()
-    {
-        return tileView;
-    }
-    
-    /**
-     * Returns a reference to the graphical representation of the tile for previewing
-     * on the arrow buttons
-     * @return The preview tile view
-     */
-    public TileView getPreviewTileView()
-    {
-        return previewTileView;
-    }
-    
-    /**
-     * Adds a listener to move player characters
-     * @param game A reference to the parent game
-     */
-    public void setListener(Game game)
-    {
-        tileView.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
-            { 
-                if (accessible)
-                {
-                    game.movePlayerToTile(this); 
-                }
-                else {}
-            });
-    }
-    
-    /**
      * Sets the tile's rotation, updating the graphics and neighbors
      * @param rotation The tile's new rotation
      */
     public void setRotation(int rotation)
     {
         currentRotation = rotation;
-        tileView.setRotation(currentRotation);
         refreshPossibleNeighbors();
     }
     
@@ -244,12 +216,6 @@ public final class Tile
     public void rotateClockwise()
     {
         currentRotation = (360 + currentRotation + 90) % 360;
-        if (tileView != null)
-        {
-            tileView.setRotation(currentRotation);
-            previewTileView.setRotation(currentRotation);
-        }
-        else {}
         refreshPossibleNeighbors();
     }
     
@@ -259,22 +225,7 @@ public final class Tile
     public void rotateCounterClockwise()
     {
         currentRotation = (360 + currentRotation - 90) % 360;
-        if (tileView != null)
-        {
-            tileView.setRotation(currentRotation);
-            previewTileView.setRotation(currentRotation);
-        }
-        else {}
         refreshPossibleNeighbors();
-    }
-    
-    /**
-     * Gets a reference to the image used to display the tile
-     * @return The tile image
-     */
-    public Image getTileImage()
-    {
-        return tileView.getTileImage();
     }
     
     /**
@@ -331,46 +282,13 @@ public final class Tile
         {
             buildingPath = true;
             accessible = true;
-            Color playerColor = Color.WHITE;
-            switch (player)
-            {
-                case 1:
-                    playerColor = Color.YELLOW;
-                    break;
-                case 2:
-                    playerColor = Color.BLUE;
-                    break;
-                case 3:
-                    playerColor = Color.GREEN;
-                    break;
-                case 4:
-                    playerColor = Color.RED;
-                    break;
-            }
-            if (tileView != null)
-            {
-                tileView.showIntersection(playerColor);
-            }
-            else {}
             for (int i = 0; i < 4; i++)
             {
                 if (connectedNeighbors[i] != null)
                 {
-                    if (tileView != null)
-                    {
-                        tileView.showPath(i, playerColor);
-                    }
-                    else {}
                     connectedNeighbors[i].showPaths(player);
                 }
-                else 
-                {
-                    if (tileView != null)
-                    {
-                        tileView.hidePath(i);
-                    }
-                    else {}
-                }
+                else { }
             }
             buildingPath = false;
         }
@@ -386,11 +304,6 @@ public final class Tile
             buildingPath = true;
             accessible = false;
             
-            if (tileView != null)
-            {
-                tileView.hideAllPaths();
-            }
-            else {}
             for (int i = 0; i < 4; i++)
             {
                 if (connectedNeighbors[i] != null)
@@ -507,35 +420,30 @@ public final class Tile
         col = newCol;
     }
     
-    /**
-     * Adds a player's character to this tile to be displayed
-     * @param player The character to add to this tile
-     */
-    public void addPlayerCharacter(int playerIndex)
+    public int getRow()
     {
-        GUIConnector.addPlayerCharacter(row, col, playerIndex);
+        return row;
     }
     
-    /**
-     * Removes a player's character from being displayed on this tile
-     * @param player The character to remove from this tile
-     */
-    public void removePlayerCharacter(int playerIndex)
+    public int getCol()
     {
-        GUIConnector.removePlayerCharacter(playerIndex);
+        return col;
     }
     
-    /**
-     * Moves all player characters on this tile when the tile is pushed off
-     * the board
-     * @param newTile The tile to move all the characters to
-     */
-    public void movePlayers(Tile newTile)
+    public void addPlayerCharacter(GUIConnector connector, int playerIndex)
     {
-        if (tileView != null)
-        {
-            tileView.moveCharacters(newTile);
-        }
-        else {}
+        players[playerIndex] = true;
+        connector.addPlayerCharacter(row, col, playerIndex);
+    }
+    
+    public void removePlayerCharacter(GUIConnector connector, int playerIndex)
+    {
+        players[playerIndex] = false;
+        connector.removePlayerCharacter(playerIndex);
+    }
+    
+    public boolean[] getPlayers()
+    {
+        return players;
     }
 }

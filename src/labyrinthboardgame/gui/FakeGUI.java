@@ -5,10 +5,192 @@
  */
 package labyrinthboardgame.gui;
 
+import javafx.scene.paint.Color;
+import labyrinthboardgame.logic.GUIConnector;
+import labyrinthboardgame.logic.Game;
+import labyrinthboardgame.logic.Player;
+import labyrinthboardgame.logic.Tile;
+import labyrinthboardgame.logic.Treasure;
+
 /**
  *
  * @author Corbi
  */
-public class FakeGUI {
+public class FakeGUI implements GUIConnector 
+{    
+    @Override
+    public void setupBoard(GameBoardController gbcontroller)
+    {
+        
+    }
     
+    @Override
+    public void addTileView(int i, int j, Tile tile, Game game)
+    {   
+        
+    }
+    
+    @Override
+    public void removeTileView(int i, int j)
+    {
+        
+    }
+    
+    @Override
+    public void enableArrows(boolean human)
+    {
+        
+    }
+    
+    @Override
+    public void disableArrows(int disabledArrow)
+    {
+        
+    }
+    
+    @Override
+    public void updateTrayNextTile(Game game, Tile nextTile)
+    {
+        
+    }
+    
+    @Override
+    public PlayerIcon getPlayerIcon(int playerNumber)
+    {
+        return null;
+    }
+    
+    @Override
+    public void removePlayerIcon(int playerNumber)
+    {
+        
+    }
+    
+    @Override
+    public void updateCurrentTreasure(Treasure treasure, Color playerColor)
+    {
+        
+    }
+    
+    @Override
+    public void updateCurrentTreasure(Treasure treasure, int playerNum)
+    {
+        
+    }
+    
+    @Override
+    public void setWinningPlayer(int currentPlayer)
+    {
+        
+    }
+    
+    @Override
+    public PlayerCharacter getPlayerCharacter(int playerIndex)
+    {
+        return null;
+    }
+    
+    @Override
+    public PlayerIcon getIcon(int playerIndex)
+    {
+        return null;
+    }
+    
+    @Override
+    public void setIconPlayerName(int playerIndex, String playerName)
+    {
+        
+    }
+    
+    @Override
+    public void updateTreasuresRemaining(int playerIndex, int playerTreasuresRemaining)
+    {
+        
+    }
+    
+    @Override
+    public void setIconHasWon(int playerIndex)
+    {
+        
+    }
+    
+    /**
+     * Sets this player as active, which updates the player's icon
+     */
+    @Override
+    public void setIconActive(int playerIndex)
+    {
+        
+    }
+    
+    /**
+     * Sets this player as inactive, which updates the player's icon
+     */
+    @Override
+    public void setInactive(int playerIndex)
+    {
+        
+    }
+    
+    @Override
+    public void createPlayerCharacter(int playerIndex, Player player)
+    {
+        
+    }
+    
+    /**
+     * Adds a player's character to this tile to be displayed
+     * @param player The character to add to this tile
+     */
+    @Override
+    public void addPlayerCharacter(int row, int col, int playerIndex)
+    {
+        
+    }
+    
+    /**
+     * Removes a player's character from being displayed on this tile
+     * @param player The character to remove from this tile
+     */
+    @Override
+    public void removePlayerCharacter(int playerIndex)
+    {
+        
+    }
+    
+    @Override
+    public void addPlayerCharacters(Tile tile, boolean[] players)
+    {
+        
+    }
+    
+    @Override
+    public void removePlayerCharacters(Tile tile)
+    {
+        
+    }
+    
+    @Override
+    public void showPaths()
+    {
+        
+    }
+    
+    @Override
+    public void hidePaths()
+    {
+        
+    }
+    
+    @Override
+    public void rotatePreviewTileClockwise()
+    {
+        
+    }
+    
+    @Override
+    public void rotatePreviewTileCounterClockwise()
+    {
+        
+    }
 }

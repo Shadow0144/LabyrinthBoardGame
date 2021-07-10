@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import static javafx.scene.layout.StackPane.setAlignment;
 import labyrinthboardgame.logic.Board;
+import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Game;
 
 /**
@@ -27,6 +28,7 @@ public final class InsertTileButton extends StackPane
     private final double PREVIEW_OPACITY = 0.5;
     
     private Tile previewTile;
+    private TileView previewTileView;
     
     private boolean enabled;
     private final double DISABLED = 0.25;
@@ -73,7 +75,7 @@ public final class InsertTileButton extends StackPane
         arrowImageView.setRotate(rotation);
         
         this.setOnMouseEntered(event -> {
-            setPreviewTile(game.getNextTile());
+            setPreviewTile(game.getConnector(), game.getNextTile());
         });
         this.setOnMouseExited(event -> {
             removePreviewTile();
@@ -87,18 +89,20 @@ public final class InsertTileButton extends StackPane
     
     /**
      * Shows a preview of the tile to be inserted
+     * @param connector Connects the logic and GUI packages
      * @param previewTile The tile to be inserted
      */
-    public void setPreviewTile(Tile previewTile)
+    public void setPreviewTile(GUIConnector connector, Tile previewTile)
     {
         if (previewTile != null)
         {
             if (enabled)
             {
                 this.previewTile = previewTile;
-                previewTile.getPreviewTileView().setOpacity(PREVIEW_OPACITY);
-                getChildren().add(previewTile.getPreviewTileView());
-                setAlignment(previewTile.getPreviewTileView(), Pos.CENTER);
+                previewTileView = new TileView(connector, previewTile);
+                previewTileView.setOpacity(PREVIEW_OPACITY);
+                getChildren().add(previewTileView);
+                setAlignment(previewTileView, Pos.CENTER);
             }
             else {}
         }
@@ -112,7 +116,7 @@ public final class InsertTileButton extends StackPane
     {
         if (previewTile != null)
         {
-            getChildren().remove(previewTile.getPreviewTileView());
+            getChildren().remove(previewTileView);
             previewTile = null;
         }
         else {}
@@ -126,7 +130,9 @@ public final class InsertTileButton extends StackPane
         if (enabled && previewTile != null)
         {
             previewTile.rotateClockwise();
+            previewTileView.setRotation(previewTile.getRotation());
         }
+        else {}
     }
     
     /**
@@ -137,7 +143,9 @@ public final class InsertTileButton extends StackPane
         if (enabled && previewTile != null)
         {
             previewTile.rotateCounterClockwise();
+            previewTileView.setRotation(previewTile.getRotation());
         }
+        else {}
     }
     
     /**

@@ -5,31 +5,38 @@
  */
 package labyrinthboardgame.gui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import labyrinthboardgame.logic.GUIConnector;
+import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.Tile;
+import labyrinthboardgame.logic.Treasure;
 
 /**
  *
  * @author Corbi
  */
 public final class TileView extends StackPane 
-{
-    private Rectangle[] paths;
-    private Circle pathIntersection;
-    
+{    
     private final ImageView tileImageView;
     private ImageView treasureImageView;
     private Circle playerStart;
     
-    private GridPane playerGridPane;
+    private final GridPane playerGridPane;
+    
+    private final Pane overlay;
         
     private Image tileImage;
     public static final int TILE_SIZE = 70;
@@ -37,21 +44,23 @@ public final class TileView extends StackPane
     
     private final int TILE_TREASURE_SIZE = 50;
     
-    private final int INTERSECTION_RADIUS = 10;
-    private final int PATH_WIDTH = 10;
-    private final int PATH_LENGTH = 40;
-    private final double PATH_OPACITY = 0.75;
+    private final PlayerCharacter[] playerCharacters;
     
-    private PlayerCharacter[] playerCharacters;
+    private final Background accessibleBackground;
+    private final Background inaccessibleBackground;
+    
+    private boolean showingPath;
     
     /**
      * A graphical representation for a tile, containing images for treasures,
      * starting locations, paths, and players
-     * @param shape The shape of the tile (i.e. I, L, or T)
-     * @param rotation The rotation of the tile
+     * @param connector Connects the logic and GUI packages
+     * @param tile The tile to draw information from
      */
-    public TileView(Tile.Shape shape, int rotation)
+    public TileView(GUIConnector connector, Tile tile)
     {
+        Tile.Shape shape = tile.getTileShape();
+        int rotation = tile.getRotation();
         String tileImageString;
         switch (shape)
         {
@@ -73,7 +82,69 @@ public final class TileView extends StackPane
         setAlignment(tileImageView, Pos.CENTER);
         tileImageView.setImage(tileImage);
         tileImageView.setRotate(rotation);
-        setupOverlays();
+        //setupOverlays();
+        setupTileView(tile);
+        
+        accessibleBackground = new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY));
+        inaccessibleBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
+        
+        playerGridPane = new GridPane();
+        playerGridPane.setAlignment(Pos.CENTER);
+        getChildren().add(playerGridPane);
+        setAlignment(playerGridPane, Pos.CENTER);
+        playerCharacters = new PlayerCharacter[4];
+        for (int i = 0; i < 4; i++)
+        {
+            playerCharacters[i] = null;
+        }
+        boolean[] players = tile.getPlayers();
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[i])
+            {
+                addPlayerCharacter(connector.getPlayerCharacter(i));
+            }
+        }
+        
+        overlay = new Pane();
+        overlay.setOpacity(0.0);
+        getChildren().add(overlay);
+        showingPath = false;
+    }
+    
+    public void setupTileView(Tile tile)
+    {
+        switch (tile.getType())
+        {
+            case None:
+                // Do nothing
+                break;
+            case Start:
+                switch (tile.getPlayer())
+                {
+                    case 1:
+                        addPlayerStart(Color.YELLOW);
+                        break;
+                    case 2:
+                        addPlayerStart(Color.BLUE);
+                        break;
+                    case 3:
+                        addPlayerStart(Color.GREEN);
+                        break;
+                    case 4:
+                        addPlayerStart(Color.RED);
+                        break;
+                }
+                break;
+            case Treasure:
+                Treasure treasure = tile.getTreasure();
+                if (treasure != null)
+                {
+                    addTreasure(treasure.getTreasureImageName());
+                }
+                else {}
+                break;
+        }
     }
     
     /**
@@ -105,63 +176,37 @@ public final class TileView extends StackPane
         setAlignment(playerStart, Pos.CENTER);
     }
     
-    /**
-     * Sets up the graphics for drawing paths between tiles
-     */
-    public void setupOverlays()
+    public void setListener(Game game, Tile tile)
     {
-        paths = new Rectangle[4];
-        for (int i = 0; i < 4; i++)
-        {
-            paths[i] = new Rectangle();
-            paths[i].setStrokeWidth(1);
-            paths[i].setStroke(Color.BLACK);
-            paths[i].setOpacity(0);
-            getChildren().add(paths[i]);
-        }
-        
-        pathIntersection = new Circle(INTERSECTION_RADIUS);
-        pathIntersection.setOpacity(0);
-        pathIntersection.setStrokeWidth(1);
-        pathIntersection.setStroke(Color.BLACK);
-        getChildren().add(pathIntersection);
-        setAlignment(pathIntersection, Pos.CENTER);
-
-        // Top
-        paths[0].setWidth(PATH_WIDTH);
-        paths[0].setHeight(PATH_LENGTH);
-        setAlignment(paths[0], Pos.TOP_CENTER);
-        
-        // Right
-        paths[1].setWidth(PATH_LENGTH);
-        paths[1].setHeight(PATH_WIDTH);
-        setAlignment(paths[1], Pos.CENTER_RIGHT);
-        
-        // Bottom
-        paths[2].setWidth(PATH_WIDTH);
-        paths[2].setHeight(PATH_LENGTH);
-        setAlignment(paths[2], Pos.BOTTOM_CENTER);
-        
-        // Left
-        paths[3].setWidth(PATH_LENGTH);
-        paths[3].setHeight(PATH_WIDTH);
-        setAlignment(paths[3], Pos.CENTER_LEFT);
-    }
-    
-    /**
-     * Set up the grid to hold any player characters that arrive on this tile
-     */
-    public void setupPlayers()
-    {
-        playerGridPane = new GridPane();
-        playerGridPane.setAlignment(Pos.CENTER);
-        getChildren().add(playerGridPane);
-        setAlignment(playerGridPane, Pos.CENTER);
-        playerCharacters = new PlayerCharacter[4];
-        for (int i = 0; i < 4; i++)
-        {
-            playerCharacters[i] = null;
-        }
+        addEventHandler(MouseEvent.MOUSE_ENTERED, (e) ->
+            {
+                if (showingPath)
+                {
+                    overlay.setOpacity(0.5);
+                    if (tile.getAccessible())
+                    {
+                        overlay.setBackground(accessibleBackground);
+                    }
+                    else 
+                    {
+                        overlay.setBackground(inaccessibleBackground);
+                    }
+                }
+                else {}
+            });
+        addEventHandler(MouseEvent.MOUSE_EXITED, (e) ->
+            {
+                overlay.setOpacity(0.0);
+            });
+        addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->
+            { 
+                if (tile.getAccessible())
+                {
+                    game.movePlayerToTile(tile); 
+                    overlay.setOpacity(0.0);
+                }
+                else {}
+            });
     }
     
     /**
@@ -182,46 +227,14 @@ public final class TileView extends StackPane
         return tileImage;
     }
     
-    /**
-     * Displays a circle indicating this tile is part of a viable path
-     * @param playerColor The color the circle should be
-     */
-    public void showIntersection(Color playerColor)
+    public void showPath()
     {
-        pathIntersection.setOpacity(PATH_OPACITY);
-        pathIntersection.setFill(playerColor);
+        showingPath = true;
     }
     
-    /**
-     * Displays a path indicating a neighboring tile is part of a viable path
-     * @param path The direction of the connecting tile
-     * @param playerColor The color the circle should be
-     */
-    public void showPath(int path, Color playerColor)
+    public void hidePath()
     {
-        paths[path].setOpacity(PATH_OPACITY);
-        paths[path].setFill(playerColor);
-    }
-    
-    /**
-     * Stops displaying a path
-     * @param path The path to stop displaying
-     */
-    public void hidePath(int path)
-    {
-        paths[path].setOpacity(0);
-    }
-    
-    /**
-     * Stops displaying all paths and the intersection point
-     */
-    public void hideAllPaths()
-    {
-        pathIntersection.setOpacity(0);
-        for (int i = 0; i < 4; i++)
-        {
-            paths[i].setOpacity(0);
-        }
+        showingPath = false;
     }
     
     /**
@@ -283,16 +296,45 @@ public final class TileView extends StackPane
         }
     }
     
-    /**
-     * When this tile is pushed off the board, all characters are moved to the
-     * new tile on the opposite side of the board
-     * @param newTile The tile the players are moved to
-     */
-    public void moveCharacters(Tile newTile)
+    public void movePlayerCharacters(GUIConnector connector, TileView newTileView)
     {
-        while (playerCharacters[0] != null)
+        if (newTileView != null)
         {
-            playerCharacters[0].getPlayer().moveCharacter(newTile);
+            for (int i = 0; i < 4; i++)
+            {
+                if (newTileView.playerCharacters[i] != null)
+                {
+                    addPlayerCharacter(newTileView.playerCharacters[i]);
+                    newTileView.playerCharacters[i] = null;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            newTileView.playerGridPane.getChildren().clear();
+        }
+        else {}
+    }
+    
+    public void addPlayerCharacters(GUIConnector connector, boolean[] players)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[i])
+            {
+                addPlayerCharacter(connector.getPlayerCharacter(i));
+            }
+            else {}
+        }
+    }
+    
+    public void removePlayerCharacters()
+    {
+        playerGridPane.getChildren().clear();
+        for (int i = 0; i < 4; i++)
+        {
+            playerCharacters[i] = null;
         }
     }
 }

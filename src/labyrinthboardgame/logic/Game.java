@@ -20,26 +20,36 @@ public final class Game
     
     private final Board gameBoard;
     
-    public Game(Player[] players, int treasureCount)
+    private final GUIConnector connector;
+    
+    public Game(Player[] players, int treasureCount, GUIConnector connector)
     {        
+        this.connector = connector;
+        
         // Create a new set of tiles and fill the board with them
         tileSet = new TileSet();
-        gameBoard = new Board(this, tileSet);
+        gameBoard = new Board(this, tileSet, connector);
         
         // Set up the players
         this.players = players;
         setupPlayers(treasureCount);
     }
     
-    public Game(Player[] players, int currentPlayer, Tile[][] tiles, Tile nextTile)
+    public Game(Player[] players, int currentPlayer, Tile[][] tiles, Tile nextTile, GUIConnector connector)
     {
+        this.connector = connector;
         tileSet = new TileSet(tiles, nextTile);
-        gameBoard = new Board(this, tileSet);
+        gameBoard = new Board(this, tileSet, connector);
         
         // Set up the players
         this.players = players;
         this.currentPlayer = currentPlayer;
         setupLoadedPlayers();
+    }
+    
+    public GUIConnector getConnector()
+    {
+        return connector;
     }
     
     /**
@@ -75,17 +85,17 @@ public final class Game
                 else {}
                 treasureSet.assignTreasuresToPlayer(players[i], treasureCount);
                 players[i].showNextTreasure();
-                GUIConnector.createPlayerCharacter(i, players[i]);
+                connector.createPlayerCharacter(i, players[i]);
                 addPlayerCharacterToBoard(players[i]);
                 players[i].setupAI(this);
             }
             else // Hide inactive players
             {
-                GUIConnector.removePlayerIcon(i+1); // Pass the player number
+                connector.removePlayerIcon(i+1); // Pass the player number
             }
         }
         players[currentPlayer].setActive();
-        GUIConnector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+        connector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
                 players[currentPlayer].getPlayerNumber());
         players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
     }
@@ -106,11 +116,11 @@ public final class Game
             }
             else // Hide inactive players
             {
-                GUIConnector.removePlayerIcon(i+1); // Pass the player number
+                connector.removePlayerIcon(i+1); // Pass the player number
             }
         }
         players[currentPlayer].setActive();
-        GUIConnector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+        connector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
                 players[currentPlayer].getPlayerNumber());
         players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
     }
@@ -129,14 +139,14 @@ public final class Game
             }
             while (!players[currentPlayer].inGame()); // Skip players not in the game
             players[currentPlayer].setActive();
-            GUIConnector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
+            connector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
                     players[currentPlayer].getPlayerNumber());
             
             players[currentPlayer].performTurn(); // Perform the AI player's turn if necessary
         }
         else 
         {
-            GUIConnector.setWinningPlayer(currentPlayer);
+            connector.setWinningPlayer(currentPlayer);
         }
     }
     
@@ -232,6 +242,8 @@ public final class Game
             gameBoard.enableArrows((players[currentPlayer].getPlayerType() == Player.PlayerType.human));
         }
         else {}
+        
+        connector.hidePaths();
     }
     
     /**

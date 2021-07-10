@@ -31,6 +31,9 @@ public class GameLoader
         Tile nextTile = null;
         int currentPlayer = -1;
         
+        GUIConnector connector = GUIConnector.getJavaFXGUI();
+        connector.setupBoard(controller);
+        
         try (BufferedReader inputStream = new BufferedReader(new FileReader(fileName)))
         {
             // Skip the first two lines
@@ -60,7 +63,7 @@ public class GameLoader
             // Load the players
             for (int i = 0; i < 4; i++)
             {
-                players[i] = getPlayerFromStrings((i+1), inputStream, controller);
+                players[i] = getPlayerFromStrings((i+1), inputStream, controller, connector);
             }
             
             // The rest of the lines aren't necessary
@@ -70,8 +73,7 @@ public class GameLoader
             System.out.println(ex);
         }
         
-        GUIConnector.setupBoard(controller);
-        Game game = new Game(players, currentPlayer, tiles, nextTile);
+        Game game = new Game(players, currentPlayer, tiles, nextTile, connector);
         
         return game;
     }
@@ -190,7 +192,8 @@ public class GameLoader
      * @throws IOException 
      */
     private static Player getPlayerFromStrings(int playerNumber,
-            BufferedReader inputStream, GameBoardController controller) throws IOException
+            BufferedReader inputStream, GameBoardController controller,
+            GUIConnector connector) throws IOException
     {
         inputStream.readLine(); // Skip this line
         
@@ -229,7 +232,7 @@ public class GameLoader
         
         inputStream.readLine(); // Skip this line
         
-        Player loadedPlayer = new Player(playerNumber, playerType, name);
+        Player loadedPlayer = new Player(playerNumber, playerType, name, connector);
         for (int i = 0; i < treasures.size(); i++)
         {
             loadedPlayer.assignTreasure(treasures.get(i));

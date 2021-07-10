@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
+import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.Tile;
 import labyrinthboardgame.logic.Treasure;
 
@@ -39,6 +40,8 @@ public final class PlayerIconTray extends VBox
     private final int PLAYER_TREASURE_SIZE = 75;
     
     private boolean showTreasure; // or show circle
+    
+    private TileView nextTileView;
         
     /**
      * Builds a tray to hold the player icons and the next tile to be inserted
@@ -129,15 +132,13 @@ public final class PlayerIconTray extends VBox
      * Updates the preview of the next tile to be inserted
      * @param nextTile The next tile
      */
-    public void updateNextTile(Tile nextTile)
+    public void updateNextTile(Game game, Tile nextTile)
     {
         this.nextTile = nextTile;
         nextTilePane.getChildren().clear();
-        if (nextTile.getTileView() != null)
-        {
-            nextTilePane.getChildren().add(nextTile.getTileView());
-        }
-        else {}
+        nextTileView = new TileView(game.getConnector(), nextTile);
+        nextTileView.setListener(game, nextTile); // Add a listener to the last remaining tile as well
+        nextTilePane.getChildren().add(nextTileView);
     }
     
     /**
@@ -147,6 +148,15 @@ public final class PlayerIconTray extends VBox
     public void updateNextTileRotation(int rotation)
     {
         nextTile.setRotation(rotation);
+        nextTileView.setRotation(rotation);
+    }
+    
+    /**
+     * Set the next tile's rotation
+     */
+    public void updateNextTileRotation()
+    {
+        nextTileView.setRotation(nextTile.getRotation());
     }
     
     /**

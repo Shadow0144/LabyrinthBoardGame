@@ -41,6 +41,8 @@ public final class Player
     private BasicAI basicAI;
     private AdvancedAI advancedAI;
     
+    private final GUIConnector connector;
+    
     /**
      * A player, which has a list of treasures to collect and a character to
      * move around the board
@@ -49,11 +51,12 @@ public final class Player
      * their color
      * @param playerName The name of the player
      */
-    public Player(int playerNumber, PlayerType playerType, String playerName)
+    public Player(int playerNumber, PlayerType playerType, String playerName, GUIConnector connector)
     {
         this.playerType = playerType;
         this.playerName = playerName;
         this.number = playerNumber;
+        this.connector = connector;
         currentTile = null;
         hasWon = false;
         
@@ -142,7 +145,7 @@ public final class Player
      */
     public void setupIcon()
     {
-        GUIConnector.setIconPlayerName(number, playerName);
+        connector.setIconPlayerName(number, playerName);
     }
     
     /**
@@ -162,7 +165,7 @@ public final class Player
     public void assignTreasure(Treasure treasure)
     {
         treasures.add(treasure);
-        GUIConnector.updateTreasuresRemaining(number-1, ++playerTreasuresRemaining);
+        connector.updateTreasuresRemaining(number-1, ++playerTreasuresRemaining);
     }
     
     /**
@@ -171,7 +174,7 @@ public final class Player
     public void showNextTreasure()
     {
         currentTreasure = treasures.poll();
-        GUIConnector.updateTreasuresRemaining(number-1, --playerTreasuresRemaining);
+        connector.updateTreasuresRemaining(number-1, --playerTreasuresRemaining);
     }
     
     /**
@@ -180,7 +183,7 @@ public final class Player
      */
     public LinkedList<Treasure> getTreasures()
     {
-        LinkedList<Treasure> allTreasures = new LinkedList<Treasure>();
+        LinkedList<Treasure> allTreasures = new LinkedList<>();
         if (currentTreasure != null) // The current treasure is popped off the list, so we need to readd it
         {
             allTreasures.add(currentTreasure);
@@ -242,32 +245,19 @@ public final class Player
     }
     
     /**
-     * Disables drawing paths
-     */
-    private void hidePaths()
-    {
-        if (currentTile != null)
-        {
-            currentTile.hidePaths();
-        }
-        else {}
-    }
-    
-    /**
      * Moves the player's character to another tile and checks if the player
      * gains a treasure or wins the game
      * @param tile The tile to move the character to
      */
     public void moveCharacter(Tile tile)
     {
-        hidePaths();
         if (currentTile != null)
         {
-            currentTile.removePlayerCharacter(number-1);
+            currentTile.removePlayerCharacter(connector, number-1);
         }
         else {}
         currentTile = tile;
-        currentTile.addPlayerCharacter(number-1);
+        currentTile.addPlayerCharacter(connector, number-1);
         
         Treasure treasure = tile.getTreasure();
         if (treasure != null && currentTreasure != null &&
@@ -281,7 +271,7 @@ public final class Player
                 && tile.getPlayer() == number)
         {
             hasWon = true;
-            GUIConnector.setIconHasWon(number);
+            connector.setIconHasWon(number);
         }
         else {}
     }
@@ -300,7 +290,7 @@ public final class Player
      */
     public void setActive()
     {
-        GUIConnector.setIconActive(number-1);
+        connector.setIconActive(number-1);
     }
     
     /**
@@ -308,7 +298,7 @@ public final class Player
      */
     public void setInactive()
     {
-        GUIConnector.setInactive(number-1);
+        connector.setInactive(number-1);
     }
     
     /**

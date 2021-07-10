@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
+import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.GameLoader;
 import labyrinthboardgame.logic.Player;
@@ -92,14 +93,14 @@ public final class SceneController
      * @param treasures The number of treasures per player
      * @throws Exception 
      */
-    public void moveToGameScene(Player[] players, int treasures) throws Exception
+    public void moveToGameScene(Player[] players, int treasures, GUIConnector connector) throws Exception
     {
         killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         GameBoardController controller = loader.getController();
-        controller.setupController(this, players, treasures);
+        controller.setupController(this, players, treasures, connector);
         
         // Create a listener for handling rotating tiles with the keyboard and mouse
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {

@@ -38,6 +38,7 @@ public final class GameBoardController implements Initializable
     
     private SceneController sceneController;
     
+    private GUIConnector connector;
     private Game game;
     
     /**
@@ -57,11 +58,12 @@ public final class GameBoardController implements Initializable
      * @param players The players in the game
      * @param treasureCount The amount of treasures per player
      */
-    public void setupController(SceneController sc, Player[] players, int treasureCount)
+    public void setupController(SceneController sc, Player[] players, int treasureCount, GUIConnector connector)
     {
         sceneController = sc;
-        GUIConnector.setupBoard(this);
-        game = new Game(players, treasureCount);
+        this.connector = connector;
+        connector.setupBoard(this);
+        game = new Game(players, treasureCount, connector);
         gameBoardView.setupArrows(game);
     }
     
@@ -141,7 +143,7 @@ public final class GameBoardController implements Initializable
      */
     public void rotateTileClockwise()
     {
-        game.rotateNextTileClockwise();
+        connector.rotatePreviewTileClockwise();
     }
     
     /**
@@ -149,7 +151,7 @@ public final class GameBoardController implements Initializable
      */
     public void rotateTileCounterClockwise()
     {
-        game.rotateNextTileCounterClockwise();
+        connector.rotatePreviewTileCounterClockwise();
     }
     
     /**

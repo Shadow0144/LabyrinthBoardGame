@@ -8,6 +8,7 @@ package labyrinthboardgame.gui;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Player;
 
 /**
@@ -51,13 +52,13 @@ public final class PlayerSelectorBox extends VBox
      * Returns an array of players based on the player selectors
      * @return Array of 4 Players
      */
-    public Player[] getPlayers()
+    public Player[] getPlayers(GUIConnector connector)
     {
         Player[] players = new Player[4];
         
         for (int i = 0; i < 4; i++)
         {
-            players[i] = new Player(i+1, selectors[i].getPlayerType(), selectors[i].getPlayerName());
+            players[i] = new Player(i+1, selectors[i].getPlayerType(), selectors[i].getPlayerName(), connector);
         }
         
         return players;

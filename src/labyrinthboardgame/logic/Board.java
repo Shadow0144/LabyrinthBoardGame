@@ -30,16 +30,22 @@ public final class Board implements Cloneable
     
     private final boolean visible;
     
-    public Board(Game game, TileSet tileSet)
+    private final GUIConnector connector;
+    
+    private Game game;
+    
+    public Board(Game game, TileSet tileSet, GUIConnector connector)
     {
+        this.connector = connector;
         this.visible = true;
         this.tileSet = tileSet;
         this.disabledArrow = -1;
         setupTiles(game);
     }
     
-    public Board(Board copy)
+    public Board(Board copy, GUIConnector connector)
     {
+        this.connector = connector;
         this.visible = false;
         this.tileSet = new TileSet(copy.tileSet);
         this.disabledArrow = copy.disabledArrow;
@@ -51,7 +57,9 @@ public final class Board implements Cloneable
      * @param game A reference to the game
      */
     public void setupTiles(Game game)
-    {                
+    {           
+        this.game = game;
+        
         tiles = new Tile[7][7];
         
         tiles[0][0] = new Tile(Tile.Shape.L, 90, 4); // Red
@@ -116,15 +124,13 @@ public final class Board implements Cloneable
             for (int j = 0; j < 7; j++)
             {
                 // Add tiles to view
-                GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
-                tiles[i][j].setListener(game);
+                connector.addTileView(i+1, j+1, tiles[i][j], game);
                 tiles[i][j].setRowAndCol(i, j);
             }
         }
         
         nextTile = tileSet.getNextTile();
-        nextTile.setListener(game); // Add a listener to the last remaining tile as well
-        GUIConnector.updateTrayNextTile(nextTile);
+        connector.updateTrayNextTile(game, nextTile);
         updateTileNeighbors(); // Update the paths between tiles
     }
     
@@ -180,7 +186,7 @@ public final class Board implements Cloneable
      */
     public void enableArrows(boolean human)
     {
-        GUIConnector.enableArrows(human);
+        connector.enableArrows(human);
     }
     
     /**
@@ -288,20 +294,11 @@ public final class Board implements Cloneable
                 break;
         }
         updateTileNeighbors(); 
-
-        // Update the positions
-        for (int i = 0; i < 7; i++)
-        {
-            for (int j = 0; j < 7; j++)
-            {
-                tiles[i][j].setRowAndCol(i, j);
-            }
-        }
-        nextTile.setRowAndCol(-1, -1);
         
         // Disable all the arrows and move into the player move phase
-        GUIConnector.disableArrows(disabledArrow);
-        GUIConnector.updateTrayNextTile(nextTile);
+        connector.disableArrows(disabledArrow);
+        connector.updateTrayNextTile(game, nextTile);
+        connector.showPaths();
     }
     
     /**
@@ -315,29 +312,33 @@ public final class Board implements Cloneable
         int j = column;
         int next = (fromAbove) ? -1 : +1;
         Tile temp = tiles[i][j]; // The tile to remove
-        // Remove temp
-        GUIConnector.removeTileView(temp.getTileView());
+        boolean[] players = temp.getPlayers();
+        connector.removePlayerCharacters(temp);
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i+next][j];
+            tiles[i][j].setRowAndCol(i, j);
             if (visible)
             {
-                GUIConnector.removeTileView(tiles[i][j].getTileView());
-                GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
+                connector.removeTileView(i+1, j+1);
+                connector.addTileView(i+1, j+1, tiles[i][j], game);
             }
             else {}
             i += next;
         }
         Tile newTile = tileSet.getNextTile();
-        temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
+        newTile.setRowAndCol(i, j);
         if (visible)
         {
-            GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
+            connector.removeTileView(i+1, j+1);
+            connector.addTileView(i+1, j+1, tiles[i][j], game);
         }
         else {}
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
+        nextTile.setRowAndCol(-1, -1);
+        connector.addPlayerCharacters(newTile, players); // Move any players off the old tile and onto the new one
     }
     
     /**
@@ -351,20 +352,33 @@ public final class Board implements Cloneable
         int j = (fromLeft) ? 6 : 0;
         int next = (fromLeft) ? -1 : +1;
         Tile temp = tiles[i][j]; // The tile to remove
-        GUIConnector.removeTileView(temp.getTileView());
+        boolean[] players = temp.getPlayers();
+        connector.removePlayerCharacters(temp);
         for (int count = 0; count < 6; count++)
         {
             tiles[i][j] = tiles[i][j+next];
-            GUIConnector.removeTileView(tiles[i][j].getTileView());
-            GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
+            tiles[i][j].setRowAndCol(i, j);
+            if (visible)
+            {
+                connector.removeTileView(i+1, j+1);
+                connector.addTileView(i+1, j+1, tiles[i][j], game);
+            }
+            else {}
             j += next;
         }
         Tile newTile = tileSet.getNextTile();
-        temp.movePlayers(newTile); // Move any players off the old tile and onto the new one
         tiles[i][j] = newTile;
-        GUIConnector.addTileView(i+1, j+1, tiles[i][j].getTileView());
+        newTile.setRowAndCol(i, j);
+        if (visible)
+        {
+            connector.removeTileView(i+1, j+1);
+            connector.addTileView(i+1, j+1, tiles[i][j], game);
+        }
+        else {}
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
+        nextTile.setRowAndCol(-1, -1);
+        connector.addPlayerCharacters(newTile, players); // Move any players off the old tile and onto the new one
     }
     
     /**

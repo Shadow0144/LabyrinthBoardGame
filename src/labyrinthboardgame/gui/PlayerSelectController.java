@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
+import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Player;
 
 /**
@@ -207,9 +208,10 @@ public final class PlayerSelectController implements Initializable
     {
         try
         {
-            Player[] players = playerSelectorBox.getPlayers();
+            GUIConnector connector = GUIConnector.getJavaFXGUI();
+            Player[] players = playerSelectorBox.getPlayers(connector);
             int treasureCount = treasures[numberOfPlayers - 2];
-            sceneController.moveToGameScene(players, treasureCount);
+            sceneController.moveToGameScene(players, treasureCount, connector);
         }
         catch (Exception ex)
         {
