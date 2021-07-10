@@ -110,6 +110,7 @@ public final class Game
             {
                 // Move the player character onto the board
                 Tile loadedTile = gameBoard.getTile(players[i].getLoadedX(), players[i].getLoadedY());
+                connector.createPlayerCharacter(i, players[i]);
                 players[i].moveCharacter(loadedTile);
                 players[i].showNextTreasure();
                 players[i].setupAI(this);
