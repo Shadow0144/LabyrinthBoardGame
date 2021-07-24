@@ -5,6 +5,8 @@
  */
 package labyrinthboardgame.gui;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -19,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.Tile;
@@ -44,12 +47,19 @@ public final class TileView extends StackPane
     
     private final int TILE_TREASURE_SIZE = 50;
     
+    private final int ANIMATION_OFFSET = TILE_SIZE;
+    
     private final PlayerCharacter[] playerCharacters;
     
     private final Background accessibleBackground;
     private final Background inaccessibleBackground;
+    private final Background treasureBackground;
+    private final Background playerMovedBackground;
     
     private boolean showingPath;
+    
+    private final int SLIDE_ANIMATION_DURATION = 500;
+    private final int FADE_ANIMATION_HALF_DURATION = 500;
     
     /**
      * A graphical representation for a tile, containing images for treasures,
@@ -87,6 +97,8 @@ public final class TileView extends StackPane
         
         accessibleBackground = new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY));
         inaccessibleBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
+        treasureBackground = new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY));
+        playerMovedBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
         
         playerGridPane = new GridPane();
         playerGridPane.setAlignment(Pos.CENTER);
@@ -219,6 +231,23 @@ public final class TileView extends StackPane
     }
     
     /**
+     * Lights up tile to show treasure
+     */
+    public void showTreasure()
+    {
+        overlay.setOpacity(0.5);
+        overlay.setBackground(treasureBackground);
+    }
+    
+    /**
+     * Lights down to hide treasure
+     */
+    public void hideTreasure()
+    {
+        overlay.setOpacity(0.0);
+    }
+    
+    /**
      * Updates the graphics to match the rotation
      * @param rotation The rotation of the tile
      */
@@ -278,6 +307,19 @@ public final class TileView extends StackPane
                 playerGridPane.add(playerCharacters[i], i % 2, (i < 2) ? 0 : 1);
             }
         }
+        
+        overlay.setBackground(playerMovedBackground);
+        
+        FadeTransition fadeInTransition = new FadeTransition(Duration.millis(FADE_ANIMATION_HALF_DURATION), overlay);
+        fadeInTransition.setFromValue(0.0);
+        fadeInTransition.setToValue(0.5);
+        fadeInTransition.play();
+        
+        FadeTransition fadeOutTransition = new FadeTransition(Duration.millis(FADE_ANIMATION_HALF_DURATION), overlay);
+        fadeOutTransition.setFromValue(0.5);
+        fadeOutTransition.setToValue(0.0);
+        fadeOutTransition.setDelay(Duration.millis(FADE_ANIMATION_HALF_DURATION));
+        fadeOutTransition.play();
     }
     
     /**
@@ -342,5 +384,45 @@ public final class TileView extends StackPane
         {
             playerCharacters[i] = null;
         }
+    }
+    
+    public void animateDown()
+    {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setDuration(Duration.millis(SLIDE_ANIMATION_DURATION));
+        translateTransition.setFromY(-ANIMATION_OFFSET);
+        translateTransition.setToY(0);
+        translateTransition.setNode(this);
+        translateTransition.play();
+    }
+    
+    public void animateUp()
+    {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setDuration(Duration.millis(SLIDE_ANIMATION_DURATION));
+        translateTransition.setFromY(ANIMATION_OFFSET);
+        translateTransition.setToY(0);
+        translateTransition.setNode(this);
+        translateTransition.play();
+    }
+    
+    public void animateRight()
+    {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setDuration(Duration.millis(SLIDE_ANIMATION_DURATION));
+        translateTransition.setFromX(-ANIMATION_OFFSET);
+        translateTransition.setToX(0);
+        translateTransition.setNode(this);
+        translateTransition.play();
+    }
+    
+    public void animateLeft()
+    {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setDuration(Duration.millis(SLIDE_ANIMATION_DURATION));
+        translateTransition.setFromX(ANIMATION_OFFSET);
+        translateTransition.setToX(0);
+        translateTransition.setNode(this);
+        translateTransition.play();
     }
 }

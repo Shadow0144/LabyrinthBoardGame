@@ -57,6 +57,7 @@ public final class GameBoardController implements Initializable
      * @param sc Pointer to the controller for controlling the scene
      * @param players The players in the game
      * @param treasureCount The amount of treasures per player
+     * @param connector Connects the logic and GUI packages
      */
     public void setupController(SceneController sc, Player[] players, int treasureCount, GUIConnector connector)
     {
@@ -174,6 +175,7 @@ public final class GameBoardController implements Initializable
     public void showTreasure()
     {
         playerIconTray.showTreasure();
+        connector.showTreasure(game.getTreasureTile());
     }
     
     /**
@@ -182,6 +184,7 @@ public final class GameBoardController implements Initializable
     public void hideTreasure()
     {
         playerIconTray.hideTreasure();
+        connector.hideTreasure(game.getTreasureTile());
     }
     
     /**

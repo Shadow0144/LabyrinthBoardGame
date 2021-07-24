@@ -194,6 +194,15 @@ public final class Game
     }
     
     /**
+     * Returns the tile with the current treasure
+     * @return The tile with the current treasure
+     */
+    public Tile getTreasureTile()
+    {
+        return gameBoard.getTreasureTile(players[currentPlayer].getCurrentTreasure());
+    }
+    
+    /**
      * Adds the player characters to their starting locations on the board
      * @param player The player to be added to the board
      */

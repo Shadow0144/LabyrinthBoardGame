@@ -181,6 +181,43 @@ public final class Board implements Cloneable
     }
     
     /**
+     * Returns the tile containing the current treasure
+     * @param currentTreasure The current treasure of the current player
+     * @return The tile containing the current treasure
+     */
+    public Tile getTreasureTile(Treasure currentTreasure)
+    {
+        Tile rTile = null;
+        
+        if (currentTreasure != null)
+        {
+            boolean found = false;
+            for (int i = 0; i < 7; i++)
+            {
+                if (!found)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        Treasure tileTreasure = tiles[i][j].getTreasure();
+                        if (tileTreasure != null &&
+                                tileTreasure.getTreasureType() == currentTreasure.getTreasureType())
+                        {
+                            rTile = tiles[i][j];
+                            found = true;
+                            break;
+                        }
+                        else {}
+                    }
+                }
+                else {}
+            }
+        }
+        else {}
+        
+        return rTile;
+    }
+    
+    /**
      * Enables the arrow buttons on the board
      * @param human If the current player is human or not
      */
@@ -322,6 +359,14 @@ public final class Board implements Cloneable
             {
                 connector.removeTileView(i+1, j+1);
                 connector.addTileView(i+1, j+1, tiles[i][j], game);
+                if (fromAbove)
+                {
+                    connector.animateTileDown(tiles[i][j]);
+                }
+                else
+                {
+                    connector.animateTileUp(tiles[i][j]);
+                }
             }
             else {}
             i += next;
@@ -334,6 +379,14 @@ public final class Board implements Cloneable
         {
             connector.removeTileView(i+1, j+1);
             connector.addTileView(i+1, j+1, tiles[i][j], game);
+            if (fromAbove)
+            {
+                connector.animateTileDown(tiles[i][j]);
+            }
+            else
+            {
+                connector.animateTileUp(tiles[i][j]);
+            }
         }
         else {}
         tileSet.setNextTile(temp); // The new next tile
@@ -363,6 +416,14 @@ public final class Board implements Cloneable
             {
                 connector.removeTileView(i+1, j+1);
                 connector.addTileView(i+1, j+1, tiles[i][j], game);
+                if (fromLeft)
+                {
+                    connector.animateTileRight(tiles[i][j]);
+                }
+                else
+                {
+                    connector.animateTileLeft(tiles[i][j]);
+                }
             }
             else {}
             j += next;
@@ -375,6 +436,14 @@ public final class Board implements Cloneable
         {
             connector.removeTileView(i+1, j+1);
             connector.addTileView(i+1, j+1, tiles[i][j], game);
+            if (fromLeft)
+            {
+                connector.animateTileRight(tiles[i][j]);
+            }
+            else
+            {
+                connector.animateTileLeft(tiles[i][j]);
+            }
         }
         else {}
         tileSet.setNextTile(temp); // The new next tile

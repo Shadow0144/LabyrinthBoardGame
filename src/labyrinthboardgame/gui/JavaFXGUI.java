@@ -237,6 +237,28 @@ public class JavaFXGUI implements GUIConnector
     }
     
     @Override
+    public void showTreasure(Tile tile)
+    {
+        if (tile != null)
+        {
+            TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+            tileView.showTreasure();
+        }
+        else {}
+    }
+    
+    @Override
+    public void hideTreasure(Tile tile)
+    {
+        if (tile != null)
+        {
+            TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+            tileView.hideTreasure();
+        }
+        else {}
+    }
+    
+    @Override
     public void rotatePreviewTileClockwise()
     {
         boardView.rotatePreviewClockwise();
@@ -248,5 +270,33 @@ public class JavaFXGUI implements GUIConnector
     {
         boardView.rotatePreviewCounterClockwise();
         playerIconTray.updateNextTileRotation();
+    }
+    
+    @Override
+    public void animateTileDown(Tile tile)
+    {
+        TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+        tileView.animateDown();
+    }
+    
+    @Override
+    public void animateTileUp(Tile tile)
+    {
+        TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+        tileView.animateUp();
+    }
+    
+    @Override
+    public void animateTileRight(Tile tile)
+    {
+        TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+        tileView.animateRight();
+    }
+    
+    @Override
+    public void animateTileLeft(Tile tile)
+    {
+        TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+        tileView.animateLeft();
     }
 }

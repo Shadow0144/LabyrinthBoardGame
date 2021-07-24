@@ -78,7 +78,19 @@ public interface GUIConnector
     
     public abstract void hidePaths();
     
+    public abstract void showTreasure(Tile tile);
+    
+    public abstract void hideTreasure(Tile tile);
+    
     public abstract void rotatePreviewTileClockwise();
     
     public abstract void rotatePreviewTileCounterClockwise();
+    
+    public abstract void animateTileDown(Tile tile);
+    
+    public abstract void animateTileUp(Tile tile);
+    
+    public abstract void animateTileRight(Tile tile);
+    
+    public abstract void animateTileLeft(Tile tile);
 }

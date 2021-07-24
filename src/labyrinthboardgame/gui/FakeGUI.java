@@ -169,6 +169,18 @@ public class FakeGUI implements GUIConnector
     }
     
     @Override
+    public void showTreasure(Tile tile)
+    {
+        
+    }
+    
+    @Override
+    public void hideTreasure(Tile tile)
+    {
+        
+    }
+    
+    @Override
     public void rotatePreviewTileClockwise()
     {
         
@@ -176,6 +188,30 @@ public class FakeGUI implements GUIConnector
     
     @Override
     public void rotatePreviewTileCounterClockwise()
+    {
+        
+    }
+    
+    @Override
+    public void animateTileDown(Tile tile)
+    {
+        
+    }
+    
+    @Override
+    public void animateTileUp(Tile tile)
+    {
+        
+    }
+    
+    @Override
+    public void animateTileRight(Tile tile)
+    {
+        
+    }
+    
+    @Override
+    public void animateTileLeft(Tile tile)
     {
         
     }
