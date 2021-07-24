@@ -308,7 +308,11 @@ public final class TileView extends StackPane
             }
         }
         
-        overlay.setBackground(playerMovedBackground);
+        if (overlay != null) // Potentially null for unknown reasons (perhaps the animations?)
+        {
+            overlay.setBackground(playerMovedBackground);
+        }
+        else {}
         
         FadeTransition fadeInTransition = new FadeTransition(Duration.millis(FADE_ANIMATION_HALF_DURATION), overlay);
         fadeInTransition.setFromValue(0.0);
