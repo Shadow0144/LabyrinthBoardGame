@@ -214,6 +214,14 @@ public class JavaFXGUI implements GUIConnector
     public void addPlayerCharacters(Tile tile, boolean[] players)
     {
         TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[i])
+            {
+                controller.getGame().movePlayerToTile(tile, i);
+            }
+            else {}
+        }
         tileView.addPlayerCharacters(this, players);
     }
     

@@ -372,9 +372,10 @@ public final class Board implements Cloneable
             i += next;
         }
         Tile newTile = tileSet.getNextTile();
-        newTile.setPlayers(temp.getPlayers());
         tiles[i][j] = newTile;
         newTile.setRowAndCol(i, j);
+        connector.addPlayerCharacters(newTile, players); // Move any players off the old tile and onto the new one
+        newTile.movePlayers(temp);
         if (visible)
         {
             connector.removeTileView(i+1, j+1);
@@ -392,7 +393,6 @@ public final class Board implements Cloneable
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
         nextTile.setRowAndCol(-1, -1);
-        connector.addPlayerCharacters(newTile, players); // Move any players off the old tile and onto the new one
     }
     
     /**
@@ -429,9 +429,10 @@ public final class Board implements Cloneable
             j += next;
         }
         Tile newTile = tileSet.getNextTile();
-        newTile.setPlayers(temp.getPlayers());
         tiles[i][j] = newTile;
         newTile.setRowAndCol(i, j);
+        connector.addPlayerCharacters(newTile, players); // Move any players off the old tile and onto the new one
+        newTile.movePlayers(temp);
         if (visible)
         {
             connector.removeTileView(i+1, j+1);
@@ -449,7 +450,6 @@ public final class Board implements Cloneable
         tileSet.setNextTile(temp); // The new next tile
         nextTile = temp; // Update the local reference
         nextTile.setRowAndCol(-1, -1);
-        connector.addPlayerCharacters(newTile, players); // Move any players off the old tile and onto the new one
     }
     
     /**

@@ -262,6 +262,17 @@ public final class Game
     }
     
     /**
+     * Moves a player's character to a new tile without switching to the next player;
+     * used when a tile slides off the board
+     * @param tile The tile the player's character moves to
+     * @param playerIndex The index of the player to move
+     */
+    public void movePlayerToTile(Tile tile, int playerIndex)
+    {
+        players[playerIndex].moveCharacter(tile);
+    }
+    
+    /**
      * Rotates the next tile clockwise
      */
     public void rotateNextTileClockwise()

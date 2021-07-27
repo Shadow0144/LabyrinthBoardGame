@@ -476,15 +476,15 @@ public final class Tile
     }
     
     /**
-     * Moves the players to this tile
-     * @param movingPlayers The players to move over to this tile
+     * Moves the players on one tile to this tile when one slides off the board
+     * @param moveTile The tile to move the players from which slide off the board
      */
-    public void setPlayers(boolean[] movingPlayers)
+    public void movePlayers(Tile moveTile)
     {
-        System.arraycopy(movingPlayers, 0, players, 0, 4);
+        System.arraycopy(moveTile.getPlayers(), 0, players, 0, 4);
         for (int i = 0; i < 4; i++)
         {
-            movingPlayers[i] = false;
+            moveTile.getPlayers()[i] = false;
         }
     }
 }
