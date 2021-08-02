@@ -146,7 +146,7 @@ public final class Player
      */
     public void setupIcon()
     {
-        connector.setIconPlayerName(number, playerName);
+        connector.setIconPlayerName(number-1, playerName);
     }
     
     /**

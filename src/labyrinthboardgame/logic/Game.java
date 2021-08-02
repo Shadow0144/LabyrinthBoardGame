@@ -98,6 +98,10 @@ public final class Game
                 connector.removePlayerIcon(i+1); // Pass the player number
             }
         }
+        for (int i = 0; i < 4; i++)
+        {
+            players[i].setupIcon();
+        }
         players[currentPlayer].setActive();
         connector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
                 players[currentPlayer].getPlayerNumber());
@@ -124,6 +128,10 @@ public final class Game
             {
                 connector.removePlayerIcon(i+1); // Pass the player number
             }
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            players[i].setupIcon();
         }
         players[currentPlayer].setActive();
         connector.updateCurrentTreasure(players[currentPlayer].getCurrentTreasure(),
