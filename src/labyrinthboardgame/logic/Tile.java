@@ -318,6 +318,14 @@ public final class Tile
     }
     
     /**
+     * Disables the tile so that players can't move onto it
+     */
+    public void disable()
+    {
+        accessible = false;
+    }
+    
+    /**
      * Returns if a tile is reachable after building paths
      * @return If the tile is accessible to the current player
      */

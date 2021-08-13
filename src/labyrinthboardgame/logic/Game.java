@@ -144,6 +144,7 @@ public final class Game
      */
     public void switchPlayers()
     {
+        gameBoard.disableTiles();
         if (!players[currentPlayer].getHasWon())
         {
             players[currentPlayer].setInactive();
