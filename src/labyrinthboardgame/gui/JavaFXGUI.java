@@ -214,6 +214,7 @@ public class JavaFXGUI implements GUIConnector
     public void addPlayerCharacters(Tile tile, boolean[] players)
     {
         TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+        tileView.addPlayerCharacters(this, players);
         for (int i = 0; i < 4; i++)
         {
             if (players[i])
@@ -222,7 +223,6 @@ public class JavaFXGUI implements GUIConnector
             }
             else {}
         }
-        tileView.addPlayerCharacters(this, players);
     }
     
     @Override

@@ -375,7 +375,6 @@ public final class Board implements Cloneable
         tiles[i][j] = newTile;
         newTile.setRowAndCol(i, j);
         connector.addPlayerCharacters(newTile, players); // Move any players off the old tile and onto the new one
-        newTile.movePlayers(temp);
         if (visible)
         {
             connector.removeTileView(i+1, j+1);
@@ -432,7 +431,6 @@ public final class Board implements Cloneable
         tiles[i][j] = newTile;
         newTile.setRowAndCol(i, j);
         connector.addPlayerCharacters(newTile, players); // Move any players off the old tile and onto the new one
-        newTile.movePlayers(temp);
         if (visible)
         {
             connector.removeTileView(i+1, j+1);
