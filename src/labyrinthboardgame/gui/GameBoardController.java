@@ -94,26 +94,12 @@ public final class GameBoardController implements Initializable
     
     /**
      * Displays the winning player
-     * @param player The winning player
+     * @param playerName The winning player's name
      */
-    public void setWinningPlayer(int player)
+    public void setWinningPlayer(String playerName)
     {
         playerWonDisplay.setVisible(true);
-        switch (player) // Current player (as opposed to player number) starts at 0
-        {
-            case 0:
-                playerWonText.setText("Yellow Player Wins!");
-                break;
-            case 1:
-                playerWonText.setText("Blue Player Wins!");
-                break;
-            case 2:
-                playerWonText.setText("Green Player Wins!");
-                break;
-            case 3:
-                playerWonText.setText("Red Player Wins!");
-                break;
-        }
+        playerWonText.setText(playerName + " Wins!");
     }
     
     /**

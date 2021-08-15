@@ -167,7 +167,7 @@ public final class Game
         }
         else 
         {
-            connector.setWinningPlayer(currentPlayer);
+            connector.setWinningPlayer(players[currentPlayer].getPlayerName());
         }
     }
     

@@ -21,6 +21,7 @@ public class BasicAI
     
     private final Player player;
     private final Game game;
+    private Board boardClone;
     
     private Timer timer;
     private TimerTask timerTask;
@@ -29,19 +30,38 @@ public class BasicAI
     
     private enum aiState
     {
+        predicting,
         rotating,
         placing,
         moving,
         none
     };
     private aiState currentState;
+    private aiState predictingState;
+    private boolean targetFound;
+    
+    private int rotation;
+    private int arrowNum;
+    private Tile targetTile;
+    
+    private int maxMoves;
+    private int maxRotation;
+    private int maxArrowNum;
+    
+    private final int MAX_GUESSES = 3;
+    private int guesses;
     
     public BasicAI(Player aiPlayer, Game game)
     {
         this.player = aiPlayer;
         this.game = game;
-        this.currentState = aiState.none;
+        this.currentState = aiState.predicting;
+        this.predictingState = aiState.none;
         this.rand = new Random();
+        this.rotation = 0;
+        this.arrowNum = 0;
+        this.guesses = 0;
+        this.targetFound = false;
     }
     
     /**
@@ -58,25 +78,124 @@ public class BasicAI
      */
     public void performTurn()
     {
-        this.currentState = aiState.rotating;
-        this.timer = new Timer();
-        this.timerTask = new java.util.TimerTask() 
+        this.rotation = 0;
+        this.arrowNum = 0;
+        this.targetTile = null;
+        this.targetFound = false;
+        this.maxMoves = 0;
+        this.maxRotation = 0;
+        this.maxArrowNum = 0;
+        this.predictingState = aiState.rotating;
+        this.currentState = aiState.predicting;
+        this.guesses = 0;
+        predictNextAction();
+    }
+    
+    /**
+     * Sets up the timer to perform the predicted best action
+     */
+    private void performPredictedActions()
+    {
+        this.timer = new Timer(); 
+        this.timerTask = new java.util.TimerTask()
+        {
+            @Override
+            public void run() 
             {
-                @Override
-                public void run() 
-                {
-                    performNextAction();
-                }
-            };
+                performNextAction();
+            }
+        };
         timer.schedule(
-            timerTask,
-            MILLISECONDS_TO_WAIT,
-            MILLISECONDS_TO_WAIT
+                timerTask,
+                MILLISECONDS_TO_WAIT,
+                MILLISECONDS_TO_WAIT
         );
     }
     
     /**
-     * Performs a step of the move
+     * Tests every possible move and selects the best action
+     */
+    public void predictNextAction()
+    {
+        Platform.runLater(() -> {
+            while (currentState == aiState.predicting)
+            {
+                switch (predictingState)
+                {
+                    case rotating:
+                        boardClone = new Board(game.getBoard(), GUIConnector.getFakeGUI());
+                        switch (rotation)
+                        {
+                            case 0:
+                                // Do nothing
+                                break;
+                            case 1:
+                                boardClone.getTileSet().rotateNextTileClockwise();
+                                break;
+                            case 2:
+                                boardClone.getTileSet().rotateNextTileCounterClockwise();
+                                break;
+                            case 3:
+                                boardClone.getTileSet().rotateNextTileClockwise();
+                                boardClone.getTileSet().rotateNextTileClockwise();
+                                break;
+                        }
+                        predictingState = aiState.placing;
+                        break;
+                    case placing:
+                        Board.ArrowPosition place = Board.ArrowPosition.values()[arrowNum];
+                        if (boardClone.isInsertAvailable(place))
+                        {
+                            boardClone.insertTile(place);
+                        }
+                        else {}
+                        predictingState = aiState.moving;
+                        break;
+                    case moving:
+                        Tile startTile = boardClone.getTile(
+                                game.findPlayerRow(player.getPlayerNumber()-1),
+                                game.findPlayerCol(player.getPlayerNumber()-1));
+                        startTile.showPaths(0);
+                        int moves = findTarget(startTile, boardClone);
+                        if (moves > maxMoves)
+                        {
+                            maxMoves = moves;
+                            maxRotation = rotation;
+                            maxArrowNum = arrowNum;
+                        }
+                        else {}
+                        rotation++;
+                        if (rotation == 4)
+                        {
+                            rotation = 0;
+                            do 
+                            {
+                                arrowNum = rand.nextInt(12); // Choose a random spot to try
+                                guesses++;
+                            }
+                            while (!game.getBoard().isInsertAvailable(arrowNum));
+                        }
+                        else {}
+                        if (targetFound || guesses >= MAX_GUESSES)
+                        {
+                            predictingState = aiState.rotating;
+                            currentState = aiState.rotating;
+                            performPredictedActions();
+                        }
+                        else
+                        {
+                            predictingState = aiState.rotating;
+                        }
+                    case none:
+                        // Do nothing - some kind of error though
+                        break;
+            }
+                    }
+        });
+    }
+    
+    /**
+     * Performs a step of the selected move
      */
     public void performNextAction()
     {
@@ -84,7 +203,15 @@ public class BasicAI
             switch (currentState)
             {
                 case rotating:
-                    int rotate = rand.nextInt(4);
+                    int rotate;
+                    if (targetFound)
+                    {
+                        rotate = rotation;
+                    }
+                    else
+                    {
+                        rotate = maxRotation; //rand.nextInt(4);
+                    }
                     switch (rotate)
                     {
                         case 0:
@@ -104,60 +231,29 @@ public class BasicAI
                     currentState = aiState.placing;
                     break;
                 case placing:
-                    boolean placed = false;
-                    do
-                    {   
-                        Board.ArrowPosition place = Board.ArrowPosition.values()[rand.nextInt(12)];
-                        if (game.isInsertAvailable(place))
-                        {
-                            game.insertTile(place);
-                            placed = true;
-                        }
-                        else {}
+                    if (targetFound)
+                    {
+                        Board.ArrowPosition place = Board.ArrowPosition.values()[arrowNum];
+                        game.insertTile(place);
                     }
-                    while (!placed);
+                    else
+                    {
+                        Board.ArrowPosition place = Board.ArrowPosition.values()[maxArrowNum];
+                        game.insertTile(place);
+                    }
                     currentState = aiState.moving;
                     break;
                 case moving:
-                    Tile targetTile = player.getCurrentTile();
-                    LinkedList<Tile> tiles = game.getAvailableTiles();
-                    Treasure playerTreasure = player.getCurrentTreasure();
-                    boolean targetFound = false;
-                    if (playerTreasure != null) // Treasures remain
+                    if (targetFound)
                     {
-                        for (Tile tile : tiles)
-                        {
-                            Treasure tileTreasure = tile.getTreasure();
-                            if (tileTreasure != null && tileTreasure.getTreasureType() == playerTreasure.getTreasureType())
-                            {
-                                targetTile = tile;
-                                targetFound = true;
-                                break;
-                            }
-                            else {}
-                        }
+                        findTarget(player.getCurrentTile(), game.getBoard());
                     }
-                    else // Return to start
+                    else // Move to random tile if the target tile was not found
                     {
-                        for (Tile tile : tiles)
-                        {
-                            int tilePlayer = tile.getPlayer();
-                            if (tilePlayer == player.getPlayerNumber())
-                            {
-                                targetTile = tile;
-                                targetFound = true;
-                                break;
-                            }
-                            else {}
-                        }
-                    }
-                    if (!targetFound) // Move to random tile if the target tile was not found
-                    {
+                        LinkedList<Tile> tiles = game.getAvailableTiles();
                         int index = rand.nextInt(tiles.size());
                         targetTile = tiles.get(index);
-                                
                     }
-                    else {}
                     game.movePlayerToTile(targetTile);
                     timerTask.cancel();
                     timer.cancel();
@@ -167,5 +263,47 @@ public class BasicAI
                     break;
         }
         });
+    }
+    
+    /**
+     * Finds the target on a board
+     * @param startTile The tile the current player is on
+     * @param board The board to search on
+     * @return The number of accessible ti
+     */
+    public int findTarget(Tile startTile, Board board)
+    {
+        targetTile = startTile;
+        LinkedList<Tile> tiles = board.getAccessibleTiles();
+        Treasure playerTreasure = player.getCurrentTreasure();
+        if (playerTreasure != null) // Treasures remain
+        {
+            for (Tile tile : tiles)
+            {
+                Treasure tileTreasure = tile.getTreasure();
+                if (tileTreasure != null && tileTreasure.getTreasureType() == playerTreasure.getTreasureType())
+                {
+                    targetTile = tile;
+                    targetFound = true;
+                    break;
+                }
+                else {}
+            }
+        }
+        else // Return to start
+        {
+            for (Tile tile : tiles)
+            {
+                int tilePlayer = tile.getPlayer();
+                if (tilePlayer == player.getPlayerNumber())
+                {
+                    targetTile = tile;
+                    targetFound = true;
+                    break;
+                }
+                else {}
+            }
+        }
+        return tiles.size();
     }
 }

@@ -79,7 +79,7 @@ public class FakeGUI implements GUIConnector
     }
     
     @Override
-    public void setWinningPlayer(int currentPlayer)
+    public void setWinningPlayer(String playerName)
     {
         
     }

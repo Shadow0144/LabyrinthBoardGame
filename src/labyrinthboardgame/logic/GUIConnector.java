@@ -48,7 +48,7 @@ public interface GUIConnector
     
     public abstract void updateCurrentTreasure(Treasure treasure, int playerNum);
     
-    public abstract void setWinningPlayer(int currentPlayer);
+    public abstract void setWinningPlayer(String playerName);
     
     public abstract PlayerCharacter getPlayerCharacter(int playerIndex);
     

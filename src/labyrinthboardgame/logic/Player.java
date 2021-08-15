@@ -273,7 +273,7 @@ public final class Player
                 && tile.getPlayer() == number)
         {
             hasWon = true;
-            connector.setIconHasWon(number);
+            connector.setIconHasWon(number-1);
         }
         else {}
     }

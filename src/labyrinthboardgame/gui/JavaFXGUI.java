@@ -115,9 +115,9 @@ public class JavaFXGUI implements GUIConnector
     }
     
     @Override
-    public void setWinningPlayer(int currentPlayer)
+    public void setWinningPlayer(String playerName)
     {
-        controller.setWinningPlayer(currentPlayer-1);
+        controller.setWinningPlayer(playerName);
     }
     
     @Override
