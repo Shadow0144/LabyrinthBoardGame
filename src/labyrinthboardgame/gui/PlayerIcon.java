@@ -14,8 +14,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.text.FontWeight;
 
 /**
  *
@@ -32,6 +34,10 @@ public final class PlayerIcon extends VBox
     private final int UNSELECTED_STROKE = 1;
     private final int SELECTED_STROKE = 3;
     private final int VICTORY_STROKE = 5;
+    private final int TREASURE_ICON_RADIUS = 12;
+    private final int TREAUSRE_TEXT_X = 69;
+    private final int TREAUSRE_TEXT_Y = 30;
+    private final int PLAYER_NAME_FONT_SIZE = 12;
     
     /**
      * Creates an icon for displaying details about a player, such as their current
@@ -59,14 +65,14 @@ public final class PlayerIcon extends VBox
         textBackground.setFill(Color.WHITE);
         textBackground.setLayoutX(75);
         textBackground.setLayoutY(30);
-        textBackground.setRadius(10);
+        textBackground.setRadius(TREASURE_ICON_RADIUS);
         textBackground.setStroke(Color.BLACK);
         textBackground.setStrokeWidth(1);
         treasuresRemainingPane.getChildren().add(textBackground);
         
         playerTreasuresRemainingText = new Text();
-        playerTreasuresRemainingText.setLayoutX(71);
-        playerTreasuresRemainingText.setLayoutY(30);
+        playerTreasuresRemainingText.setLayoutX(TREAUSRE_TEXT_X);
+        playerTreasuresRemainingText.setLayoutY(TREAUSRE_TEXT_Y);
         playerTreasuresRemainingText.setText("" + 0);
         playerTreasuresRemainingText.setTextAlignment(TextAlignment.CENTER);
         playerTreasuresRemainingText.setTextOrigin(VPos.CENTER);
@@ -80,6 +86,8 @@ public final class PlayerIcon extends VBox
         // Put the name below everything
         playerNameLabel = new Label();
         playerNameLabel.setAlignment(Pos.CENTER);
+        playerNameLabel.setPadding(new Insets(4, 0, 0, 0));
+        playerNameLabel.setFont(Font.font("Verdana", PLAYER_NAME_FONT_SIZE));
         getChildren().add(playerNameLabel);
         
         setAlignment(Pos.CENTER);

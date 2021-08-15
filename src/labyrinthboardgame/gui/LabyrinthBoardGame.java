@@ -28,6 +28,7 @@ public final class LabyrinthBoardGame extends Application
         sceneController.moveToMainMenuScene();
         
         stage.setTitle("Labyrinth Board Game");
+        stage.setResizable(false);
         stage.show();
     }
     

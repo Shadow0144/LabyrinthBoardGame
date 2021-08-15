@@ -11,8 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import labyrinthboardgame.gui.PlayerSelectorBox?>
 
-<VBox fx:id="playerSelectBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #A58772;" 
-      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="labyrinthboardgame.gui.PlayerSelectController">
+<VBox fx:id="playerSelectBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #A58772;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.PlayerSelectController">
    <children>
       <HBox fx:id="playerCharacterBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #776252;">
          <children>
@@ -62,12 +61,12 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Slider fx:id="treasuresSlider" blockIncrement="1.0" majorTickUnit="1.0" max="6.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="6.0">
+      <Slider fx:id="treasuresSlider" blockIncrement="1.0" majorTickUnit="1.0" max="6.0" min="1.0" minorTickCount="0" prefHeight="50.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="6.0">
          <padding>
-            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+            <Insets top="12.0" />
          </padding>
          <VBox.margin>
-            <Insets left="144.0" right="144.0" />
+            <Insets left="100.0" right="100.0" />
          </VBox.margin>
       </Slider>
       <Button fx:id="startButton" mnemonicParsing="false" onAction="#moveToGameScene" text="Start Game" textAlignment="CENTER">

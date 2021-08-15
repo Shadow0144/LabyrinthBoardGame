@@ -243,11 +243,12 @@ public class AdvancedAI
                     {
                         findTarget(player.getCurrentTile(), game.getBoard());
                     }
-                    else // Move to random tile if the target tile was not found
+                    else // Move to the closest tile if the target tile was not found
                     {
-                        LinkedList<Tile> tiles = game.getAvailableTiles();
+                        /*LinkedList<Tile> tiles = game.getAvailableTiles();
                         int index = rand.nextInt(tiles.size());
-                        targetTile = tiles.get(index);
+                        targetTile = tiles.get(index);*/
+                        targetTile = findClosestTile(player.getCurrentTile(), game.getBoard());
                     }
                     game.movePlayerToTile(targetTile);
                     timerTask.cancel();
@@ -300,5 +301,56 @@ public class AdvancedAI
             }
         }
         return tiles.size();
+    }
+    
+    public Tile findClosestTile(Tile startTile, Board board)
+    {
+        Tile closestTile = startTile;
+        int minDist = Integer.MAX_VALUE;
+        LinkedList<Tile> tiles = board.getAccessibleTiles();
+        Treasure playerTreasure = player.getCurrentTreasure();
+        if (playerTreasure != null) // Treasures remain
+        {
+            Tile target = board.getTreasureTile(playerTreasure);
+            if (target != null)
+            {
+                int targetRow = target.getRow();
+                int targetCol = target.getCol();
+                if (targetRow != -1 && targetCol != -1)
+                {
+                    for (Tile tile : tiles)
+                    {
+                        int dist = Math.abs(tile.getRow() - targetRow) +
+                                Math.abs(tile.getCol() - targetCol);
+                        if (dist < minDist)
+                        {
+                            minDist = dist;
+                            closestTile = tile;
+                        }
+                        else {}
+                    }
+                }
+                else {}
+            }
+            else {}
+        }
+        else // Return to start
+        {
+            Tile target = board.getStartingTile(player.getPlayerNumber());
+            int targetRow = target.getRow();
+            int targetCol = target.getCol();
+            for (Tile tile : tiles)
+            {
+                int dist = Math.abs(tile.getRow() - targetRow) +
+                                Math.abs(tile.getCol() - targetCol);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    closestTile = tile;
+                }
+                else {}
+            }
+        }
+        return closestTile;
     }
 }

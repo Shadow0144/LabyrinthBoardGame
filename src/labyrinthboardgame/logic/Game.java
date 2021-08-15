@@ -151,6 +151,7 @@ public final class Game
     public void switchPlayers()
     {
         gameBoard.disableTiles();
+        connector.unhighlightTreasure(getTreasureTile());
         if (!players[currentPlayer].getHasWon())
         {
             players[currentPlayer].setInactive();

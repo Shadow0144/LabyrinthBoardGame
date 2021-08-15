@@ -44,12 +44,14 @@ public class BasicAI
     private int arrowNum;
     private Tile targetTile;
     
-    private int maxMoves;
+    //private int maxMoves;
     private int maxRotation;
     private int maxArrowNum;
     
     private final int MAX_GUESSES = 3;
     private int guesses;
+    private int minDistance;
+    private Tile closestTile;
     
     public BasicAI(Player aiPlayer, Game game)
     {
@@ -60,8 +62,10 @@ public class BasicAI
         this.rand = new Random();
         this.rotation = 0;
         this.arrowNum = 0;
-        this.guesses = 0;
+        this.minDistance = 0;
+        this.closestTile = null;
         this.targetFound = false;
+        this.guesses = 0;
     }
     
     /**
@@ -82,11 +86,13 @@ public class BasicAI
         this.arrowNum = 0;
         this.targetTile = null;
         this.targetFound = false;
-        this.maxMoves = 0;
+        //this.maxMoves = 0;
         this.maxRotation = 0;
         this.maxArrowNum = 0;
         this.predictingState = aiState.rotating;
         this.currentState = aiState.predicting;
+        this.minDistance = Integer.MAX_VALUE;
+        this.closestTile = null;
         this.guesses = 0;
         predictNextAction();
     }
@@ -156,10 +162,13 @@ public class BasicAI
                                 game.findPlayerRow(player.getPlayerNumber()-1),
                                 game.findPlayerCol(player.getPlayerNumber()-1));
                         startTile.showPaths(0);
-                        int moves = findTarget(startTile, boardClone);
-                        if (moves > maxMoves)
+                        //int moves = findTarget(startTile, boardClone);
+                        //if (moves > maxMoves)
+                        int distance = findTarget(startTile, boardClone);
+                        if (distance < minDistance)
                         {
-                            maxMoves = moves;
+                            minDistance = distance;
+                            //maxMoves = moves;
                             maxRotation = rotation;
                             maxArrowNum = arrowNum;
                         }
@@ -203,15 +212,7 @@ public class BasicAI
             switch (currentState)
             {
                 case rotating:
-                    int rotate;
-                    if (targetFound)
-                    {
-                        rotate = rotation;
-                    }
-                    else
-                    {
-                        rotate = maxRotation; //rand.nextInt(4);
-                    }
+                    int rotate = maxRotation; //rand.nextInt(4);
                     switch (rotate)
                     {
                         case 0:
@@ -231,16 +232,8 @@ public class BasicAI
                     currentState = aiState.placing;
                     break;
                 case placing:
-                    if (targetFound)
-                    {
-                        Board.ArrowPosition place = Board.ArrowPosition.values()[arrowNum];
-                        game.insertTile(place);
-                    }
-                    else
-                    {
-                        Board.ArrowPosition place = Board.ArrowPosition.values()[maxArrowNum];
-                        game.insertTile(place);
-                    }
+                    Board.ArrowPosition place = Board.ArrowPosition.values()[maxArrowNum];
+                    game.insertTile(place);
                     currentState = aiState.moving;
                     break;
                 case moving:
@@ -248,11 +241,10 @@ public class BasicAI
                     {
                         findTarget(player.getCurrentTile(), game.getBoard());
                     }
-                    else // Move to random tile if the target tile was not found
+                    else // Move to closest tile if the target tile was not found
                     {
-                        LinkedList<Tile> tiles = game.getAvailableTiles();
-                        int index = rand.nextInt(tiles.size());
-                        targetTile = tiles.get(index);
+                        findClosestTile(player.getCurrentTile(), game.getBoard());
+                        targetTile = closestTile;
                     }
                     game.movePlayerToTile(targetTile);
                     timerTask.cancel();
@@ -269,7 +261,7 @@ public class BasicAI
      * Finds the target on a board
      * @param startTile The tile the current player is on
      * @param board The board to search on
-     * @return The number of accessible ti
+     * @return The number of accessible tiles
      */
     public int findTarget(Tile startTile, Board board)
     {
@@ -305,5 +297,57 @@ public class BasicAI
             }
         }
         return tiles.size();
+    }
+    
+    public void findClosestTile(Tile startTile, Board board)
+    {
+        closestTile = startTile;
+        int minDist = Integer.MAX_VALUE;
+        LinkedList<Tile> tiles = board.getAccessibleTiles();
+        Treasure playerTreasure = player.getCurrentTreasure();
+        if (playerTreasure != null) // Treasures remain
+        {
+            Tile target = board.getTreasureTile(playerTreasure);
+            if (target != null)
+            {
+                int targetRow = target.getRow();
+                int targetCol = target.getCol();
+                if (targetRow != -1 && targetCol != -1)
+                {
+                    for (Tile tile : tiles)
+                    {
+                        int dist = Math.abs(tile.getRow() - targetRow) +
+                                Math.abs(tile.getCol() - targetCol);
+                        if (dist < minDist)
+                        {
+                            minDist = dist;
+                            minDistance = dist;
+                            closestTile = tile;
+                        }
+                        else {}
+                    }
+                }
+                else {}
+            }
+            else {}
+        }
+        else // Return to start
+        {
+            Tile target = board.getStartingTile(player.getPlayerNumber());
+            int targetRow = target.getRow();
+            int targetCol = target.getCol();
+            for (Tile tile : tiles)
+            {
+                int dist = Math.abs(tile.getRow() - targetRow) +
+                                Math.abs(tile.getCol() - targetCol);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    minDistance = dist;
+                    closestTile = tile;
+                }
+                else {}
+            }
+        }
     }
 }
