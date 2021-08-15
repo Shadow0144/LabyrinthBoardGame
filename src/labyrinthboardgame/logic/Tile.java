@@ -27,6 +27,8 @@ public final class Tile
     private boolean accessible;
     private boolean buildingPath;
     
+    private boolean isTreasureShown;
+    
     private int row;
     private int col;
     
@@ -52,6 +54,7 @@ public final class Tile
         type = Type.None;
         setupTile();
         tileTreasure = null;
+        isTreasureShown = false;
         playerStartNumber = -1;
         players = new boolean[4];
         for (int i = 0; i < 4; i++)
@@ -76,6 +79,7 @@ public final class Tile
         setupTile();
         
         tileTreasure = null;
+        isTreasureShown = false;
         this.playerStartNumber = player;
         
         players = new boolean[4];
@@ -102,6 +106,7 @@ public final class Tile
         
         playerStartNumber = -1;
         tileTreasure = treasure;
+        isTreasureShown = false;
         
         players = new boolean[4];
         for (int i = 0; i < 4; i++)
@@ -123,6 +128,7 @@ public final class Tile
         
         playerStartNumber = copy.playerStartNumber;
         tileTreasure = copy.tileTreasure;
+        isTreasureShown = copy.isTreasureShown;
         
         players = new boolean[4];
         System.arraycopy(copy.players, 0, players, 0, 4);
@@ -163,6 +169,31 @@ public final class Tile
         
         possibleNeighbors = new boolean[4];
         refreshPossibleNeighbors();
+    }
+    
+    /**
+     * Returns If the treasure is shown on this tile
+     * @return If the treasure is shown on this tile
+     */
+    public boolean getIsTreasureShown()
+    {
+        return isTreasureShown;
+    }
+    
+    /**
+     * Enables the treasure on this tile for viewing
+     */
+    public void showTreasure()
+    {
+        isTreasureShown = true;
+    }
+    
+    /**
+     * Disables the treasure on this tile for viewing
+     */
+    public void hideTreasure()
+    {
+        isTreasureShown = false;
     }
     
     /**

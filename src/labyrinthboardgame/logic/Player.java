@@ -264,6 +264,7 @@ public final class Player
         if (treasure != null && currentTreasure != null &&
             treasure.getTreasureType() == currentTreasure.getTreasureType())
         {
+            connector.hideTreasure(tile);
             showNextTreasure();
         }
         else {}

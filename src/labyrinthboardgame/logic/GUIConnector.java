@@ -78,6 +78,10 @@ public interface GUIConnector
     
     public abstract void hidePaths();
     
+    public abstract void highlightTreasure(Tile tile);
+    
+    public abstract void unhighlightTreasure(Tile tile);
+    
     public abstract void showTreasure(Tile tile);
     
     public abstract void hideTreasure(Tile tile);

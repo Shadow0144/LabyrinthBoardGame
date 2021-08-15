@@ -156,7 +156,7 @@ public final class TileView extends StackPane
                 Treasure treasure = tile.getTreasure();
                 if (treasure != null)
                 {
-                    addTreasure(treasure.getTreasureImageName());
+                    addTreasure(treasure.getTreasureImageName(), tile.getIsTreasureShown());
                 }
                 else {}
                 break;
@@ -166,13 +166,15 @@ public final class TileView extends StackPane
     /**
      * Adds a treasure to be displayed on the tile
      * @param treasureType The name of the image of the treasure
+     * @param treasureShown If the treasure is displayed or not
      */
-    public void addTreasure(String treasureType)
+    public void addTreasure(String treasureType, boolean treasureShown)
     {
         String treasureImageString = getClass().getResource("assets/" + treasureType + ".png").toString();
         Image treasureImage = new Image(treasureImageString, TILE_TREASURE_SIZE, TILE_TREASURE_SIZE, false, true);
         treasureImageView = new ImageView();
         treasureImageView.setImage(treasureImage);
+        treasureImageView.setOpacity(treasureShown ? 1.0 : 0.0);
         getChildren().add(treasureImageView);
         setAlignment(treasureImageView, Pos.CENTER);
     }
@@ -233,7 +235,7 @@ public final class TileView extends StackPane
     /**
      * Lights up tile to show treasure
      */
-    public void showTreasure()
+    public void highlightTreasure()
     {
         overlay.setOpacity(0.5);
         overlay.setBackground(treasureBackground);
@@ -242,9 +244,25 @@ public final class TileView extends StackPane
     /**
      * Lights down to hide treasure
      */
-    public void hideTreasure()
+    public void unhighlightTreasure()
     {
         overlay.setOpacity(0.0);
+    }
+    
+    /**
+     * Shows a treasure if it is used in the game
+     */
+    public void showTreasure()
+    {
+        treasureImageView.setOpacity(1.0);
+    }
+    
+    /**
+     * Hides a treasure after it has been collected
+     */
+    public void hideTreasure()
+    {
+        treasureImageView.setOpacity(0.0);
     }
     
     /**

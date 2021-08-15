@@ -207,4 +207,13 @@ public final class PlayerIconTray extends VBox
         currentTreasureImageView.setOpacity(0);
         currentPlayerCircle.setOpacity(0);
     }
+    
+    /**
+     * Returns the TileView of the next tile
+     * @return The TileView of the next tile
+     */
+    public TileView getNextTileView()
+    {
+        return nextTileView;
+    }
 }

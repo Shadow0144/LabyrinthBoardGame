@@ -169,6 +169,18 @@ public class FakeGUI implements GUIConnector
     }
     
     @Override
+    public void highlightTreasure(Tile tile)
+    {
+        
+    }
+    
+    @Override
+    public void unhighlightTreasure(Tile tile)
+    {
+        
+    }
+    
+    @Override
     public void showTreasure(Tile tile)
     {
         

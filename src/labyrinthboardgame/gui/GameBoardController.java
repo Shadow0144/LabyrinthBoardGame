@@ -175,7 +175,7 @@ public final class GameBoardController implements Initializable
     public void showTreasure()
     {
         playerIconTray.showTreasure();
-        connector.showTreasure(game.getTreasureTile());
+        connector.highlightTreasure(game.getTreasureTile());
     }
     
     /**
@@ -184,7 +184,7 @@ public final class GameBoardController implements Initializable
     public void hideTreasure()
     {
         playerIconTray.hideTreasure();
-        connector.hideTreasure(game.getTreasureTile());
+        connector.unhighlightTreasure(game.getTreasureTile());
     }
     
     /**

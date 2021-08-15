@@ -245,12 +245,62 @@ public class JavaFXGUI implements GUIConnector
     }
     
     @Override
-    public void showTreasure(Tile tile)
+    public void highlightTreasure(Tile tile)
     {
         if (tile != null)
         {
             TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
-            tileView.showTreasure();
+            if (tileView == null)
+            {
+                tileView = playerIconTray.getNextTileView();
+            }
+            else {}
+            if (tileView != null)
+            {
+                tileView.highlightTreasure();
+            }
+            else {}
+        }
+        else {}
+    }
+    
+    @Override
+    public void unhighlightTreasure(Tile tile)
+    {
+        if (tile != null)
+        {
+            TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+            if (tileView == null)
+            {
+                tileView = playerIconTray.getNextTileView();
+            }
+            else {}
+            if (tileView != null)
+            {
+                tileView.unhighlightTreasure();
+            }
+            else {}
+        }
+        else {}
+    }
+    
+    @Override
+    public void showTreasure(Tile tile)
+    {
+        if (tile != null)
+        {
+            tile.showTreasure();
+            TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
+            if (tileView == null)
+            {
+                tileView = playerIconTray.getNextTileView();
+            }
+            else {}
+            if (tileView != null)
+            {
+                tileView.showTreasure();
+            }
+            else {}
         }
         else {}
     }
@@ -260,8 +310,18 @@ public class JavaFXGUI implements GUIConnector
     {
         if (tile != null)
         {
+            tile.hideTreasure();
             TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
-            tileView.hideTreasure();
+            if (tileView == null)
+            {
+                tileView = playerIconTray.getNextTileView();
+            }
+            else {}
+            if (tileView != null)
+            {
+                tileView.hideTreasure();
+            }
+            else {}
         }
         else {}
     }

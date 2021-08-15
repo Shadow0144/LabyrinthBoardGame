@@ -211,6 +211,17 @@ public final class Board implements Cloneable
                 }
                 else {}
             }
+            if (rTile == null)
+            {
+                Treasure tileTreasure = nextTile.getTreasure();
+                if (tileTreasure != null &&
+                        tileTreasure.getTreasureType() == currentTreasure.getTreasureType())
+                {
+                    rTile = nextTile;
+                }
+                else {}
+            }
+            else {}
         }
         else {}
         
@@ -536,6 +547,10 @@ public final class Board implements Cloneable
         return r;
     }
     
+    /**
+     * Disables the tiles after a player takes their turn so that the next one
+     * cannot move without placing a tile
+     */
     public void disableTiles()
     {
         for (int i = 0; i < 7; i++)
@@ -543,6 +558,40 @@ public final class Board implements Cloneable
             for (int j = 0; j < 7; j++)
             {
                 tiles[i][j].disable();
+            }
+        }
+    }
+    
+    /**
+     * Shows the treasures available in the game
+     * @param players The players playing this game
+     */
+    public void showTreasures(Player[] players)
+    {
+        for (int p = 0; p < 4; p++)
+        {
+            LinkedList<Treasure> treasures = players[p].getTreasures();
+            for (Treasure treasure : treasures)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        Treasure tileTreasure = tiles[i][j].getTreasure();
+                        if (tileTreasure != null && tileTreasure.getTreasureType() == treasure.getTreasureType())
+                        {
+                            connector.showTreasure(tiles[i][j]);
+                            break;
+                        }
+                        else {}
+                    }
+                }
+                Treasure tileTreasure = nextTile.getTreasure();
+                if (tileTreasure != null && tileTreasure.getTreasureType() == treasure.getTreasureType())
+                {
+                    connector.showTreasure(nextTile);
+                }
+                else {}
             }
         }
     }

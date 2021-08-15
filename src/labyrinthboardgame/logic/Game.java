@@ -33,6 +33,9 @@ public final class Game
         // Set up the players
         this.players = players;
         setupPlayers(treasureCount);
+        
+        // Set up the board to show or hide treasures
+        gameBoard.showTreasures(players);
     }
     
     public Game(Player[] players, int currentPlayer, Tile[][] tiles, Tile nextTile, GUIConnector connector)
@@ -45,6 +48,9 @@ public final class Game
         this.players = players;
         this.currentPlayer = currentPlayer;
         setupLoadedPlayers();
+        
+        // Set up the board to show or hide treasures
+        gameBoard.showTreasures(players);
     }
     
     /**
