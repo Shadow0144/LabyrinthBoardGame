@@ -49,6 +49,10 @@ public final class GameBoardController implements Initializable
     private VBox characterMovementDisplay;
     @FXML
     private TextField characterMovementTextField;
+    @FXML
+    private VBox controlsDisplay;
+    @FXML
+    private VBox aboutDisplay;
     
     private SceneController sceneController;
     
@@ -288,18 +292,25 @@ public final class GameBoardController implements Initializable
     }
     
     /**
+     * Closes any open dialogs
+     */
+    private void closeDialogs()
+    {
+        cancelCharacterMovement(null);
+        cancelTileMovement(null);
+        closeControls(null);
+        closeAbout(null);
+    }
+    
+    /**
      * Opens the menu to adjust the animation speed of tiles
      * @param e Unused
      */
     public void tileMovement(ActionEvent e)
     {
+        closeDialogs();
         tileMovementTextField.setText("" + ConfigurationManager.TILE_ANIMATION_SPEED);
         tileMovementDisplay.setVisible(true);
-        if (characterMovementDisplay.isVisible())
-        {
-            cancelCharacterMovement(null);
-        }
-        else {}
     }
     
     /**
@@ -329,13 +340,9 @@ public final class GameBoardController implements Initializable
      */
     public void characterMovement(ActionEvent e)
     {
+        closeDialogs();
         characterMovementTextField.setText("" + ConfigurationManager.CHARACTER_ANIMATION_SPEED);
         characterMovementDisplay.setVisible(true);
-        if (tileMovementDisplay.isVisible())
-        {
-            cancelTileMovement(null);
-        }
-        else {}
     }
     
     /**
@@ -360,20 +367,40 @@ public final class GameBoardController implements Initializable
     }
     
     /**
-     * Opens a dialog to display the controls
+     * Opens the dialog to display the controls
      * @param e Unused
      */
     public void controls(ActionEvent e)
     {
-        System.exit(0);
+        closeDialogs();
+        controlsDisplay.setVisible(true);
     }
     
     /**
-     * Opens a dialog to display about the game
+     * Closes the dialog to display the controls
+     * @param e Unused
+     */
+    public void closeControls(ActionEvent e)
+    {
+        controlsDisplay.setVisible(false);
+    }
+    
+    /**
+     * Opens the dialog to display about the game
      * @param e Unused
      */
     public void about(ActionEvent e)
     {
-        System.exit(0);
+        closeDialogs();
+        aboutDisplay.setVisible(true);
+    }
+    
+    /**
+     * Closes the dialog to display about the game
+     * @param e Unused
+     */
+    public void closeAbout(ActionEvent e)
+    {
+        aboutDisplay.setVisible(false);
     }
 }

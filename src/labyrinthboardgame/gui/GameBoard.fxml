@@ -184,6 +184,62 @@
                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                    </padding>
                 </VBox>
+                <VBox fx:id="controlsDisplay" alignment="CENTER" fillWidth="false" layoutX="90.0" layoutY="250.0" style="-fx-background-color: #776252; -fx-border-color: #000000;" visible="false">
+                   <children>
+                     <Label fx:id="controlsText" alignment="CENTER" text="Press 'r' or 'shift+r' or use the mouse wheel to rotate the next tile.&#13;Click on the arrows around the board to place the tile.&#13;Click on a tile to move to it if it is accessible.&#13;Press 'h' to show the current treasure to acquire." textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                     </Label>
+                      <HBox>
+                        <Button fx:id="controlsCloseButton" mnemonicParsing="false" onAction="#closeControls" text="Close" textAlignment="CENTER">
+                            <VBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </VBox.margin>
+                                <HBox.margin>
+                                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                </HBox.margin>
+                        </Button>
+                      </HBox>
+                   </children>
+                   <opaqueInsets>
+                      <Insets />
+                   </opaqueInsets>
+                   <padding>
+                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                   </padding>
+                </VBox>
+                <VBox fx:id="aboutDisplay" alignment="CENTER" fillWidth="false" layoutX="265.0" layoutY="290.0" style="-fx-background-color: #776252; -fx-border-color: #000000;" visible="false">
+                   <children>
+                     <Label fx:id="aboutText" alignment="CENTER" text="Made with JavaFX" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                     </Label>
+                      <HBox>
+                        <Button fx:id="aboutCloseButton" mnemonicParsing="false" onAction="#closeAbout" text="Close" textAlignment="CENTER">
+                            <VBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </VBox.margin>
+                                <HBox.margin>
+                                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                </HBox.margin>
+                        </Button>
+                      </HBox>
+                   </children>
+                   <opaqueInsets>
+                      <Insets />
+                   </opaqueInsets>
+                   <padding>
+                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                   </padding>
+                </VBox>
                   <Pane fx:id="menuPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #55555555;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                      </children>
