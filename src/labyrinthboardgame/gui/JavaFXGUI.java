@@ -7,6 +7,7 @@ package labyrinthboardgame.gui;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Game;
@@ -38,7 +39,9 @@ public class JavaFXGUI implements GUIConnector
         if (boardView != null && tile != null)
         {   
             TileView tileView = new TileView(this, tile);
-            boardView.add(tileView, j, i);
+            boardView.getBoardPane().add(tileView, j, i);
+            CharacterTileView cTileView = new CharacterTileView(this, tile);
+            boardView.getCharacterPane().add(cTileView, j, i);
             tileView.setListener(game, tile);
         }
         else {}
@@ -49,13 +52,24 @@ public class JavaFXGUI implements GUIConnector
     {
         if (boardView != null)
         {
-            ObservableList<Node> children = boardView.getChildren();
-            for(Node node : children) 
+            ObservableList<Node> children = boardView.getBoardPane().getChildren();
+            for (Node node : children) 
             {
-                if(node instanceof TileView && BoardView.getRowIndex(node) == i && BoardView.getColumnIndex(node) == j) 
+                if (node instanceof TileView && GridPane.getRowIndex(node) == i && GridPane.getColumnIndex(node) == j) 
                 {
-                    TileView tileView = (TileView)(node); // use what you want to remove
-                    boardView.getChildren().remove(tileView);
+                    TileView tileView = (TileView)(node);
+                    boardView.getBoardPane().getChildren().remove(tileView);
+                    break;
+                }
+                else {}
+            } 
+            children = boardView.getCharacterPane().getChildren();
+            for (Node node : children) 
+            {
+                if (node instanceof CharacterTileView && GridPane.getRowIndex(node) == i && GridPane.getColumnIndex(node) == j) 
+                {
+                    CharacterTileView cTileView = (CharacterTileView)(node);
+                    boardView.getCharacterPane().getChildren().remove(cTileView);
                     break;
                 }
                 else {}
@@ -188,7 +202,13 @@ public class JavaFXGUI implements GUIConnector
         TileView tileView = boardView.getTileView(row, col);
         if (tileView != null)
         {
-            tileView.addPlayerCharacter(getPlayerCharacter(playerIndex));
+            tileView.addPlayerCharacter();
+        }
+        else {}
+        CharacterTileView cTileView = boardView.getCharacterTileView(row, col);
+        if (cTileView != null)
+        {
+            cTileView.addPlayerCharacter(getPlayerCharacter(playerIndex));
         }
         else {}
     }
@@ -202,10 +222,10 @@ public class JavaFXGUI implements GUIConnector
     {
         int row = controller.getGame().findPlayerRow(playerIndex);
         int col = controller.getGame().findPlayerCol(playerIndex);
-        TileView tileView = boardView.getTileView(row, col);
-        if (tileView != null)
+        CharacterTileView cTileView = boardView.getCharacterTileView(row, col);
+        if (cTileView != null)
         {
-            tileView.removePlayerCharacter(getPlayerCharacter(playerIndex));
+            cTileView.removePlayerCharacter(getPlayerCharacter(playerIndex));
         }
         else {}
     }
@@ -214,7 +234,9 @@ public class JavaFXGUI implements GUIConnector
     public void addPlayerCharacters(Tile tile, boolean[] players)
     {
         TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
-        tileView.addPlayerCharacters(this, players);
+        tileView.addPlayerCharacters(players);
+        CharacterTileView cTileView = boardView.getCharacterTileView(tile.getRow(), tile.getCol());
+        cTileView.addPlayerCharacters(this, players);
         for (int i = 0; i < 4; i++)
         {
             if (players[i])
@@ -228,8 +250,8 @@ public class JavaFXGUI implements GUIConnector
     @Override
     public void removePlayerCharacters(Tile tile)
     {
-        TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
-        tileView.removePlayerCharacters();
+        CharacterTileView cTileView = boardView.getCharacterTileView(tile.getRow(), tile.getCol());
+        cTileView.removePlayerCharacters();
     }
     
     @Override
@@ -345,6 +367,8 @@ public class JavaFXGUI implements GUIConnector
     {
         TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
         tileView.animateDown();
+        CharacterTileView cTileView = boardView.getCharacterTileView(tile.getRow(), tile.getCol());
+        cTileView.animateDown();
     }
     
     @Override
@@ -352,6 +376,8 @@ public class JavaFXGUI implements GUIConnector
     {
         TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
         tileView.animateUp();
+        CharacterTileView cTileView = boardView.getCharacterTileView(tile.getRow(), tile.getCol());
+        cTileView.animateUp();
     }
     
     @Override
@@ -359,6 +385,8 @@ public class JavaFXGUI implements GUIConnector
     {
         TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
         tileView.animateRight();
+        CharacterTileView cTileView = boardView.getCharacterTileView(tile.getRow(), tile.getCol());
+        cTileView.animateRight();
     }
     
     @Override
@@ -366,5 +394,13 @@ public class JavaFXGUI implements GUIConnector
     {
         TileView tileView = boardView.getTileView(tile.getRow(), tile.getCol());
         tileView.animateLeft();
+        CharacterTileView cTileView = boardView.getCharacterTileView(tile.getRow(), tile.getCol());
+        cTileView.animateLeft();
+    }
+    
+    @Override
+    public void animateCharacter(int playerIndex, int x, int y)
+    {
+        getPlayerCharacter(playerIndex).animate(x, y);
     }
 }

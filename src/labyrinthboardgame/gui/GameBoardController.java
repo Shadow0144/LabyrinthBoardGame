@@ -6,15 +6,21 @@
 package labyrinthboardgame.gui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import labyrinthboardgame.logic.ConfigurationManager;
 import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.GameSaver;
@@ -35,6 +41,14 @@ public final class GameBoardController implements Initializable
     private Label playerWonText;
     @FXML
     private BoardView gameBoardView;
+    @FXML
+    private VBox tileMovementDisplay;
+    @FXML
+    private TextField tileMovementTextField;
+    @FXML
+    private VBox characterMovementDisplay;
+    @FXML
+    private TextField characterMovementTextField;
     
     private SceneController sceneController;
     
@@ -49,7 +63,29 @@ public final class GameBoardController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) 
     {
-        
+        // Restrict these fields to only integers
+        UnaryOperator<Change> tFilter = tChange -> {
+            String tText = tChange.getText();
+            if (tText.matches("[0-9]*"))
+            {
+                return tChange;
+            }
+            else {}
+            return null;
+        };
+        TextFormatter<String> tTextFormatter = new TextFormatter<>(tFilter);
+        tileMovementTextField.setTextFormatter(tTextFormatter);
+        UnaryOperator<Change> cFilter = cChange -> {
+            String cText = cChange.getText();
+            if (cText.matches("[0-9]*"))
+            {
+                return cChange;
+            }
+            else {}
+            return null;
+        };
+        TextFormatter<String> cTextFormatter = new TextFormatter<>(cFilter);
+        characterMovementTextField.setTextFormatter(cTextFormatter);
     }
     
     /**
@@ -188,7 +224,7 @@ public final class GameBoardController implements Initializable
             else {}
             sceneController.moveToMainMenuScene();
         }
-        catch (Exception ex)
+        catch (IOException ex)
         {
             System.out.println("Error! Failed to move to Main Menu Screen.");
         }
@@ -233,7 +269,7 @@ public final class GameBoardController implements Initializable
             {
                 sceneController.moveToGameScene(open);
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 System.out.println("Error! Failed to move to Game Screen.");
                 System.out.println(ex);
@@ -247,6 +283,96 @@ public final class GameBoardController implements Initializable
      * @param e Unused
      */
     public void exit(ActionEvent e)
+    {
+        System.exit(0);
+    }
+    
+    /**
+     * Opens the menu to adjust the animation speed of tiles
+     * @param e Unused
+     */
+    public void tileMovement(ActionEvent e)
+    {
+        tileMovementTextField.setText("" + ConfigurationManager.TILE_ANIMATION_SPEED);
+        tileMovementDisplay.setVisible(true);
+        if (characterMovementDisplay.isVisible())
+        {
+            cancelCharacterMovement(null);
+        }
+        else {}
+    }
+    
+    /**
+     * Accepts the new value for tile movement speed and closes the window
+     * @param e Unused
+     */
+    public void acceptTileMovement(ActionEvent e)
+    {
+        tileMovementDisplay.setVisible(false);
+        int speed = Integer.parseInt(tileMovementTextField.getText());
+        ConfigurationManager.TILE_ANIMATION_SPEED = speed;
+        ConfigurationManager.saveConfiguration();
+    }
+    
+    /**
+     * Cancels the new value for tile movement speed and closes the window
+     * @param e Unused
+     */
+    public void cancelTileMovement(ActionEvent e)
+    {
+        tileMovementDisplay.setVisible(false);
+    }
+    
+    /**
+     * Opens the menu to adjust the animation speed of characters
+     * @param e Unused
+     */
+    public void characterMovement(ActionEvent e)
+    {
+        characterMovementTextField.setText("" + ConfigurationManager.CHARACTER_ANIMATION_SPEED);
+        characterMovementDisplay.setVisible(true);
+        if (tileMovementDisplay.isVisible())
+        {
+            cancelTileMovement(null);
+        }
+        else {}
+    }
+    
+    /**
+     * Accepts the new value for tile movement speed and closes the window
+     * @param e Unused
+     */
+    public void acceptCharacterMovement(ActionEvent e)
+    {
+        characterMovementDisplay.setVisible(false);
+        int speed = Integer.parseInt(characterMovementTextField.getText());
+        ConfigurationManager.CHARACTER_ANIMATION_SPEED = speed;
+        ConfigurationManager.saveConfiguration();
+    }
+    
+    /**
+     * Cancels the new value for tile movement speed and closes the window
+     * @param e Unused
+     */
+    public void cancelCharacterMovement(ActionEvent e)
+    {
+        characterMovementDisplay.setVisible(false);
+    }
+    
+    /**
+     * Opens a dialog to display the controls
+     * @param e Unused
+     */
+    public void controls(ActionEvent e)
+    {
+        System.exit(0);
+    }
+    
+    /**
+     * Opens a dialog to display about the game
+     * @param e Unused
+     */
+    public void about(ActionEvent e)
     {
         System.exit(0);
     }

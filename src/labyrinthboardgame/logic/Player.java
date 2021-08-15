@@ -252,13 +252,20 @@ public final class Player
      */
     public void moveCharacter(Tile tile)
     {
+        int animX = tile.getCol();
+        int animY = tile.getRow();
         if (currentTile != null)
         {
+            animX = currentTile.getCol();
+            animY = currentTile.getRow();
             currentTile.removePlayerCharacter(connector, number-1);
         }
         else {}
         currentTile = tile;
         currentTile.addPlayerCharacter(connector, number-1);
+        animX -= currentTile.getCol();
+        animY -= currentTile.getRow();
+        connector.animateCharacter(number-1, animX, animY);
         
         Treasure treasure = tile.getTreasure();
         if (treasure != null && currentTreasure != null &&

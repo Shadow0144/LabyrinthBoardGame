@@ -6,6 +6,7 @@
 package labyrinthboardgame.gui;
 
 import java.io.File;
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -58,9 +59,9 @@ public final class SceneController
     
     /**
      * Changes the current scene to be the main menu scene
-     * @throws Exception 
+     * @throws IOException
      */
-    public void moveToMainMenuScene() throws Exception
+    public void moveToMainMenuScene() throws IOException
     {
         killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
@@ -73,9 +74,9 @@ public final class SceneController
     
     /**
      * Changes the current scene to be the player select scene
-     * @throws Exception 
+     * @throws IOException 
      */
-    public void moveToPlayerSelectScene() throws Exception
+    public void moveToPlayerSelectScene() throws IOException
     {
         killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayerSelect.fxml"));
@@ -92,9 +93,9 @@ public final class SceneController
      * @param players The players in this game
      * @param treasures The number of treasures per player
      * @param connector Connects the logic and GUI packages
-     * @throws Exception 
+     * @throws IOException 
      */
-    public void moveToGameScene(Player[] players, int treasures, GUIConnector connector) throws Exception
+    public void moveToGameScene(Player[] players, int treasures, GUIConnector connector) throws IOException
     {
         killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
@@ -149,9 +150,9 @@ public final class SceneController
      * Changes the current scene to be the game scene
      * Sets up the board, treasures, and players from a save file
      * @param save The save to load from
-     * @throws Exception 
+     * @throws IOException 
      */
-    public void moveToGameScene(File save) throws Exception
+    public void moveToGameScene(File save) throws IOException
     {
         killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));

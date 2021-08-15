@@ -97,4 +97,6 @@ public interface GUIConnector
     public abstract void animateTileRight(Tile tile);
     
     public abstract void animateTileLeft(Tile tile);
+    
+    public abstract void animateCharacter(int playerNum, int x, int y);
 }

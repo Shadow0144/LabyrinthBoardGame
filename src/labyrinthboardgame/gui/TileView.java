@@ -15,13 +15,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import static javafx.scene.layout.StackPane.setAlignment;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import labyrinthboardgame.logic.ConfigurationManager;
 import labyrinthboardgame.logic.GUIConnector;
 import labyrinthboardgame.logic.Game;
 import labyrinthboardgame.logic.Tile;
@@ -37,19 +37,16 @@ public final class TileView extends StackPane
     private ImageView treasureImageView;
     private Circle playerStart;
     
-    private final GridPane playerGridPane;
-    
     private final Pane overlay;
         
     private Image tileImage;
     public static final int TILE_SIZE = 70;
+    public static final int TILE_PADDING = 4;
     private final int PLAYER_START_RADIUS = 12;
     
     private final int TILE_TREASURE_SIZE = 50;
     
-    private final int ANIMATION_OFFSET = TILE_SIZE;
-    
-    private final PlayerCharacter[] playerCharacters;
+    private final int ANIMATION_OFFSET = TILE_SIZE + TILE_PADDING;
     
     private final Background accessibleBackground;
     private final Background inaccessibleBackground;
@@ -58,7 +55,6 @@ public final class TileView extends StackPane
     
     private boolean showingPath;
     
-    private final int SLIDE_ANIMATION_DURATION = 500;
     private final int FADE_ANIMATION_HALF_DURATION = 500;
     
     /**
@@ -99,24 +95,6 @@ public final class TileView extends StackPane
         inaccessibleBackground = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
         treasureBackground = new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY));
         playerMovedBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-        
-        playerGridPane = new GridPane();
-        playerGridPane.setAlignment(Pos.CENTER);
-        getChildren().add(playerGridPane);
-        setAlignment(playerGridPane, Pos.CENTER);
-        playerCharacters = new PlayerCharacter[4];
-        for (int i = 0; i < 4; i++)
-        {
-            playerCharacters[i] = null;
-        }
-        boolean[] players = tile.getPlayers();
-        for (int i = 0; i < 4; i++)
-        {
-            if (players[i])
-            {
-                addPlayerCharacter(connector.getPlayerCharacter(i));
-            }
-        }
         
         overlay = new Pane();
         overlay.setOpacity(0.0);
@@ -300,32 +278,10 @@ public final class TileView extends StackPane
     }
     
     /**
-     * Adds a player character to be displayed on this tile, moving other 
-     * characters as appropriate
-     * @param player The player character to add to this tile
+     * Plays the animation for a character moving to this tile
      */
-    public void addPlayerCharacter(PlayerCharacter player)
+    public void addPlayerCharacter()
     {
-         // First clear all the displayed characters and readd them all and the new character
-        playerGridPane.getChildren().clear();
-        for (int i = 0; i < 4; i++)
-        {
-            if (playerCharacters[i] == player) // No duplicates
-            {
-                break;
-            }
-            else if (playerCharacters[i] == null)
-            {
-                playerCharacters[i] = player;
-                playerGridPane.add(playerCharacters[i], i % 2, (i < 2) ? 0 : 1);
-                break;
-            }
-            else
-            {
-                playerGridPane.add(playerCharacters[i], i % 2, (i < 2) ? 0 : 1);
-            }
-        }
-        
         if (overlay != null) // Potentially null for unknown reasons (perhaps the animations?)
         {
             overlay.setBackground(playerMovedBackground);
@@ -345,103 +301,67 @@ public final class TileView extends StackPane
     }
     
     /**
-     * Removes a player character from this tile, readjusting the remaining
-     * characters as appropriate
-     * @param player The player character to remove from this tile
-     */
-    public void removePlayerCharacter(PlayerCharacter player)
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            if (playerCharacters[i] == player)
-            {
-                for (; i < 3; i++) // Shift everything left (which removes the current item)
-                {
-                    playerCharacters[i] = playerCharacters[i+1];
-                }
-                playerCharacters[3] = null; // Set the final item to null
-                break;
-            }
-            else {}
-        }
-        // Remove and readd everything to the correct spots
-        playerGridPane.getChildren().clear();
-        for (int i = 0; i < 4; i++)
-        {
-            if (playerCharacters[i] == null)
-            {
-                break;
-            }
-            else
-            {
-                playerGridPane.add(playerCharacters[i], i % 2, (i < 2) ? 0 : 1);
-            }
-        }
-    }
-    
-    /**
-     * Adds a list of player characters to the tile view
-     * @param connector Connects the logic and GUI packages
+     * Plays the animation for a character moving to this tile if necessary
      * @param players The list of player characters to add by index
      */
-    public void addPlayerCharacters(GUIConnector connector, boolean[] players)
+    public void addPlayerCharacters(boolean[] players)
     {
         for (int i = 0; i < 4; i++)
         {
             if (players[i])
             {
-                addPlayerCharacter(connector.getPlayerCharacter(i));
+                addPlayerCharacter();
             }
             else {}
         }
     }
     
     /**
-     * Removes all player characters from the tile view
+     * Animates the tile sliding down
      */
-    public void removePlayerCharacters()
-    {
-        playerGridPane.getChildren().clear();
-        for (int i = 0; i < 4; i++)
-        {
-            playerCharacters[i] = null;
-        }
-    }
-    
     public void animateDown()
     {
         TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setDuration(Duration.millis(SLIDE_ANIMATION_DURATION));
+        translateTransition.setDuration(Duration.millis(ConfigurationManager.TILE_ANIMATION_SPEED));
         translateTransition.setFromY(-ANIMATION_OFFSET);
         translateTransition.setToY(0);
         translateTransition.setNode(this);
         translateTransition.play();
     }
     
+    /**
+     * Animates the tile sliding up
+     */
     public void animateUp()
     {
         TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setDuration(Duration.millis(SLIDE_ANIMATION_DURATION));
+        translateTransition.setDuration(Duration.millis(ConfigurationManager.TILE_ANIMATION_SPEED));
         translateTransition.setFromY(ANIMATION_OFFSET);
         translateTransition.setToY(0);
         translateTransition.setNode(this);
         translateTransition.play();
     }
     
+    /**
+     * Animates the tile sliding right
+     */
     public void animateRight()
     {
         TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setDuration(Duration.millis(SLIDE_ANIMATION_DURATION));
+        translateTransition.setDuration(Duration.millis(ConfigurationManager.TILE_ANIMATION_SPEED));
         translateTransition.setFromX(-ANIMATION_OFFSET);
         translateTransition.setToX(0);
         translateTransition.setNode(this);
         translateTransition.play();
     }
     
+    /**
+     * Animates the tile sliding left
+     */
     public void animateLeft()
     {
         TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setDuration(Duration.millis(SLIDE_ANIMATION_DURATION));
+        translateTransition.setDuration(Duration.millis(ConfigurationManager.TILE_ANIMATION_SPEED));
         translateTransition.setFromX(ANIMATION_OFFSET);
         translateTransition.setToX(0);
         translateTransition.setNode(this);

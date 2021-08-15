@@ -6,6 +6,7 @@
 package labyrinthboardgame.gui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -50,7 +51,7 @@ public final class MainMenuController implements Initializable
         {
             sceneController.moveToPlayerSelectScene();
         }
-        catch (Exception ex)
+        catch (IOException ex)
         {
             System.out.println("Error! Failed to move to Player Select Screen.");
             System.out.println(ex);
@@ -76,7 +77,7 @@ public final class MainMenuController implements Initializable
             {
                 sceneController.moveToGameScene(file);
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 System.out.println("Error! Failed to move to Game Screen.");
                 System.out.println(ex);

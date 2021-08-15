@@ -38,92 +38,159 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import labyrinthboardgame.gui.BoardView?>
 <?import labyrinthboardgame.gui.PlayerIconTray?>
 
-<VBox fx:id="gameWindow" prefHeight="738.0" prefWidth="823.0" style="-fx-background-color: #A58772;" 
-      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="labyrinthboardgame.gui.GameBoardController">
+<VBox fx:id="gameWindow" style="-fx-background-color: #A58772;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinthboardgame.gui.GameBoardController">
   <children>
       <MenuBar fx:id="menuBar">
         <menus>
-          <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
+          <Menu fx:id="fileMenu" text="_File">
             <items>
-                  <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#save" text="Save..." />
-                  <MenuItem fx:id="loadMenuItem" mnemonicParsing="false" onAction="#load" text="Load..." />
-              <MenuItem fx:id="mainMenuItem" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Main Menu" />
-              <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#exit" text="Quit" />
+                <MenuItem fx:id="saveMenuItem" onAction="#save" text="_Save..." />
+                <MenuItem fx:id="loadMenuItem" onAction="#load" text="_Load..." />
+                <MenuItem fx:id="mainMenuItem" onAction="#moveToMainMenuScene" text="_Main Menu" />
+                <MenuItem fx:id="quitMenuItem" onAction="#exit" text="_Quit" />
             </items>
           </Menu>
-          <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
+          <Menu fx:id="settingsMenu" text="_Settings">
             <items>
-                  <MenuItem fx:id="controlsMenuItem" mnemonicParsing="false" text="Controls" />
-              <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" />
+                <MenuItem fx:id="tileMovementMenuItem" onAction="#tileMovement" text="Set _tile movement speed..." />
+                <MenuItem fx:id="characterMovementMenuItem" onAction="#characterMovement" text="Set _character movement speed..." />
+            </items>
+          </Menu>
+          <Menu fx:id="helpMenu" text="_Help">
+            <items>
+                <MenuItem fx:id="controlsMenuItem" onAction="#controls" text="_Controls" />
+                <MenuItem fx:id="aboutMenuItem" onAction="#about" text="_About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <HBox prefHeight="713.0" prefWidth="724.0">
+      <HBox>
          <children>
           <AnchorPane fx:id="boardPane">
               <children>
-                 <BoardView fx:id="gameBoardView" alignment="CENTER" gridLinesVisible="true" style="-fx-background-color: #777777;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                   <columnConstraints>
-                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                   </columnConstraints>
-                   <rowConstraints>
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                   </rowConstraints>
-                 </BoardView>
-                  <VBox fx:id="playerWonDisplay" alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #776252; -fx-border-color: #000000;" visible="false" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="300.0">
-                     <children>
-                       <Label fx:id="playerWonText" alignment="CENTER" text="Player Wins!" textAlignment="CENTER">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="returnToMenuButton" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Return to Menu" textAlignment="CENTER">
+                 <BoardView fx:id="gameBoardView" alignment="CENTER" />
+                <VBox fx:id="playerWonDisplay" alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #776252; -fx-border-color: #000000;" visible="false" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="200.0">
+                   <children>
+                     <Label fx:id="playerWonText" alignment="CENTER" text="Player Wins!" textAlignment="CENTER">
+                         <font>
+                            <Font size="24.0" />
+                         </font>
+                      </Label>
+                      <Button fx:id="returnToMenuButton" mnemonicParsing="false" onAction="#moveToMainMenuScene" text="Return to Menu" textAlignment="CENTER">
+                         <VBox.margin>
+                            <Insets top="10.0" />
+                         </VBox.margin>
+                      </Button>
+                   </children>
+                   <opaqueInsets>
+                      <Insets />
+                   </opaqueInsets>
+                   <padding>
+                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                   </padding>
+                </VBox>
+                <VBox fx:id="tileMovementDisplay" alignment="CENTER" fillWidth="false" layoutX="250.0" layoutY="275.0" style="-fx-background-color: #776252; -fx-border-color: #000000;" visible="false">
+                   <children>
+                     <Label fx:id="tileMovementText" alignment="CENTER" text="Tile animation speed:" textAlignment="CENTER">
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                            </VBox.margin>
-                        </Button>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </VBox>
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                      <HBox>
+                          <TextField fx:id="tileMovementTextField" />
+                          <Label text="ms">
+                              <HBox.margin>
+                                <Insets bottom="4.0" left="4.0" right="0.0" top="4.0" />
+                            </HBox.margin>
+                          </Label>
+                      </HBox>
+                      <HBox>
+                      <Button fx:id="tileOkayButton" mnemonicParsing="false" onAction="#acceptTileMovement" text="Ok" textAlignment="CENTER">
+                          <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                         </VBox.margin>
+                              <HBox.margin>
+                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                              </HBox.margin>
+                      </Button>
+                       <Button fx:id="tileCancelButton" mnemonicParsing="false" onAction="#cancelTileMovement" text="Cancel" textAlignment="CENTER">
+                          <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                         </VBox.margin>
+                              <HBox.margin>
+                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                              </HBox.margin>
+                       </Button>
+                      </HBox>
+                   </children>
+                   <opaqueInsets>
+                      <Insets />
+                   </opaqueInsets>
+                   <padding>
+                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                   </padding>
+                </VBox>
+                <VBox fx:id="characterMovementDisplay" alignment="CENTER" fillWidth="false" layoutX="240.0" layoutY="275.0" style="-fx-background-color: #776252; -fx-border-color: #000000;" visible="false">
+                   <children>
+                     <Label fx:id="characterMovementText" alignment="CENTER" text="Character animation speed:" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                      <HBox>
+                          <TextField fx:id="characterMovementTextField" />
+                          <Label text="ms">
+                              <HBox.margin>
+                                <Insets bottom="4.0" left="4.0" right="0.0" top="4.0" />
+                            </HBox.margin>
+                          </Label>
+                      </HBox>
+                      <HBox>
+                      <Button fx:id="characterOkayButton" mnemonicParsing="false" onAction="#acceptCharacterMovement" text="Ok" textAlignment="CENTER">
+                          <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                         </VBox.margin>
+                              <HBox.margin>
+                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                              </HBox.margin>
+                      </Button>
+                       <Button fx:id="characterCancelButton" mnemonicParsing="false" onAction="#cancelCharacterMovement" text="Cancel" textAlignment="CENTER">
+                          <VBox.margin>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                         </VBox.margin>
+                              <HBox.margin>
+                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                              </HBox.margin>
+                       </Button>
+                      </HBox>
+                   </children>
+                   <opaqueInsets>
+                      <Insets />
+                   </opaqueInsets>
+                   <padding>
+                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                   </padding>
+                </VBox>
                   <Pane fx:id="menuPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #55555555;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                      </children>
                   </Pane>
               </children>
            </AnchorPane>
-          <PlayerIconTray fx:id="playerIconTray" alignment="CENTER" prefWidth="52.0">
+          <PlayerIconTray fx:id="playerIconTray" alignment="CENTER" prefWidth="54.0">
                <HBox.margin>
                   <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                </HBox.margin></PlayerIconTray>

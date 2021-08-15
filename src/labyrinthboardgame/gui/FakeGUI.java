@@ -227,4 +227,10 @@ public class FakeGUI implements GUIConnector
     {
         
     }
+    
+    @Override
+    public void animateCharacter(int playerNum, int x, int y)
+    {
+        
+    }
 }

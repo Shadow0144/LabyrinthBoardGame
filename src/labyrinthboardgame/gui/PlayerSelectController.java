@@ -5,6 +5,7 @@
  */
 package labyrinthboardgame.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -213,7 +214,7 @@ public final class PlayerSelectController implements Initializable
             int treasureCount = treasures[numberOfPlayers - 2];
             sceneController.moveToGameScene(players, treasureCount, connector);
         }
-        catch (Exception ex)
+        catch (IOException ex)
         {
             System.out.println("Error! Failed to move to Game Scene.");
             System.out.println(ex);

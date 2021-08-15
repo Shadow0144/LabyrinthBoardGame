@@ -5,8 +5,11 @@
  */
 package labyrinthboardgame.gui;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+import labyrinthboardgame.logic.ConfigurationManager;
 import labyrinthboardgame.logic.Player;
 
 /**
@@ -55,5 +58,22 @@ public final class PlayerCharacter extends ImageView
     public Player getPlayer()
     {
         return player;
+    }
+    
+    /**
+     * Animates the character moving to a new tile
+     * @param x The starting x
+     * @param y The starting y
+     */
+    public void animate(int x, int y)
+    {
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setDuration(Duration.millis(ConfigurationManager.CHARACTER_ANIMATION_SPEED));
+        translateTransition.setFromX((x * (TileView.TILE_SIZE + TileView.TILE_PADDING)));
+        translateTransition.setToX(0);
+        translateTransition.setFromY((y * (TileView.TILE_SIZE + TileView.TILE_PADDING)));
+        translateTransition.setToY(0);
+        translateTransition.setNode(this);
+        translateTransition.play();
     }
 }

@@ -17,7 +17,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.text.FontWeight;
 
 /**
  *
@@ -119,7 +118,14 @@ public final class PlayerIcon extends VBox
      */
     public void updateTreasuresRemaining(int treasuresRemaining)
     {
-        playerTreasuresRemainingText.setText("" + treasuresRemaining);
+        if (treasuresRemaining < 10)
+        {
+            playerTreasuresRemainingText.setText(" " + treasuresRemaining);
+        }
+        else
+        {
+            playerTreasuresRemainingText.setText("" + treasuresRemaining);
+        }
     }
     
     /**

@@ -7,6 +7,7 @@ package labyrinthboardgame.gui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import labyrinthboardgame.logic.ConfigurationManager;
 
 /**
  * 
@@ -24,6 +25,7 @@ public final class LabyrinthBoardGame extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
+        ConfigurationManager.loadConfiguration();
         sceneController = new SceneController(stage);
         sceneController.moveToMainMenuScene();
         

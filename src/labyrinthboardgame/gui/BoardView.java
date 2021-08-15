@@ -7,10 +7,14 @@ package labyrinthboardgame.gui;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import labyrinthboardgame.logic.Board;
@@ -21,10 +25,13 @@ import labyrinthboardgame.logic.Player;
  *
  * @author Corbi
  */
-public final class BoardView extends GridPane
+public final class BoardView extends StackPane
 {
     private InsertTileButton[] arrows;
     private int disabledArrow;
+    
+    private final GridPane boardPane;
+    private final GridPane characterPane;
     
     private final PlayerCharacter[] characters;
     
@@ -37,7 +44,64 @@ public final class BoardView extends GridPane
         
         characters = new PlayerCharacter[4];
         
+        boardPane = new GridPane();
+        characterPane = new GridPane();
+        
+        boardPane.setGridLinesVisible(true);
+        boardPane.setBackground(new Background(new BackgroundFill(Color.rgb(119, 119, 119), 
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        AnchorPane.setBottomAnchor(boardPane, 0.0);
+        AnchorPane.setLeftAnchor(boardPane, 0.0);
+        AnchorPane.setTopAnchor(boardPane, 0.0);
+        AnchorPane.setRightAnchor(boardPane, 0.0);
+        
+        for (int i = 0; i < 9; i++)
+        {
+            ColumnConstraints colConstraint = new ColumnConstraints();
+            colConstraint.setPrefWidth(TileView.TILE_SIZE + TileView.TILE_PADDING);
+            boardPane.getColumnConstraints().add(colConstraint);
+            
+            ColumnConstraints cColConstraint = new ColumnConstraints();
+            cColConstraint.setPrefWidth(TileView.TILE_SIZE + TileView.TILE_PADDING);
+            characterPane.getColumnConstraints().add(cColConstraint);
+        }
+        for (int j = 0; j < 9; j++)
+        {
+            RowConstraints rowConstraint = new RowConstraints();
+            rowConstraint.setPrefHeight(TileView.TILE_SIZE + TileView.TILE_PADDING);
+            boardPane.getRowConstraints().add(rowConstraint);
+            
+            RowConstraints cRowConstraint = new RowConstraints();
+            cRowConstraint.setPrefHeight(TileView.TILE_SIZE + TileView.TILE_PADDING);
+            characterPane.getRowConstraints().add(cRowConstraint);
+        }
+        
+        // Click through
+        characterPane.setPickOnBounds(false);
+        characterPane.setMouseTransparent(true);
+        
+        getChildren().add(boardPane);
+        getChildren().add(characterPane);
+        
         addEmptyTiles();
+    }
+    
+    /**
+     * Returns the board pane
+     * @return The board pane
+     */
+    public GridPane getBoardPane()
+    {
+        return boardPane;
+    }
+    
+    /**
+     * Returns the character pane
+     * @return The character pane
+     */
+    public GridPane getCharacterPane()
+    {
+        return characterPane;
     }
     
     /**
@@ -61,6 +125,33 @@ public final class BoardView extends GridPane
     }
     
     /**
+     * Returns a character tile view at row and col
+     * @param row The row of the character tile view
+     * @param col The column of the character tile view
+     * @return A character tile view at row and col
+     */
+    public CharacterTileView getCharacterTileView(int row, int col)
+    {
+        CharacterTileView rCTileView = null;
+        if (row >= 0 && row <= 6 && col >= 0 && col <= 6)
+        {
+            for (Node view : characterPane.getChildren())
+            {
+                Integer r = boardPane.getRowIndex(view);
+                Integer c = boardPane.getColumnIndex(view);
+                if (r != null && r == (row+1) && c != null && c == (col+1))
+                {
+                    rCTileView = ((CharacterTileView)(view));
+                    break;
+                }
+                else {}
+            }
+        }
+        else {}
+        return rCTileView;
+    }
+    
+    /**
      * Returns a tile view at row and col
      * @param row The row of the tile view
      * @param col The column of the tile view
@@ -71,10 +162,10 @@ public final class BoardView extends GridPane
         TileView rTileView = null;
         if (row >= 0 && row <= 6 && col >= 0 && col <= 6)
         {
-            for (Node view : getChildren())
+            for (Node view : boardPane.getChildren())
             {
-                Integer r = getRowIndex(view);
-                Integer c = getColumnIndex(view);
+                Integer r = boardPane.getRowIndex(view);
+                Integer c = boardPane.getColumnIndex(view);
                 if (r != null && r == (row+1) && c != null && c == (col+1))
                 {
                     rTileView = ((TileView)(view));
@@ -97,32 +188,32 @@ public final class BoardView extends GridPane
         
         // Top
         arrows[0] = new InsertTileButton(game, Board.ArrowPosition.TopLeft);
-        this.add(arrows[0], 2, 0);
+        boardPane.add(arrows[0], 2, 0);
         arrows[1] = new InsertTileButton(game, Board.ArrowPosition.TopCenter);
-        this.add(arrows[1], 4, 0);
+        boardPane.add(arrows[1], 4, 0);
         arrows[2] = new InsertTileButton(game, Board.ArrowPosition.TopRight);
-        this.add(arrows[2], 6, 0);
+        boardPane.add(arrows[2], 6, 0);
         // Left
         arrows[3] = new InsertTileButton(game, Board.ArrowPosition.LeftTop);
-        this.add(arrows[3], 0, 2);
+        boardPane.add(arrows[3], 0, 2);
         arrows[4] = new InsertTileButton(game, Board.ArrowPosition.LeftCenter);
-        this.add(arrows[4], 0, 4);
+        boardPane.add(arrows[4], 0, 4);
         arrows[5] = new InsertTileButton(game, Board.ArrowPosition.LeftBottom);
-        this.add(arrows[5], 0, 6);
+        boardPane.add(arrows[5], 0, 6);
         // Bottom
         arrows[6] = new InsertTileButton(game, Board.ArrowPosition.BottomLeft);
-        this.add(arrows[6], 2, 8);
+        boardPane.add(arrows[6], 2, 8);
         arrows[7] = new InsertTileButton(game, Board.ArrowPosition.BottomCenter);
-        this.add(arrows[7], 4, 8);
+        boardPane.add(arrows[7], 4, 8);
         arrows[8] = new InsertTileButton(game, Board.ArrowPosition.BottomRight);
-        this.add(arrows[8], 6, 8);
+        boardPane.add(arrows[8], 6, 8);
         // Right
         arrows[9] = new InsertTileButton(game, Board.ArrowPosition.RightTop);
-        this.add(arrows[9], 8, 2);
+        boardPane.add(arrows[9], 8, 2);
         arrows[10] = new InsertTileButton(game, Board.ArrowPosition.RightCenter);
-        this.add(arrows[10], 8, 4);
+        boardPane.add(arrows[10], 8, 4);
         arrows[11] = new InsertTileButton(game, Board.ArrowPosition.RightBottom);
-        this.add(arrows[11], 8, 6);
+        boardPane.add(arrows[11], 8, 6);
         
         disabledArrow = -1;
     }
@@ -221,7 +312,7 @@ public final class BoardView extends GridPane
         StackPane emptyTilePane = new StackPane();
         emptyTilePane.setBackground(new Background(new BackgroundFill(Color.rgb(119, 98, 82), 
                 CornerRadii.EMPTY, Insets.EMPTY)));
-        this.add(emptyTilePane, i, j);
+        boardPane.add(emptyTilePane, i, j);
     }
     
     /**
@@ -229,7 +320,7 @@ public final class BoardView extends GridPane
      */
     public void showPaths()
     {
-        getChildren().forEach(view -> {
+        boardPane.getChildren().forEach(view -> {
             if (view instanceof TileView)
             {
                 ((TileView)view).showPath();
@@ -243,7 +334,7 @@ public final class BoardView extends GridPane
      */
     public void hidePaths()
     {
-        getChildren().forEach(view -> {
+        boardPane.getChildren().forEach(view -> {
             if (view instanceof TileView)
             {
                 ((TileView)view).hidePath();
