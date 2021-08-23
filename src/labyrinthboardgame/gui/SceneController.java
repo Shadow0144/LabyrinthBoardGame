@@ -150,9 +150,10 @@ public final class SceneController
      * Changes the current scene to be the game scene
      * Sets up the board, treasures, and players from a save file
      * @param save The save to load from
+     * @param connector Connects the logic and GUI packages
      * @throws IOException 
      */
-    public void moveToGameScene(File save) throws IOException
+    public void moveToGameScene(File save, GUIConnector connector) throws IOException
     {
         killAllTimers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
@@ -161,7 +162,7 @@ public final class SceneController
         GameBoardController controller = loader.getController();
         
         Game game = GameLoader.loadGame(save.toString(), controller);
-        controller.setupController(this, game);
+        controller.setupController(this, game, connector);
         
         // Create a listener for handling rotating tiles with the keyboard and mouse
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {

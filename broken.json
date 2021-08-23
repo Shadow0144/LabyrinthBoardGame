@@ -1,0 +1,92 @@
+{
+  "field": [
+    [ {"type:": 1, "rotated": 1, "treasure": 0},
+      {"type:": 2, "rotated": 2, "treasure": 12},
+      {"type:": 2, "rotated": 0, "treasure": 24},
+      {"type:": 1, "rotated": 1, "treasure": 0},
+      {"type:": 2, "rotated": 0, "treasure": 18},
+      {"type:": 1, "rotated": 3, "treasure": 7},
+      {"type:": 1, "rotated": 2, "treasure": 0}
+    ],
+    [ {"type:": 1, "rotated": 0, "treasure": 0},
+      {"type:": 0, "rotated": 0, "treasure": 0},
+      {"type:": 0, "rotated": 1, "treasure": 0},
+      {"type:": 0, "rotated": 0, "treasure": 0},
+      {"type:": 0, "rotated": 1, "treasure": 0},
+      {"type:": 1, "rotated": 2, "treasure": 25},
+      {"type:": 1, "rotated": 0, "treasure": 0}
+    ],
+    [ {"type:": 2, "rotated": 3, "treasure": 6},
+      {"type:": 0, "rotated": 1, "treasure": 0},
+      {"type:": 2, "rotated": 3, "treasure": 9},
+      {"type:": 0, "rotated": 1, "treasure": 0},
+      {"type:": 2, "rotated": 0, "treasure": 5},
+      {"type:": 1, "rotated": 0, "treasure": 14},
+      {"type:": 2, "rotated": 1, "treasure": 17}
+    ],
+    [ {"type:": 1, "rotated": 0, "treasure": 0},
+      {"type:": 2, "rotated": 2, "treasure": 1},
+      {"type:": 2, "rotated": 0, "treasure": 20},
+      {"type:": 0, "rotated": 0, "treasure": 0},
+      {"type:": 2, "rotated": 2, "treasure": 10},
+      {"type:": 1, "rotated": 0, "treasure": 19},
+      {"type:": 1, "rotated": 2, "treasure": 0}
+    ],
+    [ {"type:": 2, "rotated": 3, "treasure": 22},
+      {"type:": 1, "rotated": 1, "treasure": 0},
+      {"type:": 2, "rotated": 2, "treasure": 21},
+      {"type:": 0, "rotated": 1, "treasure": 0},
+      {"type:": 2, "rotated": 1, "treasure": 2},
+      {"type:": 1, "rotated": 1, "treasure": 3},
+      {"type:": 2, "rotated": 1, "treasure": 4}
+    ],
+    [ {"type:": 2, "rotated": 2, "treasure": 11},
+      {"type:": 0, "rotated": 2, "treasure": 0},
+      {"type:": 0, "rotated": 2, "treasure": 0},
+      {"type:": 2, "rotated": 2, "treasure": 13},
+      {"type:": 1, "rotated": 2, "treasure": 0},
+      {"type:": 0, "rotated": 1, "treasure": 0},
+      {"type:": 1, "rotated": 2, "treasure": 0}
+    ],
+    [ {"type:": 1, "rotated": 0, "treasure": 0},
+      {"type:": 1, "rotated": 0, "treasure": 8},
+      {"type:": 2, "rotated": 2, "treasure": 15},
+      {"type:": 0, "rotated": 2, "treasure": 0},
+      {"type:": 2, "rotated": 2, "treasure": 23},
+      {"type:": 1, "rotated": 0, "treasure": 0},
+      {"type:": 1, "rotated": 3, "treasure": 0}
+    ]
+  ],
+  "freeWayCard": {"type": 0, "rotated": 0, "treasure": 0, "position": {"x": -1, "y": -1}},
+  "currentPlayer": 3,
+  "players": [
+    {
+      "involved": true,
+      "name": "Yellow Mage",
+      "directedBy": 1,
+      "position": {"x": 0, "y": 6},
+      "treasureCards": [16, 6, 22, 17, 14, 19]
+    },
+    {
+      "involved": true,
+      "name": "Blue Wizard",
+      "directedBy": 1,
+      "position": {"x": 6, "y": 6},
+      "treasureCards": [11, 2, 13, 24, 5, 21]
+    },
+    {
+      "involved": true,
+      "name": "Green Warlock",
+      "directedBy": 1,
+      "position": {"x": 6, "y": 0},
+      "treasureCards": [10, 1, 23, 3, 12, 20]
+    },
+    {
+      "involved": true,
+      "name": "Susan",
+      "directedBy": 0,
+      "position": {"x": 0, "y": 0},
+      "treasureCards": [15, 9, 18, 7, 4, 8]
+    }
+  ]
+}

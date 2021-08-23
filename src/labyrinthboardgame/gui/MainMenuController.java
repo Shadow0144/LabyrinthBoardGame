@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.stage.FileChooser;
+import labyrinthboardgame.logic.GUIConnector;
 
 /**
  * FXML Controller class
@@ -75,7 +76,8 @@ public final class MainMenuController implements Initializable
         {
             try
             {
-                sceneController.moveToGameScene(file);
+                GUIConnector connector = GUIConnector.getJavaFXGUI();
+                sceneController.moveToGameScene(file, connector);
             }
             catch (IOException ex)
             {

@@ -112,10 +112,12 @@ public final class GameBoardController implements Initializable
      * Setups the game with the players and treasures picked
      * @param sc Pointer to the controller for controlling the scene
      * @param loadedGame A game loaded from a save
+     * @param connector Connects the logic and GUI packages
      */
-    public void setupController(SceneController sc, Game loadedGame)
+    public void setupController(SceneController sc, Game loadedGame, GUIConnector connector)
     {
         sceneController = sc;
+        this.connector = connector;
         game = loadedGame;
         gameBoardView.setupArrows(game);
     }
@@ -271,7 +273,7 @@ public final class GameBoardController implements Initializable
         {
             try
             {
-                sceneController.moveToGameScene(open);
+                sceneController.moveToGameScene(open, connector);
             }
             catch (IOException ex)
             {
